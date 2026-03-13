@@ -60,6 +60,12 @@ class LiquidationControllerTest {
 
     @BeforeEach
     void setUp() {
+        loanLiquidationRepository.deleteAll();
+        loanLedgerRepository.deleteAll();
+        loanRepository.deleteAll();
+        loanOfferRepository.deleteAll();
+        userRepository.deleteAll();
+
         lender = User.builder()
                 .email("lender@example.com")
                 .password("password")
