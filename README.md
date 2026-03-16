@@ -28,7 +28,7 @@ LinkBit solves the liquidity problem for BTC holders without requiring them to s
 -   **Collateral Release**: Automated or manual release of BTC upon successful loan repayment.
 
 ### 📉 LTV Risk Management
--   **Real-time Monitoring**: Background workers (Heartbeat) poll BTC/INR prices via CoinGecko to recalculate LTV.
+-   **Real-time Monitoring**: Background workers (Heartbeat) poll BTC/USDT prices via Binance to recalculate LTV.
 -   **Automated Alerts**: Transitions loans to `MARGIN_CALL` or `LIQUIDATION_ELIGIBLE` based on price volatility.
 -   **Admin Tools**: Manual risk state overrides for system administrators.
 
@@ -44,7 +44,7 @@ LinkBit solves the liquidity problem for BTC holders without requiring them to s
 -   **Persistence**: PostgreSQL (Prod/Staging), H2 (Local/Test)
 -   **Migrations**: Flyway
 -   **Communication**: WebSockets (STOMP) for negotiation chat
--   **Price Oracle**: CoinGecko API Integration
+-   **Price Oracle**: Binance Spot API Integration
 -   **Documentation**: SpringDoc OpenAPI (Swagger UI)
 
 ## 📁 Project Structure

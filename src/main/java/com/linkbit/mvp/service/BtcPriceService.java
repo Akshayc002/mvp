@@ -15,12 +15,12 @@ import java.util.concurrent.atomic.AtomicReference;
 @Service
 public class BtcPriceService {
 
-    private static final String COINGECKO_PRICE_URL =
-            "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=inr";
+    private static final String BINANCE_PRICE_URL =
+            "https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT";
 
     private final RestTemplate restTemplate;
     private final AtomicReference<BigDecimal> cachedBtcPrice =
-            new AtomicReference<>(new BigDecimal("8200000.00"));
+            new AtomicReference<>(new BigDecimal("73000.00"));
 
     public BtcPriceService(RestTemplateBuilder restTemplateBuilder) {
         this.restTemplate = restTemplateBuilder.build();
@@ -29,15 +29,15 @@ public class BtcPriceService {
     @Scheduled(fixedRate = 1000)
     public void fetchLatestBtcPrice() {
         try {
-            JsonNode response = restTemplate.getForObject(COINGECKO_PRICE_URL, JsonNode.class);
-            if (response != null && response.has("bitcoin") && response.get("bitcoin").has("inr")) {
-                BigDecimal latestBtcInr = new BigDecimal(response.get("bitcoin").get("inr").asText())
+            JsonNode response = restTemplate.getForObject(BINANCE_PRICE_URL, JsonNode.class);
+            if (response != null && response.has("price")) {
+                BigDecimal latestBtcUsdt = new BigDecimal(response.get("price").asText())
                         .setScale(2, RoundingMode.HALF_UP);
-                cachedBtcPrice.set(latestBtcInr);
-                log.info("BTC/INR price updated from CoinGecko: {}", latestBtcInr);
+                cachedBtcPrice.set(latestBtcUsdt);
+                log.info("BTC/USDT price updated from Binance: {}", latestBtcUsdt);
             }
         } catch (Exception e) {
-            log.warn("Failed to fetch BTC price: {}", e.getMessage());
+            log.warn("Failed to fetch BTC price from Binance: {}", e.getMessage());
         }
     }
 

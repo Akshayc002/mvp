@@ -8,4 +8,5 @@ import java.util.UUID;
 
 public interface LoanRepaymentRepository extends JpaRepository<LoanRepayment, UUID> {
     List<LoanRepayment> findByLoanIdOrderByCreatedAtDesc(UUID loanId);
+    List<LoanRepayment> findByStatusOrderByCreatedAtDesc(com.linkbit.mvp.domain.RepaymentStatus status);
 }

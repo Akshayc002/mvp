@@ -37,6 +37,10 @@ public class AdminAccessManager implements AuthorizationManager<RequestAuthoriza
     public boolean isAdmin(Authentication authentication) {
         return authentication != null
                 && authentication.isAuthenticated()
-                && adminEmails.contains(authentication.getName().toLowerCase());
+                && isAdmin(authentication.getName());
+    }
+
+    public boolean isAdmin(String email) {
+        return email != null && adminEmails.contains(email.toLowerCase());
     }
 }

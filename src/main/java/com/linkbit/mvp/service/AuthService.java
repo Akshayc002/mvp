@@ -4,6 +4,7 @@ import com.linkbit.mvp.domain.KycStatus;
 import com.linkbit.mvp.domain.PasswordResetToken;
 import com.linkbit.mvp.domain.User;
 import com.linkbit.mvp.domain.UserKycDetails;
+import com.linkbit.mvp.config.AdminAccessManager;
 import com.linkbit.mvp.dto.*;
 import com.linkbit.mvp.repository.PasswordResetTokenRepository;
 import com.linkbit.mvp.repository.UserRepository;
@@ -30,6 +31,7 @@ public class AuthService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final LoginAttemptService loginAttemptService;
+    private final AdminAccessManager adminAccessManager;
 
     @Transactional
     public void register(RegisterRequest request) {
@@ -111,6 +113,7 @@ public class AuthService {
                 .phoneNumber(user.getPhoneNumber())
                 .pseudonym(user.getPseudonym())
                 .kycStatus(user.getKycStatus())
+                .admin(adminAccessManager.isAdmin(user.getEmail()))
                 .bankDetails(bankDetails)
                 .build();
     }
