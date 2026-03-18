@@ -57,6 +57,7 @@ public class SecurityConfig {
                 .requestMatchers(new AntPathRequestMatcher("/payments/**")).authenticated()
                 .requestMatchers(new AntPathRequestMatcher("/loans/*/escrow/**")).authenticated()
                 .requestMatchers(new AntPathRequestMatcher("/loans/*/deposit")).authenticated()
+                .requestMatchers(new AntPathRequestMatcher("/offers", "GET")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/btc/price")).permitAll()
                 .anyRequest().authenticated()
             )

@@ -34,7 +34,7 @@ public class BtcPriceService {
                 BigDecimal latestBtcUsdt = new BigDecimal(response.get("price").asText())
                         .setScale(2, RoundingMode.HALF_UP);
                 cachedBtcPrice.set(latestBtcUsdt);
-                log.info("BTC/USDT price updated from Binance: {}", latestBtcUsdt);
+                log.debug("BTC/USDT price updated from Binance: {}", latestBtcUsdt);
             }
         } catch (Exception e) {
             log.warn("Failed to fetch BTC price from Binance: {}", e.getMessage());
