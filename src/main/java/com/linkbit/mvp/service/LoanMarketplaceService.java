@@ -140,6 +140,9 @@ public class LoanMarketplaceService {
                 .interestRate(offer.getInterestRate())
                 .tenureDays(offer.getTenureDays())
                 .expectedLtvPercent(offer.getExpectedLtvPercent())
+                .principalOutstanding(BigDecimal.ZERO)
+                .interestOutstanding(BigDecimal.ZERO)
+                .totalOutstanding(BigDecimal.ZERO)
                 .status(LoanStatus.NEGOTIATING)
                 .build());
         return savedLoan.getId();

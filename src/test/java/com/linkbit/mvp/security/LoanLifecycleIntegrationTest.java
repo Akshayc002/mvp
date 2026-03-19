@@ -38,10 +38,12 @@ public class LoanLifecycleIntegrationTest {
     @Autowired private StateMachineService stateMachineService;
     
     @MockBean private BtcPriceService btcPriceService;
+    @MockBean private org.springframework.messaging.simp.SimpMessagingTemplate messagingTemplate;
 
     @Autowired private LoanRepository loanRepository;
     @Autowired private LoanOfferRepository loanOfferRepository;
     @Autowired private UserRepository userRepository;
+    @Autowired private LoanAuditLogRepository auditLogRepository;
     @Autowired private LoanRepaymentRepository repaymentRepository;
 
     private String borrowerEmail = "borrower@test.com";
@@ -162,6 +164,10 @@ public class LoanLifecycleIntegrationTest {
         // 10. Close (Borrower releases collateral)
         collateralReleaseService.releaseCollateral(loanId, lenderEmail); 
         assertEquals(LoanStatus.CLOSED, getLoan(loanId).getStatus());
+
+        // Final Verify: Audit logs should exist for all major transitions
+        List<LoanAuditLog> logs = auditLogRepository.findByLoanId(loanId);
+        assertTrue(logs.size() >= 5, "Expected at least 5 audit logs for the major transitions, found " + logs.size());
     }
 
     @Test
@@ -179,6 +185,97 @@ public class LoanLifecycleIntegrationTest {
         liquidationService.executeLiquidation(loanId);
         assertEquals(LoanStatus.LIQUIDATED, getLoan(loanId).getStatus());
     }
+
+    @Test
+    void testIdempotency_FailSafes() {
+        setupLoanToDisbursed(); // Loan is in COLLATERAL_LOCKED, markDisbursed has been called once
+        Loan loan = loanRepository.findAll().get(0);
+        UUID loanId = loan.getId();
+
+        // 1. Duplicate Disbursement (should be idempotent / no error)
+        int initialLogs = auditLogRepository.findByLoanId(loanId).size();
+        disbursementService.markDisbursed(loanId, lenderEmail, DisbursementRequest.builder()
+                .transactionReference("REF-DUP")
+                .build());
+        // No new audit log because no state transition happened, but service should not throw
+        
+        // Move to ACTIVE for next tests
+        disbursementService.confirmReceipt(loanId, borrowerEmail);
+        assertEquals(LoanStatus.ACTIVE, getLoan(loanId).getStatus());
+
+        // 2. Duplicate Repayment Verification
+        BigDecimal totalDue = getLoan(loanId).getTotalOutstanding();
+        repaymentService.submitRepayment(loanId, borrowerEmail, RepaymentRequest.builder()
+                .amount(totalDue)
+                .transactionReference("REPAY-DUP")
+                .proofImageUrl("http://repay.jpg")
+                .build());
+        LoanRepayment repayment = repaymentRepository.findByLoanIdOrderByCreatedAtDesc(loanId).get(0);
+        
+        repaymentService.verifyRepayment(repayment.getId());
+        assertEquals(LoanStatus.REPAID, getLoan(loanId).getStatus());
+        
+        // Retry verification
+        assertThrows(RuntimeException.class, () -> repaymentService.verifyRepayment(repayment.getId()));
+
+        // 3. Duplicate Liquidation
+        // Setup another active loan for liquidation test
+        Loan loan2 = createManualActiveLoan(new BigDecimal("10000"), new BigDecimal("0.5"));
+        given(btcPriceService.getCurrentBtcPrice()).willReturn(new BigDecimal("20000"));
+        ltvMonitoringWorker.monitorLtvLevels();
+        assertEquals(LoanStatus.LIQUIDATION_ELIGIBLE, getLoan(loan2.getId()).getStatus());
+        
+        liquidationService.executeLiquidation(loan2.getId());
+        assertEquals(LoanStatus.LIQUIDATED, getLoan(loan2.getId()).getStatus());
+        
+        // Retry liquidation (should be idempotent and silent)
+        liquidationService.executeLiquidation(loan2.getId());
+        assertEquals(LoanStatus.LIQUIDATED, getLoan(loan2.getId()).getStatus());
+
+        // 4. Duplicate Collateral Release
+        collateralReleaseService.releaseCollateral(loanId, lenderEmail);
+        assertEquals(LoanStatus.CLOSED, getLoan(loanId).getStatus());
+        
+        // Retry release (should be idempotent and silent)
+        collateralReleaseService.releaseCollateral(loanId, lenderEmail);
+        assertEquals(LoanStatus.CLOSED, getLoan(loanId).getStatus());
+    }
+
+    private Loan createManualActiveLoan(BigDecimal amount, BigDecimal collateral) {
+        CreateOfferRequest cor = new CreateOfferRequest();
+        cor.setLoanAmountInr(amount);
+        cor.setInterestRate(new BigDecimal("12"));
+        cor.setTenureDays(30);
+        cor.setExpectedLtvPercent(50);
+        marketplaceService.createOffer(lenderEmail, cor);
+        LoanOffer offer = loanOfferRepository.findAll().get(0);
+
+        Loan loan = Loan.builder()
+                .offer(offer)
+                .lender(userRepository.findByEmail(lenderEmail).get())
+                .borrower(userRepository.findByEmail(borrowerEmail).get())
+                .principalAmount(amount)
+                .interestRate(new BigDecimal("12"))
+                .tenureDays(30)
+                .collateralBtcAmount(collateral)
+                .status(LoanStatus.COLLATERAL_LOCKED)
+                .marginCallLtvPercent(80)
+                .liquidationLtvPercent(95)
+                .principalOutstanding(BigDecimal.ZERO)
+                .interestOutstanding(BigDecimal.ZERO)
+                .totalOutstanding(BigDecimal.ZERO)
+                .build();
+        
+        loan = loanRepository.save(loan);
+        repaymentService.initializeLoanFinancials(loan);
+        
+        // Re-fetch to ensure we have the version updated by initializeLoanFinancials
+        loan = loanRepository.findById(loan.getId()).get();
+        loan = stateMachineService.transition(loan, LoanAction.DISBURSE_FIAT, ActorType.LENDER);
+        
+        return loan;
+    }
+
 
     @Test
     void testDisputePath_ResolveByActivation() {

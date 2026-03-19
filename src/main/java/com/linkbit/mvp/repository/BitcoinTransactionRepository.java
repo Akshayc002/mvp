@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface BitcoinTransactionRepository extends JpaRepository<BitcoinTransaction, String> {
+public interface BitcoinTransactionRepository extends JpaRepository<BitcoinTransaction, java.util.UUID> {
     List<BitcoinTransaction> findByLoanId(java.util.UUID loanId);
     List<BitcoinTransaction> findByLoanAndTypeAndStatus(Loan loan, BitcoinTransactionType type, String status);
 }

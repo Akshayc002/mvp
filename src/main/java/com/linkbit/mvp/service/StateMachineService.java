@@ -82,13 +82,13 @@ public class StateMachineService {
         transitionMap.computeIfAbsent(from, k -> new EnumMap<>(LoanAction.class)).put(action, to);
     }
 
-    public void transition(Loan loan, LoanAction action, ActorType actor) {
+    public Loan transition(Loan loan, LoanAction action, ActorType actor) {
         LoanStatus current = loan.getStatus();
 
         // Idempotency check: If the loan's current state is already the target of this action, skip.
         if (isAlreadyInTargetState(action, current)) {
             log.info("Idempotent retry detected for loan {} and action {}. Already in target state {}.", loan.getId(), action, current);
-            return;
+            return loan;
         }
 
         if (TERMINAL_STATES.contains(current)) {
@@ -105,7 +105,7 @@ public class StateMachineService {
 
         // Double check: if current == next despite not being caught by isAlreadyInTargetState (shouldn't happen with the logic below)
         if (current == next) {
-            return;
+            return loan;
         }
 
         if (next == LoanStatus.ACTIVE || next == LoanStatus.MARGIN_CALL || next == LoanStatus.LIQUIDATION_ELIGIBLE) {
@@ -162,7 +162,7 @@ public class StateMachineService {
         log.info("Loan {}: {} -> {} via {} by {}", loan.getId(), current, next, action, actor);
         loan.setStatus(next);
         saveAuditLog(loan, current, next, action, actor);
-        loanRepository.save(loan);
+        return loanRepository.save(loan);
     }
 
     @Transactional

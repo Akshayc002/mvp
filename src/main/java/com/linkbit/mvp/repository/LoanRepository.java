@@ -28,7 +28,8 @@ public interface LoanRepository extends JpaRepository<Loan, UUID> {
     List<Loan> findByStatusAndUpdatedAtBefore(LoanStatus status, LocalDateTime threshold);
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
-    Optional<Loan> findByIdWithLock(UUID id);
+    @Query("SELECT l FROM Loan l WHERE l.id = :id")
+    Optional<Loan> findByIdWithLock(@Param("id") UUID id);
 
     @Query("""
             select l from Loan l
