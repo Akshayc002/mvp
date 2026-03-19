@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 
 @Slf4j
@@ -16,6 +17,7 @@ import java.util.*;
 public class StateMachineService {
 
     private final LoanAuditLogRepository auditLogRepository;
+    private final BtcPriceService btcPriceService;
     private final Map<LoanStatus, Map<LoanAction, LoanStatus>> transitionMap = new EnumMap<>(LoanStatus.class);
 
     private static final Set<LoanStatus> TERMINAL_STATES = EnumSet.of(
@@ -99,7 +101,42 @@ public class StateMachineService {
 
         if (next == LoanStatus.ACTIVE || next == LoanStatus.MARGIN_CALL || next == LoanStatus.LIQUIDATION_ELIGIBLE) {
             if (loan.getCollateralBtcAmount() == null || loan.getCollateralBtcAmount().compareTo(BigDecimal.ZERO) <= 0) {
-                throw new IllegalStateException("Invariant violated: Collateral must exist for active loan states");
+                throw new IllegalStateException("Invariant violated: ACTIVE loans must have collateral balance > 0");
+            }
+        }
+
+        // Invariant 1: No fiat disbursement before collateral locked
+        if (action == LoanAction.DISBURSE_FIAT && current != LoanStatus.COLLATERAL_LOCKED && current != LoanStatus.DISPUTE_OPEN) {
+            throw new IllegalStateException("Invariant violated: No fiat disbursement before collateral locked");
+        }
+
+        // Invariant 2: No loan closure without repayment
+        if (next == LoanStatus.CLOSED && loan.getPrincipalOutstanding() != null && loan.getPrincipalOutstanding().compareTo(BigDecimal.ZERO) > 0) {
+            throw new IllegalStateException("Invariant violated: No loan closure while principal is outstanding: " + loan.getPrincipalOutstanding());
+        }
+
+        // Invariant 3: No liquidation without eligibility
+        if (action == LoanAction.LTV_DROP_MARGIN_CALL || action == LoanAction.LTV_DROP_LIQUIDATION) {
+            BigDecimal btcPrice = btcPriceService.getCurrentBtcPrice();
+            if (btcPrice == null || btcPrice.compareTo(BigDecimal.ZERO) <= 0) {
+                log.warn("Price fetch failed during state transition for loan {}", loan.getId());
+            } else {
+                BigDecimal collateralValueInr = loan.getCollateralBtcAmount().multiply(btcPrice);
+                BigDecimal outstanding = loan.getTotalOutstanding();
+                if (outstanding == null) outstanding = loan.getPrincipalAmount();
+
+                BigDecimal ltvPercent = outstanding
+                        .divide(collateralValueInr, 4, RoundingMode.HALF_UP)
+                        .multiply(new BigDecimal("100"));
+
+                int threshold = (action == LoanAction.LTV_DROP_MARGIN_CALL) ? 
+                        (loan.getMarginCallLtvPercent() != null ? loan.getMarginCallLtvPercent() : 80) :
+                        (loan.getLiquidationLtvPercent() != null ? loan.getLiquidationLtvPercent() : 95);
+
+                if (ltvPercent.compareTo(new BigDecimal(threshold)) < 0) {
+                    throw new IllegalStateException(String.format("Invariant violated: LTV %.2f%% is below threshold %d%% for action %s", 
+                            ltvPercent, threshold, action));
+                }
             }
         }
 
@@ -131,8 +168,13 @@ public class StateMachineService {
 
         if (targetStatus == LoanStatus.ACTIVE || targetStatus == LoanStatus.MARGIN_CALL || targetStatus == LoanStatus.LIQUIDATION_ELIGIBLE) {
             if (loan.getCollateralBtcAmount() == null || loan.getCollateralBtcAmount().compareTo(BigDecimal.ZERO) <= 0) {
-                throw new IllegalStateException("Invariant violated: Collateral must exist for active loan states");
+                throw new IllegalStateException("Invariant violated: ACTIVE loans must have collateral balance > 0");
             }
+        }
+
+        // Invariant 2: No loan closure without repayment
+        if (targetStatus == LoanStatus.CLOSED && loan.getPrincipalOutstanding() != null && loan.getPrincipalOutstanding().compareTo(BigDecimal.ZERO) > 0) {
+            throw new IllegalStateException("Invariant violated: No loan closure while principal is outstanding: " + loan.getPrincipalOutstanding());
         }
 
         log.info("Loan {}: {} -> {} via ADMIN_OVERRIDE", loan.getId(), current, targetStatus);

@@ -117,11 +117,13 @@ public class LoanMarketplaceService {
     @Transactional
     public UUID connectOffer(String email, UUID offerId) {
         User borrower = getUser(email);
-        LoanOffer offer = loanOfferRepository.findById(offerId)
+        
+        // Use pessimistic lock to prevent concurrent connections to the same offer
+        LoanOffer offer = loanOfferRepository.findByIdForUpdate(offerId)
                 .orElseThrow(() -> new RuntimeException("Offer not found"));
 
         if (offer.getStatus() != LoanOfferStatus.OPEN) {
-            throw new RuntimeException("Offer is not available");
+            throw new RuntimeException("Offer is no longer available");
         }
         if (offer.getLender().getId().equals(borrower.getId())) {
             throw new RuntimeException("Lender cannot connect to their own offer");

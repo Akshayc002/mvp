@@ -72,6 +72,15 @@ public class NegotiationService {
         if (loan.getStatus() != LoanStatus.NEGOTIATING) {
             throw new RuntimeException("Loan is not in negotiating status");
         }
+
+        // Lock the offer first to ensure atomicity
+        LoanOffer offer = loanOfferRepository.findByIdForUpdate(loan.getOffer().getId())
+                .orElseThrow(() -> new RuntimeException("Offer not found"));
+        
+        if (offer.getStatus() != LoanOfferStatus.OPEN) {
+            throw new RuntimeException("Offer is no longer open for finalization");
+        }
+
         if (loan.getRepaymentType() == null || loan.getExpectedLtvPercent() == null
                 || loan.getMarginCallLtvPercent() == null || loan.getLiquidationLtvPercent() == null) {
             throw new RuntimeException("Loan terms are incomplete");
@@ -81,13 +90,9 @@ public class NegotiationService {
         LocalDateTime finalizedAt = LocalDateTime.now();
         loan.setAgreementFinalizedAt(finalizedAt);
         loan.setAgreementHash(generateHash(buildAgreementData(loan, finalizedAt)));
+        
         stateMachineService.transition(loan, LoanAction.FINALIZE_CONTRACT, ActorType.LENDER);
 
-        LoanOffer offer = loanOfferRepository.findByIdForUpdate(loan.getOffer().getId())
-                .orElseThrow(() -> new RuntimeException("Offer not found"));
-        if (offer.getStatus() != LoanOfferStatus.OPEN) {
-            throw new RuntimeException("Offer is no longer open for finalization");
-        }
         offer.setStatus(LoanOfferStatus.CLOSED);
         loanOfferRepository.save(offer);
         loanRepository.save(loan);
