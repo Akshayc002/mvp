@@ -37,6 +37,10 @@ LinkBit solves the liquidity problem for BTC holders without requiring them to s
 -   **EMI & Repayments**: Flexible repayment scheduling (EMI or Bullet) with receipt verification.
 -   **System Ledger**: A transparent, immutable log of all financial transitions within the platform.
 
+### 👨‍💻 Admin & Operations
+-   **Admin Dashboard APIs**: Comprehensive endpoints for overseeing platform health, verifying collateral deposits and repayments, and handling disputes.
+-   **Notifications System**: In-app notifications for loan status transitions and critical events (like margin calls).
+
 ## 🛠 Technology Stack
 
 -   **Backend**: Java 21, Spring Boot 3.2.3
