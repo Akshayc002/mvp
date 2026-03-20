@@ -117,11 +117,13 @@ public class NegotiationService {
                 throw new RuntimeException("Borrower already signed");
             }
             loan.setBorrowerSignature(signature);
+            loan.setBorrowerSignedAt(LocalDateTime.now());
         } else if (loan.getLender().getId().equals(user.getId())) {
             if (loan.getLenderSignature() != null) {
                 throw new RuntimeException("Lender already signed");
             }
             loan.setLenderSignature(signature);
+            loan.setLenderSignedAt(LocalDateTime.now());
         } else {
             throw new RuntimeException("User is not a participant");
         }
@@ -137,7 +139,7 @@ public class NegotiationService {
         loanRepository.save(loan);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public void cancelNegotiation(String email, UUID loanId) {
         Loan loan = getLoan(loanId);
         User user = getUser(email);
@@ -172,7 +174,9 @@ public class NegotiationService {
         return AgreementResponse.builder()
                 .agreementHash(loan.getAgreementHash())
                 .borrowerSignature(loan.getBorrowerSignature())
+                .borrowerSignedAt(loan.getBorrowerSignedAt())
                 .lenderSignature(loan.getLenderSignature())
+                .lenderSignedAt(loan.getLenderSignedAt())
                 .agreementFinalizedAt(loan.getAgreementFinalizedAt())
                 .build();
     }

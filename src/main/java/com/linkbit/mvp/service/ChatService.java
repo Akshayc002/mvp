@@ -36,12 +36,26 @@ public class ChatService {
             throw new RuntimeException("User is not a participant in this loan");
         }
 
-        publish(messageRepository.save(NegotiationMessage.builder()
+        NegotiationMessage savedMessage = messageRepository.save(NegotiationMessage.builder()
                 .loan(loan)
                 .sender(sender)
                 .messageText(messageText)
                 .isSystemMessage(false)
-                .build()));
+                .build());
+
+        publish(savedMessage);
+    }
+
+    public java.util.List<ChatMessage> getMessages(UUID loanId) {
+        Loan loan = getLoan(loanId);
+        return messageRepository.findByLoanOrderBySentAtAsc(loan).stream()
+                .map(m -> ChatMessage.builder()
+                        .loanId(m.getLoan().getId())
+                        .senderId(m.getSender() != null ? m.getSender().getId() : null)
+                        .messageText(m.getMessageText())
+                        .timestamp(m.getSentAt())
+                        .build())
+                .collect(java.util.stream.Collectors.toList());
     }
 
     @Transactional

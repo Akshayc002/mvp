@@ -103,8 +103,14 @@ public class Loan {
     @Column(name = "borrower_signature", columnDefinition = "TEXT")
     private String borrowerSignature;
 
+    @Column(name = "borrower_signed_at")
+    private LocalDateTime borrowerSignedAt;
+
     @Column(name = "lender_signature", columnDefinition = "TEXT")
     private String lenderSignature;
+
+    @Column(name = "lender_signed_at")
+    private LocalDateTime lenderSignedAt;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

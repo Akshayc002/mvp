@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 public class AgreementResponse {
     private String agreementHash;
     private String borrowerSignature;
+    private LocalDateTime borrowerSignedAt;
     private String lenderSignature;
+    private LocalDateTime lenderSignedAt;
     private LocalDateTime agreementFinalizedAt;
 }

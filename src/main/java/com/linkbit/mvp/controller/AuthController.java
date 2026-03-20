@@ -43,4 +43,10 @@ public class AuthController {
         authService.resetPassword(request);
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/kyc/submit")
+    public ResponseEntity<Void> submitKyc(Authentication authentication) {
+        authService.submitKyc(authentication.getName());
+        return ResponseEntity.ok().build();
+    }
 }

@@ -152,4 +152,13 @@ public class AuthService {
 
         passwordResetTokenRepository.delete(resetToken);
     }
+
+    @Transactional
+    public void submitKyc(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        
+        user.setKycStatus(KycStatus.VERIFIED);
+        userRepository.save(user);
+    }
 }
