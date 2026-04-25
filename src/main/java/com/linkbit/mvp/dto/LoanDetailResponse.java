@@ -48,6 +48,8 @@ public class LoanDetailResponse {
     private Long escrowBalanceSats;
     private Boolean lenderFinalized;
     private Boolean borrowerFinalized;
+    private Boolean borrowerSettlementConfirmed;
+    private Boolean lenderSettlementConfirmed;
     private PendingFeeResponse borrowerFee;
     private PendingFeeResponse lenderFee;
     private List<PendingRepaymentResponse> pendingRepayments;

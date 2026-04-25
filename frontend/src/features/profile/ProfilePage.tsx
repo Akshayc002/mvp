@@ -95,17 +95,19 @@ export const ProfilePage = () => {
                   <p className="text-xs text-slate-500 uppercase tracking-wider font-semibold mb-1">Bank Account</p>
                   <div className="flex items-center gap-2 text-slate-900 font-mono">
                     <Building className="h-4 w-4 text-slate-400" />
-                    {profile.bankDetails.bankAccountNumber.slice(0, 4)}••••••••••
+                    {profile.bankDetails.bankAccountNumber ? 
+                      `${profile.bankDetails.bankAccountNumber.slice(0, 4)}••••••••••` : 
+                      'Not provided'}
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <p className="text-xs text-slate-500 uppercase tracking-wider font-semibold mb-1">IFSC Code</p>
-                    <p className="text-slate-900 font-mono">{profile.bankDetails.ifsc}</p>
+                    <p className="text-slate-900 font-mono">{profile.bankDetails.ifsc || 'N/A'}</p>
                   </div>
                   <div>
                     <p className="text-xs text-slate-500 uppercase tracking-wider font-semibold mb-1">UPI ID</p>
-                    <p className="text-slate-900 font-mono">{profile.bankDetails.upiId}</p>
+                    <p className="text-slate-900 font-mono">{profile.bankDetails.upiId || 'N/A'}</p>
                   </div>
                 </div>
               </>

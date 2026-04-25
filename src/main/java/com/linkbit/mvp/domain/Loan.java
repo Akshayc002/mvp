@@ -165,6 +165,14 @@ public class Loan {
     @Column(name = "borrower_finalized")
     private Boolean borrowerFinalized = false;
 
+    @Builder.Default
+    @Column(name = "borrower_settlement_confirmed")
+    private Boolean borrowerSettlementConfirmed = false;
+
+    @Builder.Default
+    @Column(name = "lender_settlement_confirmed")
+    private Boolean lenderSettlementConfirmed = false;
+
     @OneToMany(mappedBy = "loan", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<NegotiationMessage> negotiationMessages;
 }

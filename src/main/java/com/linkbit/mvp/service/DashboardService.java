@@ -186,6 +186,8 @@ public class DashboardService {
                 .agreementFinalizedAt(loan.getAgreementFinalizedAt())
                 .lenderFinalized(loan.getLenderFinalized())
                 .borrowerFinalized(loan.getBorrowerFinalized())
+                .borrowerSettlementConfirmed(loan.getBorrowerSettlementConfirmed())
+                .lenderSettlementConfirmed(loan.getLenderSettlementConfirmed())
                 .createdAt(loan.getCreatedAt())
                 .updatedAt(loan.getUpdatedAt())
                 .fiatDisbursedAt(loan.getFiatDisbursedAt())

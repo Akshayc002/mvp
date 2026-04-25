@@ -135,9 +135,8 @@ public class RepaymentService {
         if (loan.getTotalOutstanding().compareTo(BigDecimal.ZERO) == 0) {
             stateMachineService.transition(loan, LoanAction.REPAY_LOAN, ActorType.SYSTEM);
             loanRepository.save(loan);
-            chatService.sendSystemMessage(loan.getId(), "SYSTEM: Loan is fully REPAID. Initiating automated collateral release.");
-            // Automatically release collateral — no manual admin step required
-            collateralReleaseService.releaseCollateral(loan.getId(), "admin@linkbit.com");
+            chatService.sendSystemMessage(loan.getId(), "SYSTEM: Loan is fully REPAID. Mutual settlement confirmation required from both parties to close the loan and release collateral.");
+            // collateralReleaseService.releaseCollateral(loan.getId(), "admin@linkbit.com");
         }
     }
 

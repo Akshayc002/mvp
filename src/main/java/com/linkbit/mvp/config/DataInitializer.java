@@ -32,29 +32,8 @@ public class DataInitializer implements CommandLineRunner {
 
         log.info("Seeding sample data...");
 
-        // 1. Create Users
-        User lender = createUser("lender@linkbit.com", "LenderNode", "9988776655", KycStatus.VERIFIED, ActorType.USER);
-        User borrower = createUser("borrower@linkbit.com", "SatoshiBorrower", "8877665544", KycStatus.VERIFIED, ActorType.USER);
-        User admin = createUser("admin@linkbit.com", "SystemAdmin", "0000000000", KycStatus.VERIFIED, ActorType.ADMIN);
-        // System service account — required by CollateralReleaseService.releaseCollateral() on auto-release
-        createUser("system@linkbit.internal", "SystemService", "0000000001", KycStatus.VERIFIED, ActorType.SYSTEM);
-
-        // 2. Create Loan Offers
-        createOffer(lender, new BigDecimal("100000"), new BigDecimal("12.5"), 50, 90);
-        createOffer(lender, new BigDecimal("250000"), new BigDecimal("11.0"), 40, 180);
-        LoanOffer connectedOffer = createOffer(lender, new BigDecimal("50000"), new BigDecimal("15.0"), 60, 30);
-
-        // 3. Create an active Loan (Negotiation)
-        Loan loan = Loan.builder()
-                .offer(connectedOffer)
-                .lender(lender)
-                .borrower(borrower)
-                .principalAmount(connectedOffer.getLoanAmountInr())
-                .interestRate(connectedOffer.getInterestRate())
-                .tenureDays(connectedOffer.getTenureDays())
-                .status(LoanStatus.NEGOTIATING)
-                .build();
-        loanRepository.save(loan);
+        // 1. Create Admin User
+        createUser("admin@linkbit.com", "SystemAdmin", "0000000000", KycStatus.VERIFIED, ActorType.ADMIN);
 
         log.info("Sample data seeded successfully.");
     }

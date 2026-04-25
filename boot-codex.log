@@ -190,3 +190,181 @@
 2026-04-25T16:36:23.789+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
 2026-04-25T16:36:23.836+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : GET "/loans/267f660f-fb6a-48e3-ab1c-ec425408b8e8/details", parameters={}
 2026-04-25T16:36:23.849+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:45:47.820+05:30 DEBUG 27380 --- [LinkbitMVP] [io-8080-exec-10] o.s.web.servlet.DispatcherServlet        : POST "/auth/login", parameters={}
+2026-04-25T16:45:47.929+05:30 DEBUG 27380 --- [LinkbitMVP] [io-8080-exec-10] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:45:47.934+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : POST "/auth/register", parameters={}
+2026-04-25T16:45:47.940+05:30  WARN 27380 --- [LinkbitMVP] [nio-8080-exec-5] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [java.lang.IllegalStateException: Email already exists]
+2026-04-25T16:45:47.940+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 409 CONFLICT
+2026-04-25T16:45:47.957+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : POST "/auth/login", parameters={}
+2026-04-25T16:45:48.061+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:45:48.071+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : POST "/auth/kyc/submit", parameters={}
+2026-04-25T16:45:48.088+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:45:48.094+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : POST "/auth/register", parameters={}
+2026-04-25T16:45:48.099+05:30  WARN 27380 --- [LinkbitMVP] [nio-8080-exec-1] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [java.lang.IllegalStateException: Email already exists]
+2026-04-25T16:45:48.099+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 409 CONFLICT
+2026-04-25T16:45:48.105+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-9] o.s.web.servlet.DispatcherServlet        : POST "/auth/login", parameters={}
+2026-04-25T16:45:48.204+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:45:48.213+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : POST "/auth/kyc/submit", parameters={}
+2026-04-25T16:45:48.219+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:45:48.229+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : GET "/admin/kyc-applications", parameters={}
+2026-04-25T16:45:48.235+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:45:48.243+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : POST "/admin/users/1973e8ea-9224-42af-88e2-8987c389e5b8/kyc/approve", parameters={}
+2026-04-25T16:45:48.248+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:45:48.259+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : POST "/admin/users/c7cbfbf3-afa5-4cd6-b017-e76765574766/kyc/approve", parameters={}
+2026-04-25T16:45:48.265+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:45:48.269+05:30 DEBUG 27380 --- [LinkbitMVP] [io-8080-exec-10] o.s.web.servlet.DispatcherServlet        : POST "/auth/login", parameters={}
+2026-04-25T16:45:48.378+05:30 DEBUG 27380 --- [LinkbitMVP] [io-8080-exec-10] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:45:48.380+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : POST "/auth/login", parameters={}
+2026-04-25T16:45:48.497+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:45:48.504+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : POST "/offers", parameters={}
+2026-04-25T16:45:48.513+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 201 CREATED
+2026-04-25T16:45:48.524+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : GET "/offers", parameters={}
+2026-04-25T16:45:48.529+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:45:48.536+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : POST "/loans/connect", parameters={}
+2026-04-25T16:45:48.551+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 201 CREATED
+2026-04-25T16:45:48.560+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-9] o.s.web.servlet.DispatcherServlet        : POST "/loans/6a16749f-d33a-4aa6-8910-956484f8f719/finalize", parameters={}
+2026-04-25T16:45:48.573+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:45:48.581+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : POST "/loans/6a16749f-d33a-4aa6-8910-956484f8f719/finalize", parameters={}
+2026-04-25T16:45:48.588+05:30  INFO 27380 --- [LinkbitMVP] [nio-8080-exec-2] c.l.mvp.service.StateMachineService      : Loan 6a16749f-d33a-4aa6-8910-956484f8f719: NEGOTIATING -> AWAITING_SIGNATURES via FINALIZE_CONTRACT by LENDER
+2026-04-25T16:45:48.595+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:45:48.606+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : POST "/loans/6a16749f-d33a-4aa6-8910-956484f8f719/sign", parameters={}
+2026-04-25T16:45:48.613+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:45:48.624+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : POST "/loans/6a16749f-d33a-4aa6-8910-956484f8f719/sign", parameters={}
+2026-04-25T16:45:48.629+05:30  INFO 27380 --- [LinkbitMVP] [nio-8080-exec-8] c.l.mvp.service.StateMachineService      : Loan 6a16749f-d33a-4aa6-8910-956484f8f719: AWAITING_SIGNATURES -> AWAITING_FEE via SIGN_CONTRACT by LENDER
+2026-04-25T16:45:48.633+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:45:48.644+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : POST "/payments/fee/pay", parameters={}
+2026-04-25T16:45:48.657+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 201 CREATED
+2026-04-25T16:45:48.666+05:30 DEBUG 27380 --- [LinkbitMVP] [io-8080-exec-10] o.s.web.servlet.DispatcherServlet        : POST "/payments/fee/pay", parameters={}
+2026-04-25T16:45:48.675+05:30 DEBUG 27380 --- [LinkbitMVP] [io-8080-exec-10] o.s.web.servlet.DispatcherServlet        : Completed 201 CREATED
+2026-04-25T16:45:48.685+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : POST "/admin/fees/670a1516-57de-423d-a42e-d67d4a747eff/verify", parameters={}
+2026-04-25T16:45:48.696+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:45:48.703+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : POST "/admin/fees/c57f8000-521c-465b-a3fa-2eac49fbda1e/verify", parameters={}
+2026-04-25T16:45:48.708+05:30  INFO 27380 --- [LinkbitMVP] [nio-8080-exec-3] c.l.mvp.service.StateMachineService      : Loan 6a16749f-d33a-4aa6-8910-956484f8f719: AWAITING_FEE -> AWAITING_COLLATERAL via PAY_FEE by ADMIN
+2026-04-25T16:45:48.715+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:45:48.726+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : POST "/loans/6a16749f-d33a-4aa6-8910-956484f8f719/escrow/generate", parameters={}
+2026-04-25T16:45:48.737+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 201 CREATED
+2026-04-25T16:45:48.749+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : POST "/loans/6a16749f-d33a-4aa6-8910-956484f8f719/deposit", parameters={}
+2026-04-25T16:45:48.759+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 202 ACCEPTED
+2026-04-25T16:45:48.774+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-9] o.s.web.servlet.DispatcherServlet        : POST "/admin/loans/6a16749f-d33a-4aa6-8910-956484f8f719/verify-deposit", parameters={}
+2026-04-25T16:45:48.781+05:30  INFO 27380 --- [LinkbitMVP] [nio-8080-exec-9] c.l.mvp.service.StateMachineService      : Loan 6a16749f-d33a-4aa6-8910-956484f8f719: AWAITING_COLLATERAL -> COLLATERAL_LOCKED via DEPOSIT_COLLATERAL by SYSTEM
+2026-04-25T16:45:48.789+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:45:48.801+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : POST "/loans/6a16749f-d33a-4aa6-8910-956484f8f719/disburse", parameters={}
+2026-04-25T16:45:48.810+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 202 ACCEPTED
+2026-04-25T16:45:48.819+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : POST "/loans/6a16749f-d33a-4aa6-8910-956484f8f719/confirm-receipt", parameters={}
+2026-04-25T16:45:48.823+05:30  INFO 27380 --- [LinkbitMVP] [nio-8080-exec-6] c.l.mvp.service.StateMachineService      : Loan 6a16749f-d33a-4aa6-8910-956484f8f719: COLLATERAL_LOCKED -> ACTIVE via DISBURSE_FIAT by SYSTEM
+2026-04-25T16:45:48.831+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 202 ACCEPTED
+2026-04-25T16:45:48.840+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : GET "/loans/6a16749f-d33a-4aa6-8910-956484f8f719/details", parameters={}
+2026-04-25T16:45:48.850+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:45:48.858+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : POST "/loans/6a16749f-d33a-4aa6-8910-956484f8f719/repay", parameters={}
+2026-04-25T16:45:48.869+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 202 ACCEPTED
+2026-04-25T16:45:48.876+05:30 DEBUG 27380 --- [LinkbitMVP] [io-8080-exec-10] o.s.web.servlet.DispatcherServlet        : GET "/admin/repayments/pending", parameters={}
+2026-04-25T16:45:48.880+05:30 DEBUG 27380 --- [LinkbitMVP] [io-8080-exec-10] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:45:48.887+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : POST "/admin/repayments/b1317848-8ae0-41cc-a895-010dcf29e3fc/verify", parameters={}
+2026-04-25T16:45:48.895+05:30  INFO 27380 --- [LinkbitMVP] [nio-8080-exec-5] c.l.mvp.service.StateMachineService      : Loan 6a16749f-d33a-4aa6-8910-956484f8f719: ACTIVE -> REPAID via REPAY_LOAN by SYSTEM
+2026-04-25T16:45:48.902+05:30  INFO 27380 --- [LinkbitMVP] [nio-8080-exec-5] c.l.mvp.service.StateMachineService      : Loan 6a16749f-d33a-4aa6-8910-956484f8f719: REPAID -> CLOSED via RELEASE_COLLATERAL by SYSTEM
+2026-04-25T16:45:48.903+05:30  INFO 27380 --- [LinkbitMVP] [nio-8080-exec-5] c.l.m.service.CollateralReleaseService   : Collateral released for loan 6a16749f-d33a-4aa6-8910-956484f8f719. Amount: 0.00200000 BTC
+2026-04-25T16:45:48.908+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:45:48.925+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : GET "/loans/6a16749f-d33a-4aa6-8910-956484f8f719/details", parameters={}
+2026-04-25T16:45:48.968+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T17:05:46.510+05:30  INFO 27380 --- [LinkbitMVP] [MessageBroker-1] o.s.w.s.c.WebSocketMessageBrokerStats    : WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 18, active threads = 1, queued tasks = 3, completed tasks = 126]
+2026-04-25T17:13:52.602+05:30  INFO 27380 --- [LinkbitMVP] [   File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-04-25T17:13:52.615+05:30  INFO 27380 --- [LinkbitMVP] [       Thread-1] o.s.m.s.b.SimpleBrokerMessageHandler     : Stopping...
+2026-04-25T17:13:52.615+05:30  INFO 27380 --- [LinkbitMVP] [       Thread-1] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@7416abc2]]
+2026-04-25T17:13:52.616+05:30  INFO 27380 --- [LinkbitMVP] [       Thread-1] o.s.m.s.b.SimpleBrokerMessageHandler     : Stopped.
+2026-04-25T17:13:52.650+05:30  INFO 27380 --- [LinkbitMVP] [       Thread-1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-25T17:13:52.658+05:30  INFO 27380 --- [LinkbitMVP] [       Thread-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-04-25T17:13:52.663+05:30  INFO 27380 --- [LinkbitMVP] [       Thread-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.3)
+
+2026-04-25T17:13:52.900+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] com.linkbit.mvp.MvpApplication           : Starting MvpApplication using Java 21.0.9 with PID 27380 (C:\Users\LENOVO\OneDrive\Documents\LB\mvp\target\classes started by LENOVO in C:\Users\LENOVO\OneDrive\Documents\LB\mvp)
+2026-04-25T17:13:52.900+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] com.linkbit.mvp.MvpApplication           : The following 1 profile is active: "dev"
+2026-04-25T17:13:53.843+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-25T17:13:54.024+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 179 ms. Found 19 JPA repository interfaces.
+2026-04-25T17:13:54.508+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-04-25T17:13:54.515+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-25T17:13:54.517+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-25T17:13:54.580+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-04-25T17:13:54.580+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1674 ms
+2026-04-25T17:13:54.641+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2026-04-25T17:13:54.645+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection conn20: url=jdbc:h2:file:./data/linkbitdb user=SA
+2026-04-25T17:13:54.646+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2026-04-25T17:13:54.647+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:./data/linkbitdb'
+2026-04-25T17:13:54.765+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] org.flywaydb.core.FlywayExecutor         : Database: jdbc:h2:file:./data/linkbitdb (H2 2.2)
+2026-04-25T17:13:54.768+05:30  WARN 27380 --- [LinkbitMVP] [  restartedMain] o.f.c.internal.database.base.Database    : Flyway upgrade recommended: H2 2.2.224 is newer than this version of Flyway and support has not been tested. The latest supported version of H2 is 2.2.220.
+2026-04-25T17:13:54.813+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.f.core.internal.command.DbMigrate      : Current version of schema "PUBLIC": 29
+2026-04-25T17:13:54.815+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.f.core.internal.command.DbMigrate      : Schema "PUBLIC" is up to date. No migration necessary.
+2026-04-25T17:13:54.897+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-25T17:13:54.903+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-04-25T17:13:54.915+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-25T17:13:54.919+05:30  WARN 27380 --- [LinkbitMVP] [  restartedMain] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-25T17:13:55.991+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-25T17:13:56.010+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-25T17:13:58.430+05:30  WARN 27380 --- [LinkbitMVP] [  restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-25T17:13:58.781+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@799ba91, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@e322d6d, org.springframework.security.web.context.SecurityContextHolderFilter@48f47ff, org.springframework.security.web.header.HeaderWriterFilter@6aa2d3f6, org.springframework.web.filter.CorsFilter@57325389, org.springframework.security.web.authentication.logout.LogoutFilter@768ff5aa, com.linkbit.mvp.config.JwtAuthenticationFilter@2b97cc79, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4ca57493, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@30e43392, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@51cc3e68, org.springframework.security.web.session.SessionManagementFilter@1d44bb3f, org.springframework.security.web.access.ExceptionTranslationFilter@356fa1bc, org.springframework.security.web.access.intercept.AuthorizationFilter@80df18]
+2026-04-25T17:13:59.270+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-04-25T17:13:59.315+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-04-25T17:13:59.316+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.s.m.s.b.SimpleBrokerMessageHandler     : Starting...
+2026-04-25T17:13:59.317+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@45576c78]]
+2026-04-25T17:13:59.317+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.s.m.s.b.SimpleBrokerMessageHandler     : Started.
+2026-04-25T17:13:59.329+05:30  INFO 27380 --- [LinkbitMVP] [MessageBroker-2] c.linkbit.mvp.service.LoanTimeoutWorker  : Starting stuck loan timeout check...
+2026-04-25T17:13:59.330+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] com.linkbit.mvp.MvpApplication           : Started MvpApplication in 6.529 seconds (process running for 2361.415)
+2026-04-25T17:13:59.343+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] com.linkbit.mvp.config.DataInitializer   : Database already seeded. Skipping data initialization.
+2026-04-25T17:13:59.355+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-04-25T17:14:59.313+05:30  INFO 27380 --- [LinkbitMVP] [MessageBroker-5] o.s.w.s.c.WebSocketMessageBrokerStats    : WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 9, active threads = 1, queued tasks = 3, completed tasks = 5]
+2026-04-25T17:17:50.360+05:30  INFO 27380 --- [LinkbitMVP] [   File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-04-25T17:17:50.365+05:30  INFO 27380 --- [LinkbitMVP] [      Thread-10] o.s.m.s.b.SimpleBrokerMessageHandler     : Stopping...
+2026-04-25T17:17:50.365+05:30  INFO 27380 --- [LinkbitMVP] [      Thread-10] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@45576c78]]
+2026-04-25T17:17:50.365+05:30  INFO 27380 --- [LinkbitMVP] [      Thread-10] o.s.m.s.b.SimpleBrokerMessageHandler     : Stopped.
+2026-04-25T17:17:50.384+05:30  INFO 27380 --- [LinkbitMVP] [      Thread-10] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-25T17:17:50.386+05:30  INFO 27380 --- [LinkbitMVP] [      Thread-10] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2026-04-25T17:17:50.388+05:30  INFO 27380 --- [LinkbitMVP] [      Thread-10] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.3)
+
+2026-04-25T17:17:50.521+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] com.linkbit.mvp.MvpApplication           : Starting MvpApplication using Java 21.0.9 with PID 27380 (C:\Users\LENOVO\OneDrive\Documents\LB\mvp\target\classes started by LENOVO in C:\Users\LENOVO\OneDrive\Documents\LB\mvp)
+2026-04-25T17:17:50.522+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] com.linkbit.mvp.MvpApplication           : The following 1 profile is active: "dev"
+2026-04-25T17:17:51.322+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-25T17:17:51.468+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 144 ms. Found 19 JPA repository interfaces.
+2026-04-25T17:17:51.853+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-04-25T17:17:51.855+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-25T17:17:51.855+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-25T17:17:51.905+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-04-25T17:17:51.905+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1378 ms
+2026-04-25T17:17:51.965+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+2026-04-25T17:17:51.971+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-3 - Added connection conn30: url=jdbc:h2:file:./data/linkbitdb user=SA
+2026-04-25T17:17:51.972+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+2026-04-25T17:17:51.972+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:./data/linkbitdb'
+2026-04-25T17:17:52.070+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] org.flywaydb.core.FlywayExecutor         : Database: jdbc:h2:file:./data/linkbitdb (H2 2.2)
+2026-04-25T17:17:52.072+05:30  WARN 27380 --- [LinkbitMVP] [  restartedMain] o.f.c.internal.database.base.Database    : Flyway upgrade recommended: H2 2.2.224 is newer than this version of Flyway and support has not been tested. The latest supported version of H2 is 2.2.220.
+2026-04-25T17:17:52.116+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.f.core.internal.command.DbMigrate      : Current version of schema "PUBLIC": 29
+2026-04-25T17:17:52.117+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.f.core.internal.command.DbMigrate      : Schema "PUBLIC" is up to date. No migration necessary.
+2026-04-25T17:17:52.179+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-25T17:17:52.184+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-04-25T17:17:52.197+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-25T17:17:52.199+05:30  WARN 27380 --- [LinkbitMVP] [  restartedMain] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-25T17:17:53.061+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-25T17:17:53.069+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-25T17:17:55.400+05:30  WARN 27380 --- [LinkbitMVP] [  restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-25T17:17:55.731+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@708ab781, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@45eeaf76, org.springframework.security.web.context.SecurityContextHolderFilter@28f70598, org.springframework.security.web.header.HeaderWriterFilter@19ea281a, org.springframework.web.filter.CorsFilter@5f6d7403, org.springframework.security.web.authentication.logout.LogoutFilter@572c4fa1, com.linkbit.mvp.config.JwtAuthenticationFilter@6965651a, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5b6b01bf, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@13894830, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@147d6c55, org.springframework.security.web.session.SessionManagementFilter@7f7579f8, org.springframework.security.web.access.ExceptionTranslationFilter@3dd9c6c7, org.springframework.security.web.access.intercept.AuthorizationFilter@dd8c063]
+2026-04-25T17:17:56.178+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-04-25T17:17:56.210+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-04-25T17:17:56.212+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.s.m.s.b.SimpleBrokerMessageHandler     : Starting...
+2026-04-25T17:17:56.212+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@7eb0807e]]
+2026-04-25T17:17:56.213+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.s.m.s.b.SimpleBrokerMessageHandler     : Started.
+2026-04-25T17:17:56.228+05:30  INFO 27380 --- [LinkbitMVP] [MessageBroker-2] c.linkbit.mvp.service.LoanTimeoutWorker  : Starting stuck loan timeout check...
+2026-04-25T17:17:56.229+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] com.linkbit.mvp.MvpApplication           : Started MvpApplication in 5.767 seconds (process running for 2598.314)
+2026-04-25T17:17:56.237+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] com.linkbit.mvp.config.DataInitializer   : Database already seeded. Skipping data initialization.
+2026-04-25T17:17:56.240+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged

@@ -68,6 +68,14 @@ export const RepaymentPage = () => {
     }
   });
 
+  // 4. Confirm Settlement Mutation
+  const confirmSettlementMutation = useMutation({
+    mutationFn: () => api.post(`/loans/${loanId}/settlement/confirm`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['loan', loanId] });
+    }
+  });
+
   if (isLoanLoading) {
     return (
       <div className="flex flex-col items-center justify-center p-24 space-y-4">
@@ -158,6 +166,54 @@ export const RepaymentPage = () => {
           {loan.status === 'EXTENSION_REQUESTED' && loan.role === 'LENDER' && (
             <div className="mt-6 animate-in slide-in-from-bottom-2 duration-500">
               <ExtensionReviewAction loanId={loanId!} pendingExtension={loan.pendingExtension} />
+            </div>
+          )}
+
+          {loan.status === 'REPAID' && (
+            <div className="mt-6 animate-in zoom-in-95 duration-500">
+              <Card className="bg-amber-50 border-amber-200 rounded-[2rem] overflow-hidden shadow-lg border-2">
+                <CardHeader className="bg-amber-100/50 p-8 border-b border-amber-200">
+                  <div className="flex items-center gap-4">
+                    <div className="bg-amber-500 p-3 rounded-2xl shadow-lg">
+                      <ShieldCheck className="h-6 w-6 text-white" />
+                    </div>
+                    <div>
+                      <CardTitle className="text-xl font-black text-amber-900 uppercase tracking-tight">Mutual Settlement Confirmation</CardTitle>
+                      <p className="text-[10px] text-amber-700 font-black uppercase tracking-widest mt-1">Both parties must confirm to release collateral</p>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent className="p-8 space-y-6">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className={`p-4 rounded-2xl flex flex-col items-center justify-center gap-2 border-2 transition-all ${
+                      loan.borrowerSettlementConfirmed ? 'bg-green-100 border-green-200 text-green-700' : 'bg-white border-slate-100 text-slate-400 opacity-60'
+                    }`}>
+                      <CheckCircle2 className={`h-6 w-6 ${loan.borrowerSettlementConfirmed ? 'text-green-600' : 'text-slate-200'}`} />
+                      <span className="text-[10px] font-black uppercase tracking-widest">Borrower Confirmed</span>
+                    </div>
+                    <div className={`p-4 rounded-2xl flex flex-col items-center justify-center gap-2 border-2 transition-all ${
+                      loan.lenderSettlementConfirmed ? 'bg-green-100 border-green-200 text-green-700' : 'bg-white border-slate-100 text-slate-400 opacity-60'
+                    }`}>
+                      <CheckCircle2 className={`h-6 w-6 ${loan.lenderSettlementConfirmed ? 'text-green-600' : 'text-slate-200'}`} />
+                      <span className="text-[10px] font-black uppercase tracking-widest">Lender Confirmed</span>
+                    </div>
+                  </div>
+
+                  <Button 
+                    className="w-full bg-amber-600 hover:bg-amber-700 text-white h-16 rounded-2xl font-black text-base shadow-xl transition-all active:scale-95 disabled:opacity-50 uppercase tracking-widest"
+                    disabled={
+                      (loan.role === 'BORROWER' && loan.borrowerSettlementConfirmed) || 
+                      (loan.role === 'LENDER' && loan.lenderSettlementConfirmed) ||
+                      confirmSettlementMutation.isPending
+                    }
+                    onClick={() => confirmSettlementMutation.mutate()}
+                  >
+                    {confirmSettlementMutation.isPending ? 'CONFIRMING...' : 
+                      ((loan.role === 'BORROWER' && loan.borrowerSettlementConfirmed) || (loan.role === 'LENDER' && loan.lenderSettlementConfirmed)) 
+                      ? 'SETTLEMENT CONFIRMED' : 'CONFIRM SETTLEMENT'}
+                  </Button>
+                </CardContent>
+              </Card>
             </div>
           )}
 
