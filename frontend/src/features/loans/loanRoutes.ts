@@ -8,7 +8,8 @@ export const getLoanRoute = (loanId: string, status: string): string => {
     case 'DISPUTE_OPEN': return `/loans/${loanId}/disbursement`;
     case 'ACTIVE':
     case 'MARGIN_CALL':
-    case 'LIQUIDATION_ELIGIBLE': return `/loans/${loanId}/repay`;
+    case 'LIQUIDATION_ELIGIBLE':
+    case 'EXTENSION_REQUESTED': return `/loans/${loanId}/repay`;
     case 'REPAID':
     case 'CLOSED': return `/loans/${loanId}/closure`;
     default: return `/loans/${loanId}`;
@@ -27,6 +28,7 @@ export const getLoanStatusLabel = (status: string): string => {
     case 'CLOSED': return 'View';
     case 'MARGIN_CALL': return 'Take Action';
     case 'LIQUIDATION_ELIGIBLE': return 'Take Action';
+    case 'EXTENSION_REQUESTED': return 'Review Extension';
     default: return 'View';
   }
 };
@@ -44,6 +46,7 @@ export const getActionLabel = (status: string): string => {
     case 'CLOSED': return 'View';
     case 'MARGIN_CALL': return 'Take Action';
     case 'LIQUIDATION_ELIGIBLE': return 'Take Action';
+    case 'EXTENSION_REQUESTED': return 'Review';
     default: return 'View';
   }
 };

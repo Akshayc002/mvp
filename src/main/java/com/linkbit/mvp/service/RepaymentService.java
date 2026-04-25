@@ -137,7 +137,7 @@ public class RepaymentService {
             loanRepository.save(loan);
             chatService.sendSystemMessage(loan.getId(), "SYSTEM: Loan is fully REPAID. Initiating automated collateral release.");
             // Automatically release collateral — no manual admin step required
-            collateralReleaseService.releaseCollateral(loan.getId(), "system@linkbit.internal");
+            collateralReleaseService.releaseCollateral(loan.getId(), "admin@linkbit.com");
         }
     }
 
@@ -227,6 +227,7 @@ public class RepaymentService {
         return repaymentRepository.findByStatusOrderByCreatedAtDesc(RepaymentStatus.PENDING).stream()
                 .map(r -> com.linkbit.mvp.dto.PendingRepaymentResponse.builder()
                         .repaymentId(r.getId())
+                        .loanId(r.getLoan().getId())
                         .amountInr(r.getAmountInr())
                         .transactionReference(r.getTransactionReference())
                         .proofUrl(r.getProofUrl())

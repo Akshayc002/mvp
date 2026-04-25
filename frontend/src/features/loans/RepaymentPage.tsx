@@ -19,10 +19,13 @@ import {
   History,
   FileSearch,
   Receipt,
-  Image as ImageIcon
+  ImageIcon,
+  CalendarClock
 } from 'lucide-react';
 import { useState } from 'react';
 import { format } from 'date-fns';
+import { ExtensionRequestModal } from './components/ExtensionRequestModal';
+import { ExtensionReviewAction } from './components/ExtensionReviewAction';
 
 export const RepaymentPage = () => {
   const { id: loanId } = useParams();
@@ -32,6 +35,7 @@ export const RepaymentPage = () => {
   const [txRef, setTxRef] = useState('');
   const [proofUrl, setProofUrl] = useState('');
   const [activeTab, setActiveTab] = useState('submissions');
+  const [isExtensionModalOpen, setIsExtensionModalOpen] = useState(false);
 
   // 1. Fetch Loan Details (Balances & Submissions)
   const { data: loan, isLoading: isLoanLoading } = useQuery({
@@ -150,6 +154,25 @@ export const RepaymentPage = () => {
                 </CardContent>
              </Card>
           </div>
+
+          {loan.status === 'EXTENSION_REQUESTED' && loan.role === 'LENDER' && (
+            <div className="mt-6 animate-in slide-in-from-bottom-2 duration-500">
+              <ExtensionReviewAction loanId={loanId!} />
+            </div>
+          )}
+
+          {loan.status === 'ACTIVE' && loan.role === 'BORROWER' && (
+            <div className="mt-6">
+              <Button 
+                variant="outline" 
+                className="w-full border-dashed border-indigo-200 text-indigo-600 hover:bg-indigo-50 h-12 rounded-2xl font-black text-[10px] uppercase tracking-widest"
+                onClick={() => setIsExtensionModalOpen(true)}
+              >
+                <CalendarClock className="h-4 w-4 mr-2" />
+                Request Loan Extension
+              </Button>
+            </div>
+          )}
         </div>
 
         {/* REPAYMENT FORM */}
@@ -370,6 +393,13 @@ export const RepaymentPage = () => {
             </Card>
         </div>
 
+        <ExtensionRequestModal 
+          loanId={loanId!}
+          isOpen={isExtensionModalOpen}
+          onClose={() => setIsExtensionModalOpen(false)}
+          currentTenureDays={loan.tenureDays}
+          currentInterestRate={loan.interestRate}
+        />
       </div>
     </div>
   );

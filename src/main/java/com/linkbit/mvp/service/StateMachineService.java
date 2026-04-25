@@ -77,6 +77,11 @@ public class StateMachineService {
         
         // Collateral Release can only happen from REPAID state
         addTransition(LoanStatus.REPAID, LoanAction.RELEASE_COLLATERAL, LoanStatus.CLOSED);
+
+        // Extensions
+        addTransition(LoanStatus.ACTIVE, LoanAction.REQUEST_EXTENSION, LoanStatus.EXTENSION_REQUESTED);
+        addTransition(LoanStatus.EXTENSION_REQUESTED, LoanAction.APPROVE_EXTENSION, LoanStatus.ACTIVE);
+        addTransition(LoanStatus.EXTENSION_REQUESTED, LoanAction.REJECT_EXTENSION, LoanStatus.ACTIVE);
     }
 
     private void addTransition(LoanStatus from, LoanAction action, LoanStatus to) {
@@ -245,6 +250,7 @@ public class StateMachineService {
             case MARGIN_CALL -> "\u26a0\ufe0f Margin Call Triggered";
             case LIQUIDATION_ELIGIBLE -> "\u26a0\ufe0f Eligible for Liquidation";
             case LIQUIDATED -> "Loan Liquidated";
+            case EXTENSION_REQUESTED -> "Extension Requested";
         };
     }
 }

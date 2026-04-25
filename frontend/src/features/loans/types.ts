@@ -13,7 +13,8 @@ export type LoanStatus =
   | 'LIQUIDATED'
   | 'REPAID'
   | 'MARGIN_CALL'
-  | 'LIQUIDATION_ELIGIBLE';
+  | 'LIQUIDATION_ELIGIBLE'
+  | 'EXTENSION_REQUESTED';
 
 export type RepaymentType = 'BULLET' | 'EMI' | 'FLEXIBLE';
 

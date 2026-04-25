@@ -12,6 +12,7 @@ import java.util.UUID;
 @Builder
 public class PendingRepaymentResponse {
     private UUID repaymentId;
+    private UUID loanId;
     private BigDecimal amountInr;
     private String transactionReference;
     private String proofUrl;

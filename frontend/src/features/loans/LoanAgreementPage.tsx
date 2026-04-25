@@ -59,9 +59,6 @@ export const LoanAgreementPage = () => {
 
   const signMutation = useMutation({
     mutationFn: () => {
-      if (!window.confirm('By signing this agreement, you legally commit to the terms specified. Continuance will apply your cryptographic signature.')) {
-        throw new Error('Cancelled');
-      }
       return api.post(`/loans/${loanId}/sign`, { signature_string: `SIGNED_BY_${user?.userId}_${Date.now()}` });
     },
     onSuccess: () => {

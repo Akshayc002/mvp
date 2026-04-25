@@ -72,7 +72,7 @@ public class CollateralReleaseService {
         escrow.setCurrentBalanceSats(0L);
         escrowAccountRepository.save(escrow);
 
-        createLedgerEntry(loan, LedgerEntryType.COLLATERAL_RELEASED, BigDecimal.ZERO, "Collateral Released: " + releaseAmount + " BTC");
+        createLedgerEntry(loan, LedgerEntryType.COLLATERAL_RELEASE, BigDecimal.ZERO, "Collateral Released: " + releaseAmount + " BTC");
         createLedgerEntry(loan, LedgerEntryType.ESCROW_CLOSED, BigDecimal.ZERO, "Escrow Account Closed");
         loanRepository.save(loan);
 

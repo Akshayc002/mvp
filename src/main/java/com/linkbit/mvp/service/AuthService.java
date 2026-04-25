@@ -32,6 +32,12 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final LoginAttemptService loginAttemptService;
 
+    public User getCurrentUser() {
+        String email = org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication().getName();
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    }
+
     @Transactional
     public void register(RegisterRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {
