@@ -51,7 +51,7 @@ const getStatusVariant = (status: string): BadgeProps['variant'] => {
   }
 };
 
-import { getLoanRoute, getLoanStatusLabel, getActionLabel } from '@/features/loans/loanRoutes';
+import { getLoanRoute, getActionLabel } from '@/features/loans/loanRoutes';
 
 export const DashboardPage = () => {
   const navigate = useNavigate();

@@ -150,9 +150,12 @@ class NegotiationControllerTest {
                 .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk());
 
-        // Then finalize
+        // Then both parties finalize
         mockMvc.perform(post("/loans/" + loan.getId() + "/finalize")
                 .header("Authorization", lenderToken))
+                .andExpect(status().isOk());
+        mockMvc.perform(post("/loans/" + loan.getId() + "/finalize")
+                .header("Authorization", borrowerToken))
                 .andExpect(status().isOk());
 
         Loan updatedLoan = loanRepository.findById(loan.getId()).orElseThrow();

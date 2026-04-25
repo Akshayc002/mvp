@@ -63,11 +63,40 @@ class LoanExtensionServiceTest {
         dto.setReason("Need more time");
 
         when(loanRepository.findById(loanId)).thenReturn(Optional.of(loan));
+        when(extensionRequestRepository.existsByLoanIdAndStatus(loanId, LoanExtensionRequest.ExtensionStatus.PENDING))
+                .thenReturn(false);
 
         loanExtensionService.requestExtension(loanId, dto, borrower);
 
         verify(extensionRequestRepository, times(1)).save(any(LoanExtensionRequest.class));
         verify(stateMachineService, times(1)).transition(loan, LoanAction.REQUEST_EXTENSION, ActorType.BORROWER);
+    }
+
+    @Test
+    void requestExtension_Failure_NotActive() {
+        loan.setStatus(LoanStatus.REPAID);
+        ExtensionRequestDTO dto = new ExtensionRequestDTO();
+        dto.setNewTenureDays(60);
+
+        when(loanRepository.findById(loanId)).thenReturn(Optional.of(loan));
+
+        assertThrows(IllegalStateException.class, () ->
+                loanExtensionService.requestExtension(loanId, dto, borrower)
+        );
+    }
+
+    @Test
+    void requestExtension_Failure_DuplicatePendingRequest() {
+        ExtensionRequestDTO dto = new ExtensionRequestDTO();
+        dto.setNewTenureDays(60);
+
+        when(loanRepository.findById(loanId)).thenReturn(Optional.of(loan));
+        when(extensionRequestRepository.existsByLoanIdAndStatus(loanId, LoanExtensionRequest.ExtensionStatus.PENDING))
+                .thenReturn(true);
+
+        assertThrows(IllegalStateException.class, () ->
+                loanExtensionService.requestExtension(loanId, dto, borrower)
+        );
     }
 
     @Test

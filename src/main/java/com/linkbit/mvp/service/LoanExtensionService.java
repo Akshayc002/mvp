@@ -26,6 +26,12 @@ public class LoanExtensionService {
         if (!loan.getBorrower().getId().equals(borrower.getId())) {
             throw new IllegalStateException("Only the borrower can request an extension");
         }
+        if (loan.getStatus() != LoanStatus.ACTIVE) {
+            throw new IllegalStateException("Extensions can only be requested for ACTIVE loans");
+        }
+        if (extensionRequestRepository.existsByLoanIdAndStatus(loanId, LoanExtensionRequest.ExtensionStatus.PENDING)) {
+            throw new IllegalStateException("A pending extension request already exists for this loan");
+        }
 
         LoanExtensionRequest request = LoanExtensionRequest.builder()
                 .loan(loan)

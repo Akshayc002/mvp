@@ -14,8 +14,7 @@ import {
 
 // ─── Admin Dashboard Page ────────────────────────────────────────────────────
 export const AdminDashboardPage = () => {
-  const navigate = useNavigate();
-  const user = useAuthStore((state: any) => state.user);
+  const user = useAuthStore((state) => state.user);
   const queryClient = useQueryClient();
   const [activeTab, setActiveTab] = useState<'kyc' | 'repayments' | 'fees' | 'deposits' | 'risk'>('kyc');
 

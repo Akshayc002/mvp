@@ -31,6 +31,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class EscrowService {
+    private static final BigDecimal SATS_PER_BTC = new BigDecimal("100000000");
 
     private final LoanRepository loanRepository;
     private final EscrowAccountRepository escrowAccountRepository;
@@ -92,8 +93,7 @@ public class EscrowService {
             throw new RuntimeException("Escrow account not generated for this loan yet");
         }
 
-        // Convert BTC to Sats (1 BTC = 100,000,000 Sats)
-        long sats = amountBtc.multiply(new BigDecimal("100000000")).longValue();
+        long sats = toSats(amountBtc);
         String fakeTxHash = "txmock" + UUID.randomUUID().toString().substring(0, 12);
 
         BitcoinTransaction tx = BitcoinTransaction.builder()
@@ -166,7 +166,7 @@ public class EscrowService {
             throw new RuntimeException("Escrow account not generated for this loan yet");
         }
 
-        long sats = amountBtc.multiply(new BigDecimal("100000000")).longValue();
+        long sats = toSats(amountBtc);
         String fakeTxHash = "txmock" + UUID.randomUUID().toString().substring(0, 12);
 
         BitcoinTransaction tx = BitcoinTransaction.builder()
@@ -243,6 +243,21 @@ public class EscrowService {
             bitcoinTransactionRepository.save(tx);
         }
         return newlyAddedSats;
+    }
+
+    private long toSats(BigDecimal amountBtc) {
+        if (amountBtc == null || amountBtc.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Bitcoin amount must be positive");
+        }
+        BigDecimal sats = amountBtc.multiply(SATS_PER_BTC).stripTrailingZeros();
+        if (sats.scale() > 0) {
+            throw new IllegalArgumentException("Bitcoin amount cannot be more precise than 1 satoshi");
+        }
+        try {
+            return sats.longValueExact();
+        } catch (ArithmeticException ex) {
+            throw new IllegalArgumentException("Bitcoin amount is too large");
+        }
     }
 
     private boolean validateCollateralAmount(Loan loan, long currentSats) {

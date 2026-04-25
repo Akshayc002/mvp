@@ -99,6 +99,14 @@ public class RepaymentControllerTest {
                         .role(ActorType.ADMIN)
                         .build()));
 
+        userRepository.findByEmail("admin@linkbit.com").orElseGet(() ->
+                userRepository.save(User.builder()
+                        .email("admin@linkbit.com")
+                        .password("password")
+                        .kycStatus(KycStatus.VERIFIED)
+                        .role(ActorType.ADMIN)
+                        .build()));
+
         userRepository.findByEmail("system@linkbit.internal").orElseGet(() ->
                 userRepository.save(User.builder()
                         .email("system@linkbit.internal")

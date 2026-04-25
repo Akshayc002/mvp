@@ -171,6 +171,36 @@ public class EscrowControllerTest {
     }
 
     @Test
+    void shouldRejectNegativeDeposit() throws Exception {
+        mockMvc.perform(post("/loans/" + loan.getId() + "/escrow/generate")
+                .header("Authorization", borrowerToken));
+
+        DepositRequest request = new DepositRequest();
+        request.setAmountBtc(new BigDecimal("-0.01"));
+
+        mockMvc.perform(post("/loans/" + loan.getId() + "/deposit")
+                .header("Authorization", borrowerToken)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void shouldRejectSubSatoshiDepositPrecision() throws Exception {
+        mockMvc.perform(post("/loans/" + loan.getId() + "/escrow/generate")
+                .header("Authorization", borrowerToken));
+
+        DepositRequest request = new DepositRequest();
+        request.setAmountBtc(new BigDecimal("0.000000001"));
+
+        mockMvc.perform(post("/loans/" + loan.getId() + "/deposit")
+                .header("Authorization", borrowerToken)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     void shouldVerifyCollateralLtvAndLock() throws Exception {
         // Setup mock price: 1 BTC = ₹5,500,000
         Mockito.when(btcPriceService.getCurrentBtcPrice()).thenReturn(new BigDecimal("5500000.00"));
@@ -254,6 +284,25 @@ public class EscrowControllerTest {
         assert transactions.get(0).getAmountSats() == 1_500_000L;
         assert transactions.get(0).getType() == BitcoinTransactionType.COLLATERAL_TOPUP;
         assert transactions.get(0).getConfirmations() == 0;
+    }
+
+    @Test
+    void shouldRejectSubSatoshiTopupPrecision() throws Exception {
+        mockMvc.perform(post("/loans/" + loan.getId() + "/escrow/generate")
+                .header("Authorization", borrowerToken))
+                .andExpect(status().isCreated());
+
+        loan.setStatus(LoanStatus.MARGIN_CALL);
+        loanRepository.save(loan);
+
+        TopupRequest request = new TopupRequest();
+        request.setAmountBtc(new BigDecimal("0.000000001"));
+
+        mockMvc.perform(post("/loans/" + loan.getId() + "/topup-collateral")
+                .header("Authorization", borrowerToken)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest());
     }
 
     @Test

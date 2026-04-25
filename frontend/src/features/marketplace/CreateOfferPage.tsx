@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@/store/authStore';
 import api from '@/services/api';
+import { getApiErrorMessage } from '@/services/apiError';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,7 +11,6 @@ import { Loader2 } from 'lucide-react';
 
 export const CreateOfferPage = () => {
   const navigate = useNavigate();
-  const { user } = useAuthStore();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [formData, setFormData] = useState({
@@ -51,8 +51,8 @@ export const CreateOfferPage = () => {
         tenure_days: Number(formData.tenureDays)
       });
       navigate('/marketplace');
-    } catch (err: any) {
-      setError(err.response?.data?.message || err.message || 'Failed to create offer');
+    } catch (err: unknown) {
+      setError(getApiErrorMessage(err, 'Failed to create offer'));
     } finally {
       setLoading(false);
     }

@@ -4,6 +4,7 @@ import com.linkbit.mvp.domain.User;
 import com.linkbit.mvp.dto.ExtensionRequestDTO;
 import com.linkbit.mvp.service.AuthService;
 import com.linkbit.mvp.service.LoanExtensionService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/loans")
+@RequestMapping("/loans")
 @RequiredArgsConstructor
 public class LoanExtensionController {
 
@@ -21,7 +22,7 @@ public class LoanExtensionController {
     @PostMapping("/{loanId}/extension")
     public ResponseEntity<Void> requestExtension(
             @PathVariable UUID loanId,
-            @RequestBody ExtensionRequestDTO dto) {
+            @Valid @RequestBody ExtensionRequestDTO dto) {
         User currentUser = authService.getCurrentUser();
         extensionService.requestExtension(loanId, dto, currentUser);
         return ResponseEntity.ok().build();

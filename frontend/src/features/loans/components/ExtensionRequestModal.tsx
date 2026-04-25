@@ -13,6 +13,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '@/services/api';
+import { getApiErrorMessage } from '@/services/apiError';
 import { toast } from 'sonner';
 import { Loader2 } from 'lucide-react';
 
@@ -49,8 +50,8 @@ export const ExtensionRequestModal: React.FC<ExtensionRequestModalProps> = ({
       queryClient.invalidateQueries({ queryKey: ['loan-details', loanId] });
       onClose();
     },
-    onError: (error: any) => {
-      toast.error(error.response?.data?.message || 'Failed to send request');
+    onError: (error: unknown) => {
+      toast.error(getApiErrorMessage(error, 'Failed to send request'));
     },
   });
 

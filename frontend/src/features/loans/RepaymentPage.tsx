@@ -157,7 +157,7 @@ export const RepaymentPage = () => {
 
           {loan.status === 'EXTENSION_REQUESTED' && loan.role === 'LENDER' && (
             <div className="mt-6 animate-in slide-in-from-bottom-2 duration-500">
-              <ExtensionReviewAction loanId={loanId!} />
+              <ExtensionReviewAction loanId={loanId!} pendingExtension={loan.pendingExtension} />
             </div>
           )}
 

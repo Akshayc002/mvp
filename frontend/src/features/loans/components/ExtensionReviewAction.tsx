@@ -3,14 +3,20 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '@/services/api';
+import { getApiErrorMessage } from '@/services/apiError';
 import { toast } from 'sonner';
 import { Check, X, Loader2, CalendarClock } from 'lucide-react';
 
 interface ExtensionReviewActionProps {
   loanId: string;
+  pendingExtension?: {
+    newTenureDays: number;
+    newInterestRate?: number | null;
+    reason?: string | null;
+  } | null;
 }
 
-export const ExtensionReviewAction: React.FC<ExtensionReviewActionProps> = ({ loanId }) => {
+export const ExtensionReviewAction: React.FC<ExtensionReviewActionProps> = ({ loanId, pendingExtension }) => {
   const queryClient = useQueryClient();
 
   const respondMutation = useMutation({
@@ -22,8 +28,8 @@ export const ExtensionReviewAction: React.FC<ExtensionReviewActionProps> = ({ lo
       toast.success(approve ? 'Extension approved' : 'Extension rejected');
       queryClient.invalidateQueries({ queryKey: ['loan-details', loanId] });
     },
-    onError: (error: any) => {
-      toast.error(error.response?.data?.message || 'Failed to respond');
+    onError: (error: unknown) => {
+      toast.error(getApiErrorMessage(error, 'Failed to respond'));
     },
   });
 
@@ -39,6 +45,23 @@ export const ExtensionReviewAction: React.FC<ExtensionReviewActionProps> = ({ lo
         </CardDescription>
       </CardHeader>
       <CardContent>
+        {pendingExtension && (
+          <div className="mb-4 grid gap-2 rounded-md border border-indigo-100 bg-white p-3 text-sm text-slate-700">
+            <div className="flex justify-between gap-4">
+              <span className="font-medium">Proposed tenure</span>
+              <span>{pendingExtension.newTenureDays} days</span>
+            </div>
+            {pendingExtension.newInterestRate != null && (
+              <div className="flex justify-between gap-4">
+                <span className="font-medium">Proposed interest</span>
+                <span>{pendingExtension.newInterestRate}%</span>
+              </div>
+            )}
+            {pendingExtension.reason && (
+              <p className="text-xs text-slate-500">{pendingExtension.reason}</p>
+            )}
+          </div>
+        )}
         <div className="flex gap-3">
           <Button 
             className="flex-1 bg-emerald-600 hover:bg-emerald-700" 

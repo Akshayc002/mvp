@@ -7,4 +7,5 @@ import java.util.UUID;
 
 public interface LoanExtensionRequestRepository extends JpaRepository<LoanExtensionRequest, UUID> {
     Optional<LoanExtensionRequest> findFirstByLoanIdAndStatusOrderByCreatedAtDesc(UUID loanId, LoanExtensionRequest.ExtensionStatus status);
+    boolean existsByLoanIdAndStatus(UUID loanId, LoanExtensionRequest.ExtensionStatus status);
 }

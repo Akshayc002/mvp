@@ -131,13 +131,13 @@ public class PaymentControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.amount_inr").value(2000.0)) // 2% of 100,000
+                .andExpect(jsonPath("$.amount_inr").value(1000.0)) // 1% of 100,000 per party
                 .andExpect(jsonPath("$.status").value("PENDING"))
                 .andExpect(jsonPath("$.fee_id").exists());
     }
 
     @Test
-    void shouldFailInitiateFeePaymentIfNotBorrower() throws Exception {
+    void shouldInitiateLenderFeePaymentSuccessfully() throws Exception {
         PayFeeRequest request = new PayFeeRequest();
         request.setLoanId(loan.getId());
 
@@ -145,26 +145,42 @@ public class PaymentControllerTest {
                 .header("Authorization", lenderToken)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isInternalServerError());
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.amount_inr").value(1000.0))
+                .andExpect(jsonPath("$.status").value("PENDING"))
+                .andExpect(jsonPath("$.fee_id").exists());
     }
 
     @Test
     void shouldVerifyPaymentAndTransitionStatus() throws Exception {
-        // Act: Initiate payment
         PayFeeRequest request = new PayFeeRequest();
         request.setLoanId(loan.getId());
 
-        String responseJson = mockMvc.perform(post("/payments/fee/pay")
+        String borrowerResponseJson = mockMvc.perform(post("/payments/fee/pay")
                 .header("Authorization", borrowerToken)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated())
                 .andReturn().getResponse().getContentAsString();
 
-        String feeId = objectMapper.readTree(responseJson).get("fee_id").asText();
+        String lenderResponseJson = mockMvc.perform(post("/payments/fee/pay")
+                .header("Authorization", lenderToken)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isCreated())
+                .andReturn().getResponse().getContentAsString();
 
-        // Act: Verify payment
-        mockMvc.perform(post("/admin/payments/" + feeId + "/verify")
+        String borrowerFeeId = objectMapper.readTree(borrowerResponseJson).get("fee_id").asText();
+        String lenderFeeId = objectMapper.readTree(lenderResponseJson).get("fee_id").asText();
+
+        mockMvc.perform(post("/admin/payments/" + borrowerFeeId + "/verify")
+                .header("Authorization", adminToken))
+                .andExpect(status().isOk());
+
+        Loan afterOneFee = loanRepository.findById(loan.getId()).orElseThrow();
+        assert afterOneFee.getStatus() == LoanStatus.AWAITING_FEE;
+
+        mockMvc.perform(post("/admin/payments/" + lenderFeeId + "/verify")
                 .header("Authorization", adminToken))
                 .andExpect(status().isOk());
 
@@ -172,7 +188,9 @@ public class PaymentControllerTest {
         Loan updatedLoan = loanRepository.findById(loan.getId()).orElseThrow();
         assert updatedLoan.getStatus() == LoanStatus.AWAITING_COLLATERAL;
 
-        PlatformFee updatedFee = platformFeeRepository.findById(java.util.UUID.fromString(feeId)).orElseThrow();
-        assert updatedFee.getStatus() == PlatformFeeStatus.SUCCESS;
+        PlatformFee borrowerFee = platformFeeRepository.findById(java.util.UUID.fromString(borrowerFeeId)).orElseThrow();
+        PlatformFee lenderFee = platformFeeRepository.findById(java.util.UUID.fromString(lenderFeeId)).orElseThrow();
+        assert borrowerFee.getStatus() == PlatformFeeStatus.SUCCESS;
+        assert lenderFee.getStatus() == PlatformFeeStatus.SUCCESS;
     }
 }

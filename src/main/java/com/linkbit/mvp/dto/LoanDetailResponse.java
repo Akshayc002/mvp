@@ -51,4 +51,15 @@ public class LoanDetailResponse {
     private PendingFeeResponse borrowerFee;
     private PendingFeeResponse lenderFee;
     private List<PendingRepaymentResponse> pendingRepayments;
+    private ExtensionDetails pendingExtension;
+
+    @Data
+    @Builder
+    public static class ExtensionDetails {
+        private UUID requestId;
+        private Integer newTenureDays;
+        private BigDecimal newInterestRate;
+        private String reason;
+        private LocalDateTime createdAt;
+    }
 }

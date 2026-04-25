@@ -51,7 +51,6 @@ export const DisbursementPage = () => {
 
   // 2. Fetch Payment Details (Lenders only usually)
   const isLender = loan?.role === 'LENDER';
-  const isBorrower = loan?.role === 'BORROWER';
 
   const { data: paymentDetails, isLoading: isPaymentLoading } = useQuery({
     queryKey: ['paymentDetails', loanId],

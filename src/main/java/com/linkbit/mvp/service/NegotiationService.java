@@ -47,6 +47,11 @@ public class NegotiationService {
         if (loan.getStatus() != LoanStatus.NEGOTIATING) {
             throw new RuntimeException("Loan is not in negotiating status");
         }
+        validateLtvThresholds(
+                request.getExpectedLtvPercent(),
+                request.getMarginCallLtvPercent(),
+                request.getLiquidationLtvPercent()
+        );
 
         loan.setPrincipalAmount(request.getPrincipalAmount());
         loan.setInterestRate(request.getInterestRate());
@@ -87,8 +92,14 @@ public class NegotiationService {
         LoanOffer offer = loanOfferRepository.findByIdForUpdate(loan.getOffer().getId())
                 .orElseThrow(() -> new RuntimeException("Offer not found"));
         
-        if (offer.getStatus() != LoanOfferStatus.OPEN) {
+        boolean currentLoanAlreadyReserved = Boolean.TRUE.equals(loan.getLenderFinalized())
+                || Boolean.TRUE.equals(loan.getBorrowerFinalized());
+
+        if (offer.getStatus() != LoanOfferStatus.OPEN && !currentLoanAlreadyReserved) {
             throw new RuntimeException("Offer is no longer open for finalization");
+        }
+        if (loanRepository.existsCompetingReservedLoan(offer, loan.getId())) {
+            throw new RuntimeException("Offer already has a finalized loan");
         }
 
         if (loan.getRepaymentType() == null || loan.getExpectedLtvPercent() == null
@@ -118,7 +129,7 @@ public class NegotiationService {
             chatService.sendSystemMessage(loanId, "SYSTEM: " + roleName + " has agreed to terms. Waiting for " + waiterName + " to finalize.");
         }
 
-        offer.setStatus(loan.getStatus() == LoanStatus.NEGOTIATING ? LoanOfferStatus.OPEN : LoanOfferStatus.CLOSED);
+        offer.setStatus(LoanOfferStatus.CLOSED);
         loanOfferRepository.save(offer);
         loanRepository.save(loan);
     }
@@ -162,7 +173,7 @@ public class NegotiationService {
         loanRepository.save(loan);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public void cancelNegotiation(String email, UUID loanId) {
         Loan loan = getLoan(loanId);
         User user = getUser(email);
@@ -212,6 +223,15 @@ public class NegotiationService {
     private User getUser(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    }
+
+    private void validateLtvThresholds(Integer expectedLtv, Integer marginCallLtv, Integer liquidationLtv) {
+        if (expectedLtv >= marginCallLtv) {
+            throw new IllegalArgumentException("Expected LTV must be lower than margin call LTV");
+        }
+        if (marginCallLtv >= liquidationLtv) {
+            throw new IllegalArgumentException("Margin call LTV must be lower than liquidation LTV");
+        }
     }
 
     private void calculateRepayment(Loan loan) {

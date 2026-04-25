@@ -4,6 +4,7 @@ import com.linkbit.mvp.domain.ActorType;
 import com.linkbit.mvp.domain.Loan;
 import com.linkbit.mvp.domain.LoanRepayment;
 import com.linkbit.mvp.domain.LoanStatus;
+import com.linkbit.mvp.domain.LoanExtensionRequest;
 import com.linkbit.mvp.domain.PlatformFee;
 import com.linkbit.mvp.domain.PlatformFeeStatus;
 import com.linkbit.mvp.domain.RepaymentStatus;
@@ -16,6 +17,7 @@ import com.linkbit.mvp.dto.PendingRepaymentResponse;
 import com.linkbit.mvp.repository.EscrowAccountRepository;
 import com.linkbit.mvp.repository.LoanRepaymentRepository;
 import com.linkbit.mvp.repository.LoanRepository;
+import com.linkbit.mvp.repository.LoanExtensionRequestRepository;
 import com.linkbit.mvp.repository.PlatformFeeRepository;
 import com.linkbit.mvp.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +39,7 @@ public class DashboardService {
     private final PlatformFeeRepository platformFeeRepository;
     private final LoanRepaymentRepository loanRepaymentRepository;
     private final EscrowAccountRepository escrowAccountRepository;
+    private final LoanExtensionRequestRepository extensionRequestRepository;
 
     public Page<LoanSummaryResponse> getMyLoans(String email, Pageable pageable) {
         User user = userRepository.findByEmail(email)
@@ -146,6 +149,17 @@ public class DashboardService {
                 .map(this::toPendingRepayment)
                 .toList();
 
+        var pendingExtension = extensionRequestRepository
+                .findFirstByLoanIdAndStatusOrderByCreatedAtDesc(loan.getId(), LoanExtensionRequest.ExtensionStatus.PENDING)
+                .map(request -> LoanDetailResponse.ExtensionDetails.builder()
+                        .requestId(request.getId())
+                        .newTenureDays(request.getNewTenureDays())
+                        .newInterestRate(request.getNewInterestRate())
+                        .reason(request.getReason())
+                        .createdAt(request.getCreatedAt())
+                        .build())
+                .orElse(null);
+
         return LoanDetailResponse.builder()
                 .loanId(loan.getId())
                 .role(role)
@@ -185,6 +199,7 @@ public class DashboardService {
                 .borrowerFee(borrowerFee)
                 .lenderFee(lenderFee)
                 .pendingRepayments(pendingRepayments)
+                .pendingExtension(pendingExtension)
                 .build();
     }
 

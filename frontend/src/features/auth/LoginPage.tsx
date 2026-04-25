@@ -6,6 +6,7 @@ import * as z from 'zod';
 import { useMutation } from '@tanstack/react-query';
 import { useAuthStore } from '@/store/authStore';
 import api from '@/services/api';
+import { getApiErrorMessage } from '@/services/apiError';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -83,9 +84,9 @@ export const LoginPage = () => {
               <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md flex items-center gap-2 text-sm">
                 <AlertCircle className="h-4 w-4" />
                 <span>
-                  {any(loginMutation.error).response?.status === 401 
+                  {getApiErrorMessage(loginMutation.error).includes('Bad credentials')
                     ? 'Invalid credentials. Please try again.' 
-                    : 'Network error. Please check your connection.'}
+                    : getApiErrorMessage(loginMutation.error, 'Network error. Please check your connection.')}
                 </span>
               </div>
             )}
@@ -148,7 +149,3 @@ export const LoginPage = () => {
   );
 };
 
-// Helper for type safety with any
-function any(obj: any): any {
-  return obj;
-}

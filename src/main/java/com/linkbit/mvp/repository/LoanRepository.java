@@ -23,6 +23,7 @@ public interface LoanRepository extends JpaRepository<Loan, UUID> {
     boolean existsByOffer(LoanOffer offer);
     boolean existsByOfferAndStatusNot(LoanOffer offer, LoanStatus status);
     boolean existsByOfferAndStatusIn(LoanOffer offer, List<LoanStatus> statuses);
+    boolean existsByOfferAndStatusInAndIdNot(LoanOffer offer, List<LoanStatus> statuses, UUID id);
     List<Loan> findByStatusIn(List<LoanStatus> statuses);
     Page<Loan> findByStatusIn(List<LoanStatus> statuses, Pageable pageable);
     List<Loan> findByStatusAndUpdatedAtBefore(LoanStatus status, LocalDateTime threshold);
@@ -40,4 +41,16 @@ public interface LoanRepository extends JpaRepository<Loan, UUID> {
 
     @Query("SELECT COUNT(l) > 0 FROM Loan l WHERE l.id = :id AND (l.borrower.email = :email OR l.lender.email = :email)")
     boolean isParticipant(@Param("id") UUID id, @Param("email") String email);
+
+    @Query("""
+            select count(l) > 0 from Loan l
+            where l.offer = :offer
+              and l.id <> :loanId
+              and (
+                    l.lenderFinalized = true
+                 or l.borrowerFinalized = true
+                 or l.status not in (com.linkbit.mvp.domain.LoanStatus.NEGOTIATING, com.linkbit.mvp.domain.LoanStatus.CANCELLED)
+              )
+            """)
+    boolean existsCompetingReservedLoan(@Param("offer") LoanOffer offer, @Param("loanId") UUID loanId);
 }

@@ -1,0 +1,192 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --------------------------< com.linkbit:mvp >---------------------------
+[INFO] Building mvp 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.2.3:run (default-cli) > test-compile @ mvp >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ mvp ---
+[INFO] Copying 2 resources from src\main\resources to target\classes
+[INFO] Copying 27 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ mvp ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ mvp ---
+[INFO] Copying 2 resources from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ mvp ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] <<< spring-boot:3.2.3:run (default-cli) < test-compile @ mvp <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.2.3:run (default-cli) @ mvp ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.3)
+
+2026-04-25T16:34:39.029+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] com.linkbit.mvp.MvpApplication           : Starting MvpApplication using Java 21.0.9 with PID 27380 (C:\Users\LENOVO\OneDrive\Documents\LB\mvp\target\classes started by LENOVO in C:\Users\LENOVO\OneDrive\Documents\LB\mvp)
+2026-04-25T16:34:39.052+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] com.linkbit.mvp.MvpApplication           : The following 1 profile is active: "dev"
+2026-04-25T16:34:39.140+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-04-25T16:34:40.546+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-25T16:34:40.672+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 120 ms. Found 19 JPA repository interfaces.
+2026-04-25T16:34:41.577+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-04-25T16:34:41.589+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-25T16:34:41.589+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-25T16:34:41.635+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-04-25T16:34:41.635+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2495 ms
+2026-04-25T16:34:41.664+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-25T16:34:41.912+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:file:./data/linkbitdb user=SA
+2026-04-25T16:34:41.915+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-25T16:34:41.923+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:./data/linkbitdb'
+2026-04-25T16:34:42.054+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.f.c.internal.license.VersionPrinter    : Flyway Community Edition 9.22.3 by Redgate
+2026-04-25T16:34:42.054+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.f.c.internal.license.VersionPrinter    : See release notes here: https://rd.gt/416ObMi
+2026-04-25T16:34:42.054+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.f.c.internal.license.VersionPrinter    : 
+2026-04-25T16:34:42.088+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] org.flywaydb.core.FlywayExecutor         : Database: jdbc:h2:file:./data/linkbitdb (H2 2.2)
+2026-04-25T16:34:42.096+05:30  WARN 27380 --- [LinkbitMVP] [  restartedMain] o.f.c.internal.database.base.Database    : Flyway upgrade recommended: H2 2.2.224 is newer than this version of Flyway and support has not been tested. The latest supported version of H2 is 2.2.220.
+2026-04-25T16:34:42.185+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.f.core.internal.command.DbMigrate      : Current version of schema "PUBLIC": 29
+2026-04-25T16:34:42.188+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.f.core.internal.command.DbMigrate      : Schema "PUBLIC" is up to date. No migration necessary.
+2026-04-25T16:34:42.287+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-25T16:34:42.328+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-04-25T16:34:42.357+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-04-25T16:34:42.527+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-25T16:34:42.559+05:30  WARN 27380 --- [LinkbitMVP] [  restartedMain] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-25T16:34:44.030+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-25T16:34:44.053+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-25T16:34:44.377+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-25T16:34:45.772+05:30  WARN 27380 --- [LinkbitMVP] [  restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-25T16:34:46.051+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4bc5cf09, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@df40327, org.springframework.security.web.context.SecurityContextHolderFilter@4154f3a5, org.springframework.security.web.header.HeaderWriterFilter@3890712c, org.springframework.web.filter.CorsFilter@edc2d83, org.springframework.security.web.authentication.logout.LogoutFilter@87e11bd, com.linkbit.mvp.config.JwtAuthenticationFilter@7f78148, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@68f60c1c, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@38cbbb1f, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7764b6fe, org.springframework.security.web.session.SessionManagementFilter@3d474acb, org.springframework.security.web.access.ExceptionTranslationFilter@775f35a5, org.springframework.security.web.access.intercept.AuthorizationFilter@62e48274]
+2026-04-25T16:34:46.470+05:30  WARN 27380 --- [LinkbitMVP] [  restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : Unable to start LiveReload server
+2026-04-25T16:34:46.517+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-04-25T16:34:46.519+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.s.m.s.b.SimpleBrokerMessageHandler     : Starting...
+2026-04-25T16:34:46.520+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@7416abc2]]
+2026-04-25T16:34:46.520+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] o.s.m.s.b.SimpleBrokerMessageHandler     : Started.
+2026-04-25T16:34:46.531+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] com.linkbit.mvp.MvpApplication           : Started MvpApplication in 7.967 seconds (process running for 8.616)
+2026-04-25T16:34:46.545+05:30  INFO 27380 --- [LinkbitMVP] [MessageBroker-2] c.linkbit.mvp.service.LoanTimeoutWorker  : Starting stuck loan timeout check...
+2026-04-25T16:34:46.637+05:30  INFO 27380 --- [LinkbitMVP] [  restartedMain] com.linkbit.mvp.config.DataInitializer   : Database already seeded. Skipping data initialization.
+2026-04-25T16:34:49.318+05:30  INFO 27380 --- [LinkbitMVP] [nio-8080-exec-3] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-25T16:34:49.319+05:30  INFO 27380 --- [LinkbitMVP] [nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-04-25T16:34:49.319+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2026-04-25T16:34:49.319+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2026-04-25T16:34:49.319+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2026-04-25T16:34:49.320+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@25308968
+2026-04-25T16:34:49.320+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@1a642586
+2026-04-25T16:34:49.320+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2026-04-25T16:34:49.320+05:30  INFO 27380 --- [LinkbitMVP] [nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-04-25T16:34:49.339+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : GET "/api-docs", parameters={}
+2026-04-25T16:34:49.920+05:30  INFO 27380 --- [LinkbitMVP] [nio-8080-exec-3] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 560 ms
+2026-04-25T16:34:49.947+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:35:39.193+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-9] o.s.web.servlet.DispatcherServlet        : POST "/auth/login", parameters={}
+2026-04-25T16:35:39.387+05:30  WARN 27380 --- [LinkbitMVP] [nio-8080-exec-9] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.security.authentication.BadCredentialsException: Bad credentials]
+2026-04-25T16:35:39.387+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 401 UNAUTHORIZED
+2026-04-25T16:35:46.495+05:30  INFO 27380 --- [LinkbitMVP] [MessageBroker-4] o.s.w.s.c.WebSocketMessageBrokerStats    : WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 9, active threads = 1, queued tasks = 3, completed tasks = 5]
+2026-04-25T16:36:19.416+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : POST "/auth/login", parameters={}
+2026-04-25T16:36:19.566+05:30  WARN 27380 --- [LinkbitMVP] [nio-8080-exec-2] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.security.authentication.BadCredentialsException: Bad credentials]
+2026-04-25T16:36:19.567+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 401 UNAUTHORIZED
+2026-04-25T16:36:19.635+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : POST "/auth/register", parameters={}
+2026-04-25T16:36:19.845+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 201 CREATED
+2026-04-25T16:36:19.871+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : POST "/auth/register", parameters={}
+2026-04-25T16:36:20.029+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 201 CREATED
+2026-04-25T16:36:20.087+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : POST "/auth/login", parameters={}
+2026-04-25T16:36:20.270+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:36:20.480+05:30 DEBUG 27380 --- [LinkbitMVP] [io-8080-exec-10] o.s.web.servlet.DispatcherServlet        : POST "/offers", parameters={}
+2026-04-25T16:36:20.506+05:30  WARN 27380 --- [LinkbitMVP] [io-8080-exec-10] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [java.lang.RuntimeException: User is not verified]
+2026-04-25T16:36:20.507+05:30 DEBUG 27380 --- [LinkbitMVP] [io-8080-exec-10] o.s.web.servlet.DispatcherServlet        : Completed 403 FORBIDDEN
+2026-04-25T16:36:20.591+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : POST "/auth/login", parameters={}
+2026-04-25T16:36:20.725+05:30  WARN 27380 --- [LinkbitMVP] [nio-8080-exec-5] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.security.authentication.BadCredentialsException: Bad credentials]
+2026-04-25T16:36:20.725+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 401 UNAUTHORIZED
+2026-04-25T16:36:20.727+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : POST "/auth/login", parameters={}
+2026-04-25T16:36:20.851+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:36:20.862+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : GET "/admin/users", parameters={}
+2026-04-25T16:36:20.890+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:36:20.961+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : POST "/admin/users/ab45fcbd-ae1a-424a-b942-a31661d9ca7b/kyc/approve", parameters={}
+2026-04-25T16:36:20.980+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:36:20.988+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-9] o.s.web.servlet.DispatcherServlet        : POST "/admin/users/2a2b7462-7c1a-4cbe-a5ee-64ae8bc45806/kyc/approve", parameters={}
+2026-04-25T16:36:20.992+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:36:21.044+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : POST "/auth/login", parameters={}
+2026-04-25T16:36:21.172+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:36:21.179+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : POST "/auth/login", parameters={}
+2026-04-25T16:36:21.318+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:36:21.409+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : POST "/offers", parameters={}
+2026-04-25T16:36:21.416+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 201 CREATED
+2026-04-25T16:36:21.459+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : GET "/offers", parameters={}
+2026-04-25T16:36:21.480+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:36:21.671+05:30 DEBUG 27380 --- [LinkbitMVP] [io-8080-exec-10] o.s.web.servlet.DispatcherServlet        : POST "/loans/connect", parameters={}
+2026-04-25T16:36:21.700+05:30  WARN 27380 --- [LinkbitMVP] [io-8080-exec-10] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [java.lang.RuntimeException: Lender cannot connect to their own offer]
+2026-04-25T16:36:21.700+05:30 DEBUG 27380 --- [LinkbitMVP] [io-8080-exec-10] o.s.web.servlet.DispatcherServlet        : Completed 500 INTERNAL_SERVER_ERROR
+2026-04-25T16:36:21.734+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : POST "/loans/connect", parameters={}
+2026-04-25T16:36:21.768+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 201 CREATED
+2026-04-25T16:36:21.876+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : POST "/auth/register", parameters={}
+2026-04-25T16:36:22.002+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 201 CREATED
+2026-04-25T16:36:22.021+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : POST "/auth/login", parameters={}
+2026-04-25T16:36:22.160+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:36:22.232+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/loans/267f660f-fb6a-48e3-ab1c-ec425408b8e8/details", parameters={}
+2026-04-25T16:36:22.253+05:30  WARN 27380 --- [LinkbitMVP] [nio-8080-exec-1] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [java.lang.RuntimeException: You are not part of this loan]
+2026-04-25T16:36:22.254+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 500 INTERNAL_SERVER_ERROR
+2026-04-25T16:36:22.312+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-9] o.s.web.servlet.DispatcherServlet        : PUT "/loans/267f660f-fb6a-48e3-ab1c-ec425408b8e8/terms", parameters={}
+2026-04-25T16:36:22.379+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:36:22.418+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : POST "/loans/267f660f-fb6a-48e3-ab1c-ec425408b8e8/finalize", parameters={}
+2026-04-25T16:36:22.446+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:36:22.469+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : POST "/loans/267f660f-fb6a-48e3-ab1c-ec425408b8e8/finalize", parameters={}
+2026-04-25T16:36:22.485+05:30  INFO 27380 --- [LinkbitMVP] [nio-8080-exec-6] c.l.mvp.service.StateMachineService      : Loan 267f660f-fb6a-48e3-ab1c-ec425408b8e8: NEGOTIATING -> AWAITING_SIGNATURES via FINALIZE_CONTRACT by BORROWER
+2026-04-25T16:36:22.496+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:36:22.527+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : POST "/loans/267f660f-fb6a-48e3-ab1c-ec425408b8e8/sign", parameters={}
+2026-04-25T16:36:22.543+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:36:22.580+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : POST "/loans/267f660f-fb6a-48e3-ab1c-ec425408b8e8/sign", parameters={}
+2026-04-25T16:36:22.586+05:30  INFO 27380 --- [LinkbitMVP] [nio-8080-exec-7] c.l.mvp.service.StateMachineService      : Loan 267f660f-fb6a-48e3-ab1c-ec425408b8e8: AWAITING_SIGNATURES -> AWAITING_FEE via SIGN_CONTRACT by LENDER
+2026-04-25T16:36:22.591+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:36:22.639+05:30 DEBUG 27380 --- [LinkbitMVP] [io-8080-exec-10] o.s.web.servlet.DispatcherServlet        : POST "/payments/fee/pay", parameters={}
+2026-04-25T16:36:22.654+05:30 DEBUG 27380 --- [LinkbitMVP] [io-8080-exec-10] o.s.web.servlet.DispatcherServlet        : Completed 201 CREATED
+2026-04-25T16:36:22.689+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : POST "/payments/fee/pay", parameters={}
+2026-04-25T16:36:22.699+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 201 CREATED
+2026-04-25T16:36:22.768+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : POST "/admin/payments/133f804a-6710-4207-a747-ec126bbc1d9e/verify", parameters={}
+2026-04-25T16:36:22.777+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:36:22.818+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : POST "/admin/payments/d98bfbcb-1dc9-40c9-97a2-277424bf61d9/verify", parameters={}
+2026-04-25T16:36:22.827+05:30  INFO 27380 --- [LinkbitMVP] [nio-8080-exec-4] c.l.mvp.service.StateMachineService      : Loan 267f660f-fb6a-48e3-ab1c-ec425408b8e8: AWAITING_FEE -> AWAITING_COLLATERAL via PAY_FEE by ADMIN
+2026-04-25T16:36:22.837+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:36:22.883+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : POST "/loans/267f660f-fb6a-48e3-ab1c-ec425408b8e8/escrow/generate", parameters={}
+2026-04-25T16:36:22.926+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 201 CREATED
+2026-04-25T16:36:22.975+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-9] o.s.web.servlet.DispatcherServlet        : POST "/loans/267f660f-fb6a-48e3-ab1c-ec425408b8e8/deposit", parameters={}
+2026-04-25T16:36:22.993+05:30  WARN 27380 --- [LinkbitMVP] [nio-8080-exec-9] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [2] in public org.springframework.http.ResponseEntity<java.lang.Void> com.linkbit.mvp.controller.EscrowController.submitDeposit(org.springframework.security.core.Authentication,java.util.UUID,com.linkbit.mvp.dto.DepositRequest): [Field error in object 'depositRequest' on field 'amountBtc': rejected value [-0.01]; codes [Positive.depositRequest.amountBtc,Positive.amountBtc,Positive.java.math.BigDecimal,Positive]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [depositRequest.amountBtc,amountBtc]; arguments []; default message [amountBtc]]; default message [Bitcoin amount must be positive]] ]
+2026-04-25T16:36:22.994+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 400 BAD_REQUEST
+2026-04-25T16:36:23.026+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : POST "/loans/267f660f-fb6a-48e3-ab1c-ec425408b8e8/deposit", parameters={}
+2026-04-25T16:36:23.040+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 202 ACCEPTED
+2026-04-25T16:36:23.071+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : POST "/admin/collateral/267f660f-fb6a-48e3-ab1c-ec425408b8e8/verify", parameters={}
+2026-04-25T16:36:23.077+05:30  INFO 27380 --- [LinkbitMVP] [nio-8080-exec-6] c.l.mvp.service.StateMachineService      : Loan 267f660f-fb6a-48e3-ab1c-ec425408b8e8: AWAITING_COLLATERAL -> COLLATERAL_LOCKED via DEPOSIT_COLLATERAL by SYSTEM
+2026-04-25T16:36:23.087+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:36:23.124+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : POST "/loans/267f660f-fb6a-48e3-ab1c-ec425408b8e8/disburse", parameters={}
+2026-04-25T16:36:23.138+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 202 ACCEPTED
+2026-04-25T16:36:23.172+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : POST "/loans/267f660f-fb6a-48e3-ab1c-ec425408b8e8/confirm-receipt", parameters={}
+2026-04-25T16:36:23.176+05:30  INFO 27380 --- [LinkbitMVP] [nio-8080-exec-7] c.l.mvp.service.StateMachineService      : Loan 267f660f-fb6a-48e3-ab1c-ec425408b8e8: COLLATERAL_LOCKED -> ACTIVE via DISBURSE_FIAT by SYSTEM
+2026-04-25T16:36:23.187+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 202 ACCEPTED
+2026-04-25T16:36:23.269+05:30 DEBUG 27380 --- [LinkbitMVP] [io-8080-exec-10] o.s.web.servlet.DispatcherServlet        : POST "/loans/267f660f-fb6a-48e3-ab1c-ec425408b8e8/extension", parameters={}
+2026-04-25T16:36:23.277+05:30  WARN 27380 --- [LinkbitMVP] [io-8080-exec-10] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [1] in public org.springframework.http.ResponseEntity<java.lang.Void> com.linkbit.mvp.controller.LoanExtensionController.requestExtension(java.util.UUID,com.linkbit.mvp.dto.ExtensionRequestDTO) with 2 errors: [Field error in object 'extensionRequestDTO' on field 'newInterestRate': rejected value [101]; codes [DecimalMax.extensionRequestDTO.newInterestRate,DecimalMax.newInterestRate,DecimalMax.java.math.BigDecimal,DecimalMax]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [extensionRequestDTO.newInterestRate,newInterestRate]; arguments []; default message [newInterestRate],true,100.00]; default message [Interest rate cannot exceed 100]] [Field error in object 'extensionRequestDTO' on field 'newTenureDays': rejected value [0]; codes [Min.extensionRequestDTO.newTenureDays,Min.newTenureDays,Min.java.lang.Integer,Min]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [extensionRequestDTO.newTenureDays,newTenureDays]; arguments []; default message [newTenureDays],1]; default message [New tenure must be at least 1 day]] ]
+2026-04-25T16:36:23.277+05:30 DEBUG 27380 --- [LinkbitMVP] [io-8080-exec-10] o.s.web.servlet.DispatcherServlet        : Completed 400 BAD_REQUEST
+2026-04-25T16:36:23.306+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : POST "/loans/267f660f-fb6a-48e3-ab1c-ec425408b8e8/extension", parameters={}
+2026-04-25T16:36:23.320+05:30  INFO 27380 --- [LinkbitMVP] [nio-8080-exec-5] c.l.mvp.service.StateMachineService      : Loan 267f660f-fb6a-48e3-ab1c-ec425408b8e8: ACTIVE -> EXTENSION_REQUESTED via REQUEST_EXTENSION by BORROWER
+2026-04-25T16:36:23.331+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:36:23.375+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : POST "/loans/267f660f-fb6a-48e3-ab1c-ec425408b8e8/extension/reject", parameters={}
+2026-04-25T16:36:23.390+05:30  INFO 27380 --- [LinkbitMVP] [nio-8080-exec-3] c.l.mvp.service.StateMachineService      : Loan 267f660f-fb6a-48e3-ab1c-ec425408b8e8: EXTENSION_REQUESTED -> ACTIVE via REJECT_EXTENSION by LENDER
+2026-04-25T16:36:23.397+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:36:23.434+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : GET "/loans/267f660f-fb6a-48e3-ab1c-ec425408b8e8/details", parameters={}
+2026-04-25T16:36:23.453+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:36:23.552+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : POST "/loans/267f660f-fb6a-48e3-ab1c-ec425408b8e8/repay", parameters={}
+2026-04-25T16:36:23.568+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 202 ACCEPTED
+2026-04-25T16:36:23.598+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-9] o.s.web.servlet.DispatcherServlet        : GET "/admin/repayments/pending", parameters={}
+2026-04-25T16:36:23.604+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:36:23.729+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : POST "/admin/repayments/60110e7c-8154-470f-9df7-83d74c9db58d/verify", parameters={}
+2026-04-25T16:36:23.741+05:30  INFO 27380 --- [LinkbitMVP] [nio-8080-exec-2] c.l.mvp.service.StateMachineService      : Loan 267f660f-fb6a-48e3-ab1c-ec425408b8e8: ACTIVE -> REPAID via REPAY_LOAN by SYSTEM
+2026-04-25T16:36:23.762+05:30  INFO 27380 --- [LinkbitMVP] [nio-8080-exec-2] c.l.mvp.service.StateMachineService      : Loan 267f660f-fb6a-48e3-ab1c-ec425408b8e8: REPAID -> CLOSED via RELEASE_COLLATERAL by SYSTEM
+2026-04-25T16:36:23.763+05:30  INFO 27380 --- [LinkbitMVP] [nio-8080-exec-2] c.l.m.service.CollateralReleaseService   : Collateral released for loan 267f660f-fb6a-48e3-ab1c-ec425408b8e8. Amount: 0.05000000 BTC
+2026-04-25T16:36:23.789+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-04-25T16:36:23.836+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : GET "/loans/267f660f-fb6a-48e3-ab1c-ec425408b8e8/details", parameters={}
+2026-04-25T16:36:23.849+05:30 DEBUG 27380 --- [LinkbitMVP] [nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
