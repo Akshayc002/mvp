@@ -12,4 +12,5 @@ import java.util.List;
 public interface BitcoinTransactionRepository extends JpaRepository<BitcoinTransaction, java.util.UUID> {
     List<BitcoinTransaction> findByLoanId(java.util.UUID loanId);
     List<BitcoinTransaction> findByLoanAndTypeAndStatus(Loan loan, BitcoinTransactionType type, String status);
+    boolean existsByLoanIdAndConfirmationsAndType(java.util.UUID loanId, Integer confirmations, BitcoinTransactionType type);
 }

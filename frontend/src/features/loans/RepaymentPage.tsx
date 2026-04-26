@@ -44,7 +44,7 @@ export const RepaymentPage = () => {
       const res = await api.get(`/loans/${loanId}/details`);
       return res.data;
     },
-    refetchInterval: 5000,
+    refetchInterval: 3000,
   });
 
   // 2. Fetch Ledger
@@ -54,6 +54,7 @@ export const RepaymentPage = () => {
       const res = await api.get(`/loans/${loanId}/ledger`);
       return res.data;
     },
+    refetchInterval: 3000,
   });
 
   // 3. Repayment Mutation
@@ -297,7 +298,7 @@ export const RepaymentPage = () => {
                     transaction_reference: txRef, 
                     proof_image_url: proofUrl 
                   })}
-                  className="w-full bg-slate-900 hover:bg-black text-white h-16 rounded-3xl font-black text-base shadow-xl transition-all active:scale-95 disabled:opacity-50 group uppercase tracking-widest"
+                  className="w-full bg-slate-900 hover:bg-black text-white h-16 rounded-3xl font-black text-base shadow-xl shadow-slate-200 transition-all active:scale-95 disabled:opacity-50 group uppercase tracking-widest"
                 >
                   {repayMutation.isPending ? 'PROCESSING...' : isFullyRepaid ? 'LOAN SETTLED' : 'SUBMIT REPAYMENT'}
                   {!isFullyRepaid && <ArrowUpRight className="h-5 w-5 ml-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />}

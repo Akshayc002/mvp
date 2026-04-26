@@ -48,6 +48,7 @@ export const MarketplacePage = () => {
       const response = await api.get('/offers');
       return response.data;
     },
+    refetchInterval: 10000,
   });
 
   const connectMutation = useMutation({

@@ -9,6 +9,7 @@ import com.linkbit.mvp.domain.PlatformFee;
 import com.linkbit.mvp.domain.PlatformFeeStatus;
 import com.linkbit.mvp.domain.RepaymentStatus;
 import com.linkbit.mvp.domain.User;
+import com.linkbit.mvp.domain.BitcoinTransactionType;
 import com.linkbit.mvp.dto.AdminOverviewResponse;
 import com.linkbit.mvp.dto.LoanDetailResponse;
 import com.linkbit.mvp.dto.LoanSummaryResponse;
@@ -20,6 +21,7 @@ import com.linkbit.mvp.repository.LoanRepository;
 import com.linkbit.mvp.repository.LoanExtensionRequestRepository;
 import com.linkbit.mvp.repository.PlatformFeeRepository;
 import com.linkbit.mvp.repository.UserRepository;
+import com.linkbit.mvp.repository.BitcoinTransactionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -40,6 +42,7 @@ public class DashboardService {
     private final LoanRepaymentRepository loanRepaymentRepository;
     private final EscrowAccountRepository escrowAccountRepository;
     private final LoanExtensionRequestRepository extensionRequestRepository;
+    private final BitcoinTransactionRepository bitcoinTransactionRepository;
 
     public Page<LoanSummaryResponse> getMyLoans(String email, Pageable pageable) {
         User user = userRepository.findByEmail(email)
@@ -198,6 +201,7 @@ public class DashboardService {
                 .collateralReleasedAt(loan.getCollateralReleasedAt())
                 .escrowAddress(escrowAccount != null ? escrowAccount.getEscrowAddress() : null)
                 .escrowBalanceSats(escrowAccount != null ? escrowAccount.getCurrentBalanceSats() : null)
+                .hasPendingDeposit(bitcoinTransactionRepository.existsByLoanIdAndConfirmationsAndType(loan.getId(), 0, BitcoinTransactionType.DEPOSIT))
                 .borrowerFee(borrowerFee)
                 .lenderFee(lenderFee)
                 .pendingRepayments(pendingRepayments)

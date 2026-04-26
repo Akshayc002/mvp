@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import api from '@/services/api';
 import type { LoanSummary } from '@/features/loans/types';
+import type { Offer } from '@/features/marketplace/types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -65,7 +66,16 @@ export const DashboardPage = () => {
       const response = await api.get('/loans/mine');
       return response.data.content || response.data;
     },
-    refetchInterval: 30000,
+    refetchInterval: 5000,
+  });
+
+  const { data: myOffers, isLoading: isOffersLoading } = useQuery<Offer[]>({
+    queryKey: ['my-offers'],
+    queryFn: async () => {
+      const response = await api.get('/offers/mine');
+      return response.data;
+    },
+    refetchInterval: 10000,
   });
 
   useEffect(() => {
@@ -112,10 +122,13 @@ export const DashboardPage = () => {
     return getPriority(a.status) - getPriority(b.status);
   });
 
-  const totalBorrowed = loans?.filter(l => l.role === 'BORROWER' && l.status !== 'CANCELLED')
+  // Only include loans that have actually started (post-collateral lock or active)
+  const STARTED_STATUSES = ['ACTIVE', 'COLLATERAL_LOCKED', 'MARGIN_CALL', 'LIQUIDATION_ELIGIBLE', 'DISPUTE_OPEN', 'REPAID', 'LIQUIDATED'];
+
+  const totalBorrowed = loans?.filter(l => l.role === 'BORROWER' && STARTED_STATUSES.includes(l.status))
     .reduce((sum, l) => sum + (l.principalAmount || 0), 0) || 0;
   
-  const totalLent = loans?.filter(l => l.role === 'LENDER' && l.status !== 'CANCELLED')
+  const totalLent = loans?.filter(l => l.role === 'LENDER' && STARTED_STATUSES.includes(l.status))
     .reduce((sum, l) => sum + (l.principalAmount || 0), 0) || 0;
   
   const activeCount = loans?.filter(l => ['ACTIVE', 'MARGIN_CALL', 'LIQUIDATION_ELIGIBLE'].includes(l.status)).length || 0;
@@ -278,6 +291,69 @@ export const DashboardPage = () => {
           </Card>
         )}
       </div>
+
+      {/* MY OFFERS SECTION */}
+      {user?.role !== 'BORROWER' && (
+        <div className="space-y-4 pt-4 border-t border-slate-100">
+          <div className="flex items-center justify-between">
+            <h2 className="text-xl font-semibold text-slate-900">Your Loan Offers</h2>
+            <Link to="/offers/create">
+               <Button variant="ghost" size="sm" className="text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50 font-bold uppercase tracking-widest text-[10px]">
+                  + Create New
+               </Button>
+            </Link>
+          </div>
+          
+          {isOffersLoading ? (
+            <div className="flex justify-center p-8">
+              <Loader2 className="h-6 w-6 animate-spin text-slate-300" />
+            </div>
+          ) : myOffers && myOffers.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {myOffers.map((offer) => (
+                <Card key={offer.offer_id} className="border-slate-200 hover:border-indigo-200 transition-all group relative overflow-hidden">
+                   <div className="absolute top-0 right-0 p-3">
+                      <Badge variant="outline" className="bg-slate-50 text-[9px] font-black uppercase tracking-tighter border-slate-100">
+                         {offer.tenure_months}M
+                      </Badge>
+                   </div>
+                   <CardHeader className="p-5 pb-2">
+                      <CardTitle className="text-lg font-black text-slate-900">₹{offer.loan_amount.toLocaleString()}</CardTitle>
+                      <CardDescription className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">
+                         ID: {offer.offer_id.substring(0, 8)}
+                      </CardDescription>
+                   </CardHeader>
+                   <CardContent className="p-5 pt-0">
+                      <div className="flex items-center gap-4 mt-2">
+                         <div>
+                            <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Interest</p>
+                            <p className="text-sm font-black text-emerald-600 leading-none">{offer.interest_rate}%</p>
+                         </div>
+                         <div className="w-px h-6 bg-slate-100" />
+                         <div>
+                            <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Min Value</p>
+                            <p className="text-sm font-black text-slate-900 leading-none">{offer.expected_ltv}%</p>
+                         </div>
+                      </div>
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="w-full mt-4 rounded-xl text-[10px] font-black uppercase tracking-widest h-9 hover:bg-indigo-50 hover:text-indigo-600 border-slate-100"
+                        onClick={() => navigate(`/offers/create?edit=${offer.offer_id}`)}
+                      >
+                         Edit Offer
+                      </Button>
+                   </CardContent>
+                </Card>
+              ))}
+            </div>
+          ) : (
+            <div className="p-8 border-2 border-dashed border-slate-100 rounded-3xl text-center">
+               <p className="text-xs text-slate-400 font-bold uppercase tracking-tight">You haven't posted any loan offers yet.</p>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

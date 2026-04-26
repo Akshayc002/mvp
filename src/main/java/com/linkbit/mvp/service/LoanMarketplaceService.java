@@ -91,6 +91,14 @@ public class LoanMarketplaceService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
+    public List<OfferResponse> getMyOffers(String email) {
+        User user = getUser(email);
+        return loanOfferRepository.findAllByLenderOrderByCreatedAtDesc(user).stream()
+                .map(this::mapToOfferResponse)
+                .collect(Collectors.toList());
+    }
+
     @Transactional
     public void editOffer(String email, UUID offerId, CreateOfferRequest request) {
         User lender = getUser(email);

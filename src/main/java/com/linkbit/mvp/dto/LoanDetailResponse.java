@@ -50,6 +50,7 @@ public class LoanDetailResponse {
     private Boolean borrowerFinalized;
     private Boolean borrowerSettlementConfirmed;
     private Boolean lenderSettlementConfirmed;
+    private Boolean hasPendingDeposit;
     private PendingFeeResponse borrowerFee;
     private PendingFeeResponse lenderFee;
     private List<PendingRepaymentResponse> pendingRepayments;

@@ -26,7 +26,8 @@ export const FeePaymentPage = () => {
     queryFn: async () => {
       const res = await api.get(`/loans/${loanId}/details`);
       return res.data;
-    }
+    },
+    refetchInterval: 3000,
   });
 
   const payMutation = useMutation({

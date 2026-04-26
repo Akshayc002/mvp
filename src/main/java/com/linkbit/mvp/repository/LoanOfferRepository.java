@@ -2,6 +2,7 @@ package com.linkbit.mvp.repository;
 
 import com.linkbit.mvp.domain.LoanOffer;
 import com.linkbit.mvp.domain.LoanOfferStatus;
+import com.linkbit.mvp.domain.User;
 import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -21,4 +22,6 @@ public interface LoanOfferRepository extends JpaRepository<LoanOffer, UUID>, Jpa
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT o FROM LoanOffer o WHERE o.id = :id")
     Optional<LoanOffer> findByIdForUpdate(@Param("id") UUID id);
+
+    List<LoanOffer> findAllByLenderOrderByCreatedAtDesc(User lender);
 }

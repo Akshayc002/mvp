@@ -52,4 +52,9 @@ public class LoanMarketplaceController {
         UUID loanId = loanMarketplaceService.connectOffer(authentication.getName(), request.getOfferId());
         return ResponseEntity.status(HttpStatus.CREATED).body(loanId);
     }
+
+    @GetMapping("/offers/mine")
+    public ResponseEntity<List<OfferResponse>> getMyOffers(Authentication authentication) {
+        return ResponseEntity.ok(loanMarketplaceService.getMyOffers(authentication.getName()));
+    }
 }

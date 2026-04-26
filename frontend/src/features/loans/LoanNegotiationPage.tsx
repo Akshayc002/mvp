@@ -7,6 +7,14 @@ import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/componen
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { 
   Send, 
   Settings2, 
@@ -46,6 +54,7 @@ export const LoanNegotiationPage = () => {
     marginCallLtvPercent: 70,
     liquidationLtvPercent: 85
   });
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
   const { data: loan, isLoading: isLoadingLoan } = useQuery({
     queryKey: ['loan', loanId],
@@ -117,6 +126,7 @@ export const LoanNegotiationPage = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['loan', loanId] });
+      setIsConfirmOpen(false);
     }
   });
 
@@ -323,15 +333,58 @@ export const LoanNegotiationPage = () => {
                   Propose New Terms
                 </Button>
               )}
-              <div className="grid grid-cols-2 gap-3 w-full">
                 <Button 
-                  onClick={() => finalizeMutation.mutate()}
+                  onClick={() => setIsConfirmOpen(true)}
                   disabled={finalizeMutation.isPending || hasIAgreed}
                   className={`${hasIAgreed ? 'bg-green-600' : 'bg-indigo-600'} hover:bg-indigo-700 text-sm font-bold h-11 rounded-xl shadow-lg shadow-indigo-100 flex-1 transition-all`}
                 >
                   <CheckCircle2 className="h-4 w-4 mr-2" />
                   {hasIAgreed ? (hasOtherAgreed ? 'Finalized' : 'Agreed') : 'Finalize'}
                 </Button>
+
+                <Dialog open={isConfirmOpen} onOpenChange={setIsConfirmOpen}>
+                  <DialogContent className="sm:max-w-[400px] rounded-[2rem] p-8 border-none shadow-2xl">
+                    <DialogHeader className="space-y-4">
+                      <div className="mx-auto bg-indigo-50 p-4 rounded-full w-fit">
+                        <AlertCircle className="h-8 w-8 text-indigo-600" />
+                      </div>
+                      <DialogTitle className="text-2xl font-black text-center text-slate-900 uppercase tracking-tight">Confirm Terms?</DialogTitle>
+                      <DialogDescription className="text-center text-slate-500 font-medium leading-relaxed">
+                        By finalizing, you agree to the current loan terms. This will lock the negotiation and proceed to the next stage.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="bg-slate-50 p-6 rounded-3xl border border-slate-100 space-y-3 my-2">
+                       <div className="flex justify-between items-baseline">
+                          <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Amount</span>
+                          <span className="text-lg font-black text-slate-900">₹{loan.principalAmount.toLocaleString()}</span>
+                       </div>
+                       <div className="flex justify-between items-baseline">
+                          <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Interest Rate</span>
+                          <span className="text-lg font-black text-emerald-600">{loan.interestRate}%</span>
+                       </div>
+                       <div className="flex justify-between items-baseline">
+                          <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Tenure</span>
+                          <span className="text-lg font-black text-slate-900">{loan.tenureMonths} Months</span>
+                       </div>
+                    </div>
+                    <DialogFooter className="flex-col sm:flex-row gap-3 pt-4">
+                      <Button 
+                        variant="outline" 
+                        onClick={() => setIsConfirmOpen(false)}
+                        className="flex-1 rounded-2xl h-14 font-black uppercase tracking-widest text-[10px] border-slate-200"
+                      >
+                        Go Back
+                      </Button>
+                      <Button 
+                        onClick={() => finalizeMutation.mutate()}
+                        disabled={finalizeMutation.isPending}
+                        className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl h-14 font-black uppercase tracking-widest text-[10px] shadow-xl shadow-indigo-100"
+                      >
+                        {finalizeMutation.isPending ? 'Processing...' : 'Yes, Finalize'}
+                      </Button>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
                 <Button 
                   variant="outline"
                   onClick={() => cancelMutation.mutate()}

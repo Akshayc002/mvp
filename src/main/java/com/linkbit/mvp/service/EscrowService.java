@@ -93,6 +93,10 @@ public class EscrowService {
             throw new RuntimeException("Escrow account not generated for this loan yet");
         }
 
+        if (bitcoinTransactionRepository.existsByLoanIdAndConfirmationsAndType(loanId, 0, BitcoinTransactionType.DEPOSIT)) {
+            throw new RuntimeException("A deposit is already awaiting verification. Please wait for admin approval.");
+        }
+
         long sats = toSats(amountBtc);
         String fakeTxHash = "txmock" + UUID.randomUUID().toString().substring(0, 12);
 

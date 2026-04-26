@@ -77,6 +77,12 @@ export const CollateralDepositPage = () => {
     }
   });
 
+  useEffect(() => {
+    if (loan?.hasPendingDeposit) {
+      setHasSubmitted(true);
+    }
+  }, [loan?.hasPendingDeposit]);
+
   const handleCopy = () => {
     if (escrow?.escrow_address) {
       navigator.clipboard.writeText(escrow.escrow_address);
@@ -287,6 +293,11 @@ export const CollateralDepositPage = () => {
                         </>
                       )}
                     </Button>
+                    {depositMutation.isError && (
+                      <p className="text-[10px] text-red-600 font-black uppercase tracking-widest mt-3 text-center bg-red-50 p-3 rounded-2xl border border-red-100 animate-in fade-in zoom-in duration-300">
+                        {(depositMutation.error as any)?.response?.data?.message || 'Submission failed. A deposit might already be pending.'}
+                      </p>
+                    )}
                   </form>
 
                   {hasSubmitted && (
