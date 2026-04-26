@@ -101,7 +101,7 @@ class CollateralReleaseControllerTest {
                 .loanAmountInr(new BigDecimal("50000"))
                 .interestRate(new BigDecimal("12.0"))
                 .expectedLtvPercent(60)
-                .tenureDays(90)
+                .tenureMonths(3)
                 .status(LoanOfferStatus.OPEN)
                 .build();
         loanOfferRepository.save(offer);
@@ -112,7 +112,7 @@ class CollateralReleaseControllerTest {
                 .lender(lender)
                 .principalAmount(new BigDecimal("20000"))
                 .interestRate(new BigDecimal("12.0"))
-                .tenureDays(90)
+                .tenureMonths(3)
                 .status(LoanStatus.REPAID)
                 .repaymentType(RepaymentType.BULLET)
                 .emiCount(1)

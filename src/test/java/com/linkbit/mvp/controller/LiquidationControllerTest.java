@@ -103,8 +103,8 @@ class LiquidationControllerTest {
                 .lender(lender)
                 .loanAmountInr(new BigDecimal("100000.00"))
                 .interestRate(new BigDecimal("12.00"))
-                .tenureDays(30)
-                .expectedLtvPercent(70)
+                .tenureMonths(1)
+                .expectedLtvPercent(60)
                 .status(LoanOfferStatus.OPEN)
                 .build();
         loanOfferRepository.save(offer);
@@ -115,7 +115,7 @@ class LiquidationControllerTest {
                 .borrower(borrower)
                 .principalAmount(new BigDecimal("100000.00"))
                 .interestRate(new BigDecimal("12.00"))
-                .tenureDays(30)
+                .tenureMonths(1)
                 .status(LoanStatus.LIQUIDATION_ELIGIBLE)
                 .collateralBtcAmount(new BigDecimal("0.02"))
                 .totalOutstanding(new BigDecimal("100000.00"))

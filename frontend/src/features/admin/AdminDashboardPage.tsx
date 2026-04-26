@@ -380,7 +380,8 @@ const RiskTab = () => {
                     {l.borrowerPseudonym} → {l.lenderPseudonym} • ₹{l.principalAmount?.toLocaleString()}
                   </p>
                   <p className="text-[10px] text-slate-400 font-medium">
-                    LTV: {l.currentLtvPercent ?? '—'}% / Margin: {l.marginCallLtvPercent}% / Liq: {l.liquidationLtvPercent}%
+                    Safety: {l.currentLtvPercent ?? '—'}% / Margin: {l.marginCallLtvPercent}% / Liq: {l.liquidationLtvPercent}%
+
                   </p>
                 </div>
                 <ChevronRight className="h-4 w-4 text-slate-300 group-hover:text-slate-600 transition-colors" />

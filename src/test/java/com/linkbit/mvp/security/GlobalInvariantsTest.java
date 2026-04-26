@@ -60,7 +60,7 @@ public class GlobalInvariantsTest {
                 .lender(lender)
                 .loanAmountInr(new BigDecimal("10000"))
                 .interestRate(new BigDecimal("10"))
-                .tenureDays(30)
+                .tenureMonths(1)
                 .expectedLtvPercent(50)
                 .status(LoanOfferStatus.OPEN)
                 .build());
@@ -71,7 +71,7 @@ public class GlobalInvariantsTest {
                 .lender(lender)
                 .principalAmount(new BigDecimal("10000"))
                 .interestRate(new BigDecimal("10"))
-                .tenureDays(30)
+                .tenureMonths(1)
                 .status(LoanStatus.NEGOTIATING)
                 .principalOutstanding(new BigDecimal("10000"))
                 .totalOutstanding(new BigDecimal("10000"))

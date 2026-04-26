@@ -25,8 +25,8 @@ public class LoanExtensionRequest {
     @JoinColumn(name = "loan_id", nullable = false)
     private Loan loan;
 
-    @Column(name = "new_tenure_days", nullable = false)
-    private Integer newTenureDays;
+    @Column(name = "new_tenure_months", nullable = false)
+    private Integer newTenureMonths;
 
     @Column(name = "new_interest_rate", precision = 5, scale = 2)
     private BigDecimal newInterestRate;

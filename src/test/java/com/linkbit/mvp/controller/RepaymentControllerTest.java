@@ -119,8 +119,8 @@ public class RepaymentControllerTest {
                 .lender(lender)
                 .loanAmountInr(new BigDecimal("1000"))
                 .interestRate(new BigDecimal("10"))
-                .tenureDays(60) // 2 EMIs
-                .expectedLtvPercent(150)
+                .tenureMonths(2) // 2 EMIs
+                .expectedLtvPercent(60)
                 .status(LoanOfferStatus.OPEN)
                 .build());
 
@@ -134,7 +134,7 @@ public class RepaymentControllerTest {
                 .emiCount(2)
                 .emiAmount(new BigDecimal("550.00"))
                 .totalRepaymentAmount(new BigDecimal("1100")) // 10% on 1000 (simplistic flat sum logic)
-                .tenureDays(offer.getTenureDays())
+                .tenureMonths(offer.getTenureMonths())
                 .collateralBtcAmount(new BigDecimal("1.5"))
                 .status(LoanStatus.DISPUTE_OPEN) // Jumpstarting directly to activation call
                 .build());
@@ -229,7 +229,7 @@ public class RepaymentControllerTest {
                 .andExpect(status().isOk());
 
         Loan loan = loanRepository.findById(activeLoan.getId()).orElseThrow();
-        assert loan.getStatus() == LoanStatus.CLOSED;
+        assert loan.getStatus() == LoanStatus.REPAID;
         assert loan.getTotalOutstanding().compareTo(BigDecimal.ZERO) == 0;
     }
 

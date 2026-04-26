@@ -20,7 +20,8 @@ public class LoanSummaryResponse {
     private String counterpartyPseudonym;
     private BigDecimal principalAmount;
     private BigDecimal interestRate;
-    private Integer tenureDays;
+    @com.fasterxml.jackson.annotation.JsonProperty("tenureMonths")
+    private Integer tenureMonths;
     private RepaymentType repaymentType;
     private Integer emiCount;
     private BigDecimal emiAmount;

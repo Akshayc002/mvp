@@ -122,7 +122,7 @@ public class EscrowControllerTest {
                 .loanAmountInr(new BigDecimal("100000"))
                 .interestRate(new BigDecimal("12.0"))
                 .expectedLtvPercent(60) // 60% LTV
-                .tenureDays(90)
+                .tenureMonths(3)
                 .status(LoanOfferStatus.OPEN)
                 .build();
         loanOfferRepository.save(offer);
@@ -134,7 +134,7 @@ public class EscrowControllerTest {
                 .principalAmount(new BigDecimal("100000"))
                 .interestRate(new BigDecimal("12.0"))
                 .expectedLtvPercent(60)
-                .tenureDays(90)
+                .tenureMonths(3)
                 .status(LoanStatus.AWAITING_COLLATERAL)
                 .build();
         loanRepository.save(loan);

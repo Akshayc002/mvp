@@ -48,9 +48,9 @@ public class RepaymentService {
         if (loan.getTotalRepaymentAmount() == null) {
             BigDecimal principal = loan.getPrincipalAmount() != null ? loan.getPrincipalAmount() : BigDecimal.ZERO;
             BigDecimal rate = loan.getInterestRate() != null ? loan.getInterestRate() : BigDecimal.ZERO;
-            int days = loan.getTenureDays() != null ? loan.getTenureDays() : 30;
-            BigDecimal interest = principal.multiply(rate).multiply(BigDecimal.valueOf(days))
-                    .divide(new BigDecimal("36500"), 2, RoundingMode.HALF_UP);
+            int months = loan.getTenureMonths() != null ? loan.getTenureMonths() : 1;
+            BigDecimal interest = principal.multiply(rate).multiply(BigDecimal.valueOf(months))
+                    .divide(new BigDecimal("1200"), 2, RoundingMode.HALF_UP);
             loan.setTotalRepaymentAmount(principal.add(interest));
         }
 
@@ -80,7 +80,7 @@ public class RepaymentService {
             emiRepository.save(LoanEmi.builder()
                     .loan(loan)
                     .emiNumber(i)
-                    .dueDate(LocalDate.now().plusDays(30L * i))
+                    .dueDate(LocalDate.now().plusMonths(i))
                     .emiAmount(currentEmiAmount)
                     .amountPaid(BigDecimal.ZERO)
                     .status(EmiStatus.PENDING)

@@ -17,6 +17,7 @@ import {
   AlertCircle,
   ArrowRight
 } from 'lucide-react';
+import { InfoTooltip } from '@/components/InfoTooltip';
 
 interface ChatMessage {
   loan_id: string;
@@ -38,7 +39,7 @@ export const LoanNegotiationPage = () => {
   const [editTerms, setEditTerms] = useState({
     principalAmount: 0,
     interestRate: 0,
-    tenureDays: 0,
+    tenureMonths: 0,
     repaymentType: 'BULLET' as 'BULLET' | 'EMI',
     emiCount: 1,
     expectedLtvPercent: 50,
@@ -69,7 +70,7 @@ export const LoanNegotiationPage = () => {
       const hasChanged = 
         editTerms.principalAmount !== loan.principalAmount ||
         editTerms.interestRate !== loan.interestRate ||
-        editTerms.tenureDays !== loan.tenureDays;
+        editTerms.tenureMonths !== loan.tenureMonths;
 
       if (hasChanged && editTerms.principalAmount !== 0) {
         setShowFlash(true);
@@ -79,7 +80,7 @@ export const LoanNegotiationPage = () => {
       setEditTerms({
         principalAmount: loan.principalAmount || 0,
         interestRate: loan.interestRate || 0,
-        tenureDays: loan.tenureDays || 0,
+        tenureMonths: loan.tenureMonths || 0,
         repaymentType: loan.repaymentType || 'BULLET',
         emiCount: loan.emiCount || 1,
         expectedLtvPercent: loan.expectedLtvPercent || 50,
@@ -269,11 +270,11 @@ export const LoanNegotiationPage = () => {
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Tenure (Days)</label>
+                <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Tenure (Months)</label>
                 <Input
                   type="number"
-                  value={editTerms.tenureDays}
-                  onChange={(e) => setEditTerms({ ...editTerms, tenureDays: Number(e.target.value) })}
+                  value={editTerms.tenureMonths}
+                  onChange={(e) => setEditTerms({ ...editTerms, tenureMonths: Number(e.target.value) })}
                   disabled={!canEdit}
                   className={`h-11 font-semibold transition-all duration-500 ${
                     showFlash ? 'ring-2 ring-indigo-500 bg-indigo-50/50' : ''
@@ -286,15 +287,24 @@ export const LoanNegotiationPage = () => {
 
             <div className="space-y-4">
               <div className="flex justify-between items-center bg-indigo-50/30 p-3 rounded-xl border border-indigo-50">
-                <span className="text-sm font-medium text-slate-600">Expected LTV</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-medium text-slate-600">Initial BTC Safety Value</span>
+                  <InfoTooltip content="The starting collateral value relative to your loan. 50% means your BTC value is 2x the loan amount." />
+                </div>
                 <span className="text-sm font-bold text-indigo-700">{editTerms.expectedLtvPercent}%</span>
               </div>
               <div className="flex justify-between items-center bg-amber-50/30 p-3 rounded-xl border border-amber-50">
-                <span className="text-sm font-medium text-slate-600">Margin Call LTV</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-medium text-slate-600">Margin Call Threshold</span>
+                  <InfoTooltip content="If your collateral value drops and the ratio hits this %, you'll receive a Margin Call to add more BTC." />
+                </div>
                 <span className="text-sm font-bold text-amber-700">{editTerms.marginCallLtvPercent}%</span>
               </div>
               <div className="flex justify-between items-center bg-red-50/30 p-3 rounded-xl border border-red-100">
-                <span className="text-sm font-medium text-slate-600">Liquidation LTV</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-medium text-slate-600">Liquidation Threshold</span>
+                  <InfoTooltip content="CRITICAL: If the ratio hits this %, your BTC will be liquidated to repay the lender." />
+                </div>
                 <span className="text-sm font-bold text-red-700">{editTerms.liquidationLtvPercent}%</span>
               </div>
             </div>

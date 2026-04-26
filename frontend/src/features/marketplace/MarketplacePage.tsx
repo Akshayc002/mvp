@@ -147,16 +147,16 @@ export const MarketplacePage = () => {
                       <Clock className="h-3 w-3" />
                       Tenure
                     </div>
-                    <div className="text-lg font-bold text-slate-900">{offer.tenure_days} Days</div>
+                    <div className="text-lg font-bold text-slate-900">{offer.tenure_months} Months</div>
                   </div>
                 </div>
                 <div className="pt-4 border-t border-slate-100">
                    <div className="flex items-center justify-between">
                       <div className="flex items-center gap-1.5 text-xs text-slate-500 font-bold uppercase tracking-wider">
                         <BarChart3 className="h-3 w-3" />
-                        Collateral LTV
+                        BTC Min Value
                       </div>
-                      <div className="text-sm font-bold text-slate-900">{offer.expected_ltv}% Target</div>
+                      <div className="text-sm font-bold text-slate-900">{offer.expected_ltv}% Min Value</div>
                    </div>
                    <div className="w-full bg-slate-100 h-1.5 rounded-full mt-2">
                       <div className="bg-indigo-500 h-1.5 rounded-full" style={{ width: `${offer.expected_ltv}%` }} />

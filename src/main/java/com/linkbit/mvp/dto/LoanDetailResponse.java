@@ -20,7 +20,7 @@ public class LoanDetailResponse {
     private String lenderPseudonym;
     private BigDecimal principalAmount;
     private BigDecimal interestRate;
-    private Integer tenureDays;
+    private Integer tenureMonths;
     private RepaymentType repaymentType;
     private Integer emiCount;
     private BigDecimal emiAmount;
@@ -59,7 +59,8 @@ public class LoanDetailResponse {
     @Builder
     public static class ExtensionDetails {
         private UUID requestId;
-        private Integer newTenureDays;
+        @com.fasterxml.jackson.annotation.JsonProperty("newTenureMonths")
+        private Integer newTenureMonths;
         private BigDecimal newInterestRate;
         private String reason;
         private LocalDateTime createdAt;

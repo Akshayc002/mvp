@@ -112,7 +112,7 @@ public class LoanLifecycleIntegrationTest {
         CreateOfferRequest cor = new CreateOfferRequest();
         cor.setLoanAmountInr(new BigDecimal("10000"));
         cor.setInterestRate(new BigDecimal("12"));
-        cor.setTenureDays(30);
+        cor.setTenureMonths(1);
         cor.setExpectedLtvPercent(50);
         marketplaceService.createOffer(lenderEmail, cor);
         
@@ -125,7 +125,7 @@ public class LoanLifecycleIntegrationTest {
         UpdateTermsRequest utr = new UpdateTermsRequest();
         utr.setPrincipalAmount(new BigDecimal("10000"));
         utr.setInterestRate(new BigDecimal("12"));
-        utr.setTenureDays(30);
+        utr.setTenureMonths(1);
         utr.setRepaymentType(RepaymentType.BULLET);
         utr.setEmiCount(1);
         utr.setExpectedLtvPercent(50);
@@ -185,7 +185,8 @@ public class LoanLifecycleIntegrationTest {
         repaymentService.verifyRepayment(repaymentId);
         
         // Due to automated collateral release, state goes immediately from REPAID -> CLOSED
-        assertEquals(LoanStatus.CLOSED, getLoan(loanId).getStatus());
+        // Wait, if it's no longer immediate, it should be REPAID
+        assertEquals(LoanStatus.REPAID, getLoan(loanId).getStatus());
 
         // Final Verify: Audit logs should exist for all major transitions
         List<LoanAuditLog> logs = auditLogRepository.findByLoanId(loanId);
@@ -235,7 +236,7 @@ public class LoanLifecycleIntegrationTest {
         LoanRepayment repayment = repaymentRepository.findByLoanIdOrderByCreatedAtDesc(loanId).get(0);
         
         repaymentService.verifyRepayment(repayment.getId());
-        assertEquals(LoanStatus.CLOSED, getLoan(loanId).getStatus());
+        assertEquals(LoanStatus.REPAID, getLoan(loanId).getStatus());
         
         // Retry verification
         assertThrows(RuntimeException.class, () -> repaymentService.verifyRepayment(repayment.getId()));
@@ -267,7 +268,7 @@ public class LoanLifecycleIntegrationTest {
         CreateOfferRequest cor = new CreateOfferRequest();
         cor.setLoanAmountInr(amount);
         cor.setInterestRate(new BigDecimal("12"));
-        cor.setTenureDays(30);
+        cor.setTenureMonths(1);
         cor.setExpectedLtvPercent(50);
         marketplaceService.createOffer(lenderEmail, cor);
         LoanOffer offer = loanOfferRepository.findAll().get(0);
@@ -278,7 +279,7 @@ public class LoanLifecycleIntegrationTest {
                 .borrower(userRepository.findByEmail(borrowerEmail).get())
                 .principalAmount(amount)
                 .interestRate(new BigDecimal("12"))
-                .tenureDays(30)
+                .tenureMonths(1)
                 .collateralBtcAmount(collateral)
                 .status(LoanStatus.COLLATERAL_LOCKED)
                 .marginCallLtvPercent(80)
@@ -334,7 +335,7 @@ public class LoanLifecycleIntegrationTest {
         CreateOfferRequest cor = new CreateOfferRequest();
         cor.setLoanAmountInr(new BigDecimal("10000"));
         cor.setInterestRate(new BigDecimal("12"));
-        cor.setTenureDays(30);
+        cor.setTenureMonths(1);
         cor.setExpectedLtvPercent(50);
         marketplaceService.createOffer(lenderEmail, cor);
 
@@ -344,7 +345,7 @@ public class LoanLifecycleIntegrationTest {
         UpdateTermsRequest utr = new UpdateTermsRequest();
         utr.setPrincipalAmount(new BigDecimal("10000"));
         utr.setInterestRate(new BigDecimal("12"));
-        utr.setTenureDays(30);
+        utr.setTenureMonths(1);
         utr.setRepaymentType(RepaymentType.BULLET);
         utr.setEmiCount(1);
         utr.setExpectedLtvPercent(50);

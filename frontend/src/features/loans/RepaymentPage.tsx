@@ -453,7 +453,7 @@ export const RepaymentPage = () => {
           loanId={loanId!}
           isOpen={isExtensionModalOpen}
           onClose={() => setIsExtensionModalOpen(false)}
-          currentTenureDays={loan.tenureDays}
+          currentTenureMonths={loan.tenureMonths}
           currentInterestRate={loan.interestRate}
         />
       </div>

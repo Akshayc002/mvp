@@ -21,7 +21,7 @@ interface ExtensionRequestModalProps {
   loanId: string;
   isOpen: boolean;
   onClose: () => void;
-  currentTenureDays: number;
+  currentTenureMonths: number;
   currentInterestRate: number;
 }
 
@@ -29,10 +29,10 @@ export const ExtensionRequestModal: React.FC<ExtensionRequestModalProps> = ({
   loanId,
   isOpen,
   onClose,
-  currentTenureDays,
+  currentTenureMonths,
   currentInterestRate,
 }) => {
-  const [newTenure, setNewTenure] = useState(currentTenureDays + 30);
+  const [newTenure, setNewTenure] = useState(currentTenureMonths + 1);
   const [newInterestRate, setNewInterestRate] = useState(currentInterestRate);
   const [reason, setReason] = useState('');
   const queryClient = useQueryClient();
@@ -40,7 +40,7 @@ export const ExtensionRequestModal: React.FC<ExtensionRequestModalProps> = ({
   const mutation = useMutation({
     mutationFn: async () => {
       await api.post(`/loans/${loanId}/extension`, {
-        newTenureDays: newTenure,
+        newTenureMonths: newTenure,
         newInterestRate: newInterestRate,
         reason: reason,
       });
@@ -66,14 +66,14 @@ export const ExtensionRequestModal: React.FC<ExtensionRequestModalProps> = ({
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid gap-2">
-            <Label htmlFor="tenure">New Tenure (Days)</Label>
+            <Label htmlFor="tenure">New Tenure (Months)</Label>
             <Input
               id="tenure"
               type="number"
               value={newTenure}
               onChange={(e) => setNewTenure(parseInt(e.target.value))}
             />
-            <p className="text-xs text-slate-500">Current: {currentTenureDays} days</p>
+            <p className="text-xs text-slate-500">Current: {currentTenureMonths} months</p>
           </div>
           <div className="grid gap-2">
             <Label htmlFor="rate">New Interest Rate (%)</Label>

@@ -53,7 +53,7 @@ public class ReliabilityIntegrationTest {
                 .lender(lender)
                 .loanAmountInr(new BigDecimal("1000"))
                 .interestRate(new BigDecimal("10"))
-                .tenureDays(30)
+                .tenureMonths(1)
                 .expectedLtvPercent(60)
                 .status(LoanOfferStatus.OPEN)
                 .build());
@@ -64,7 +64,7 @@ public class ReliabilityIntegrationTest {
                 .borrower(borrower)
                 .principalAmount(new BigDecimal("1000"))
                 .interestRate(new BigDecimal("10"))
-                .tenureDays(30)
+                .tenureMonths(1)
                 .status(LoanStatus.AWAITING_FEE)
                 .build());
     }

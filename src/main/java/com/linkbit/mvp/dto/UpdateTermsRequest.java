@@ -29,9 +29,9 @@ public class UpdateTermsRequest {
     private BigDecimal interestRate;
 
     @NotNull
-    @Min(value = 1, message = "Tenure must be at least 1 day")
-    @com.fasterxml.jackson.annotation.JsonProperty("tenureDays")
-    private Integer tenureDays;
+    @Min(value = 1, message = "Tenure must be at least 1 month")
+    @com.fasterxml.jackson.annotation.JsonProperty("tenureMonths")
+    private Integer tenureMonths;
 
     @NotNull
     @com.fasterxml.jackson.annotation.JsonProperty("repaymentType")
@@ -43,8 +43,8 @@ public class UpdateTermsRequest {
     private Integer emiCount;
 
     @NotNull
-    @Min(value = 1, message = "Expected LTV must be at least 1")
-    @Max(value = 90, message = "Expected LTV cannot exceed 90")
+    @Min(value = 40, message = "Expected LTV must be at least 40")
+    @Max(value = 60, message = "Expected LTV cannot exceed 60")
     @com.fasterxml.jackson.annotation.JsonProperty("expectedLtvPercent")
     private Integer expectedLtvPercent;
 

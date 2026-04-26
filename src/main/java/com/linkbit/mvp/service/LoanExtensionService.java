@@ -35,7 +35,7 @@ public class LoanExtensionService {
 
         LoanExtensionRequest request = LoanExtensionRequest.builder()
                 .loan(loan)
-                .newTenureDays(dto.getNewTenureDays())
+                .newTenureMonths(dto.getNewTenureMonths())
                 .newInterestRate(dto.getNewInterestRate())
                 .reason(dto.getReason())
                 .status(LoanExtensionRequest.ExtensionStatus.PENDING)
@@ -59,7 +59,7 @@ public class LoanExtensionService {
 
         if (approve) {
             request.setStatus(LoanExtensionRequest.ExtensionStatus.APPROVED);
-            loan.setTenureDays(request.getNewTenureDays());
+            loan.setTenureMonths(request.getNewTenureMonths());
             if (request.getNewInterestRate() != null) {
                 loan.setInterestRate(request.getNewInterestRate());
             }

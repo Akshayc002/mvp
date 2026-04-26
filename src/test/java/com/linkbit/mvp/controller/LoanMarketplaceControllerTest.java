@@ -104,7 +104,7 @@ class LoanMarketplaceControllerTest {
         request.setLoanAmountInr(new BigDecimal("100000"));
         request.setInterestRate(new BigDecimal("12.5"));
         request.setExpectedLtvPercent(60);
-        request.setTenureDays(90);
+        request.setTenureMonths(3);
 
         mockMvc.perform(post("/offers")
                 .header("Authorization", lenderToken)
@@ -119,7 +119,7 @@ class LoanMarketplaceControllerTest {
         request.setLoanAmountInr(new BigDecimal("100000"));
         request.setInterestRate(new BigDecimal("12.5"));
         request.setExpectedLtvPercent(60);
-        request.setTenureDays(90);
+        request.setTenureMonths(3);
 
         String token = "Bearer " + jwtService.generateToken(pendingUser);
 
@@ -138,7 +138,7 @@ class LoanMarketplaceControllerTest {
                 .loanAmountInr(new BigDecimal("50000"))
                 .interestRate(new BigDecimal("10.0"))
                 .expectedLtvPercent(50)
-                .tenureDays(30)
+                .tenureMonths(1)
                 .status(LoanOfferStatus.OPEN)
                 .build();
         loanOfferRepository.save(offer);
@@ -158,7 +158,7 @@ class LoanMarketplaceControllerTest {
                 .loanAmountInr(new BigDecimal("50000"))
                 .interestRate(new BigDecimal("10.0"))
                 .expectedLtvPercent(50)
-                .tenureDays(30)
+                .tenureMonths(1)
                 .status(LoanOfferStatus.OPEN)
                 .build();
         loanOfferRepository.save(offer);

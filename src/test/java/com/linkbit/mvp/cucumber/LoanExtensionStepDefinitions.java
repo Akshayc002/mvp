@@ -76,7 +76,7 @@ public class LoanExtensionStepDefinitions {
         users.put(lenderName, userRepository.save(lender));
     }
 
-    @Given("an active loan exists between {string} and {string} with {int} days tenure")
+    @Given("an active loan exists between {string} and {string} with {int} months tenure")
     public void setupLoan(String borrowerName, String lenderName, int tenure) {
         User borrower = users.get(borrowerName);
         User lender = users.get(lenderName);
@@ -86,7 +86,7 @@ public class LoanExtensionStepDefinitions {
                 .loanAmountInr(new BigDecimal("100000"))
                 .interestRate(new BigDecimal("10.00"))
                 .expectedLtvPercent(50)
-                .tenureDays(tenure)
+                .tenureMonths(tenure)
                 .status(LoanOfferStatus.OPEN)
                 .build();
         offer = loanOfferRepository.save(offer);
@@ -96,7 +96,7 @@ public class LoanExtensionStepDefinitions {
                 .borrower(borrower)
                 .lender(lender)
                 .status(LoanStatus.ACTIVE)
-                .tenureDays(tenure)
+                .tenureMonths(tenure)
                 .principalAmount(new BigDecimal("100000"))
                 .interestRate(new BigDecimal("10.00"))
                 .collateralBtcAmount(new BigDecimal("1.0")) // Invariant check in StateMachine
@@ -104,11 +104,11 @@ public class LoanExtensionStepDefinitions {
         currentLoan = loanRepository.save(currentLoan);
     }
 
-    @When("{string} requests an extension of {int} days with {int}% interest")
+    @When("{string} requests an extension of {int} months with {int}% interest")
     public void requestExtension(String userName, int tenure, int interest) {
         User user = users.get(userName);
         ExtensionRequestDTO dto = new ExtensionRequestDTO();
-        dto.setNewTenureDays(tenure);
+        dto.setNewTenureMonths(tenure);
         dto.setNewInterestRate(new BigDecimal(interest));
         dto.setReason("Test extension");
 
@@ -119,10 +119,10 @@ public class LoanExtensionStepDefinitions {
         }
     }
 
-    @Given("{string} has a pending extension request for {int} days")
+    @Given("{string} has a pending extension request for {int} months")
     public void setupPendingRequest(String borrowerName, int tenure) {
         ExtensionRequestDTO dto = new ExtensionRequestDTO();
-        dto.setNewTenureDays(tenure);
+        dto.setNewTenureMonths(tenure);
         requestExtension(borrowerName, tenure, 12);
     }
 
@@ -162,10 +162,10 @@ public class LoanExtensionStepDefinitions {
         assertTrue(extensionRequestRepository.findFirstByLoanIdAndStatusOrderByCreatedAtDesc(currentLoan.getId(), LoanExtensionRequest.ExtensionStatus.PENDING).isPresent());
     }
 
-    @Then("the loan tenure should be {int} days")
+    @Then("the loan tenure should be {int} months")
     public void verifyTenure(int tenure) {
         Loan updated = loanRepository.findById(currentLoan.getId()).get();
-        assertEquals(tenure, updated.getTenureDays());
+        assertEquals(tenure, updated.getTenureMonths());
     }
 
     @Then("the extension request status should be {string}")

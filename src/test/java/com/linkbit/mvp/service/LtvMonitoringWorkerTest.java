@@ -64,8 +64,8 @@ public class LtvMonitoringWorkerTest {
                 .lender(lender)
                 .loanAmountInr(new BigDecimal("100000"))
                 .interestRate(new BigDecimal("10"))
-                .tenureDays(30)
-                .expectedLtvPercent(100)
+                .tenureMonths(1)
+                .expectedLtvPercent(60)
                 .status(LoanOfferStatus.OPEN)
                 .build());
 
@@ -75,7 +75,7 @@ public class LtvMonitoringWorkerTest {
                 .borrower(borrower)
                 .principalAmount(offer.getLoanAmountInr())
                 .interestRate(offer.getInterestRate())
-                .tenureDays(30)
+                .tenureMonths(1)
                 .totalOutstanding(new BigDecimal("100000"))
                 .collateralBtcAmount(new BigDecimal("0.02"))
                 .marginCallLtvPercent(80)

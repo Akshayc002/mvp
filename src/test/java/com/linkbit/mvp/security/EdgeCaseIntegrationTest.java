@@ -123,7 +123,7 @@ public class EdgeCaseIntegrationTest {
         CreateOfferRequest cor = new CreateOfferRequest();
         cor.setLoanAmountInr(new BigDecimal("10000"));
         cor.setInterestRate(new BigDecimal("10"));
-        cor.setTenureDays(30);
+        cor.setTenureMonths(1);
         cor.setExpectedLtvPercent(50);
         
         assertThrows(RuntimeException.class, () -> marketplaceService.createOffer(unverifiedEmail, cor));
@@ -175,7 +175,7 @@ public class EdgeCaseIntegrationTest {
         CreateOfferRequest cor = new CreateOfferRequest();
         cor.setLoanAmountInr(principal);
         cor.setInterestRate(new BigDecimal("10"));
-        cor.setTenureDays(30);
+        cor.setTenureMonths(1);
         cor.setExpectedLtvPercent(expectedLtv);
         marketplaceService.createOffer(lenderEmail, cor);
         LoanOffer offer = loanOfferRepository.findAll().get(loanOfferRepository.findAll().size()-1);

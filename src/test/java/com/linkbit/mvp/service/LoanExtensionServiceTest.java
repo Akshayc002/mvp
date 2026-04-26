@@ -50,7 +50,7 @@ class LoanExtensionServiceTest {
                 .borrower(borrower)
                 .lender(lender)
                 .status(LoanStatus.ACTIVE)
-                .tenureDays(30)
+                .tenureMonths(1)
                 .interestRate(new BigDecimal("10.00"))
                 .build();
     }
@@ -58,7 +58,7 @@ class LoanExtensionServiceTest {
     @Test
     void requestExtension_Success() {
         ExtensionRequestDTO dto = new ExtensionRequestDTO();
-        dto.setNewTenureDays(60);
+        dto.setNewTenureMonths(2);
         dto.setNewInterestRate(new BigDecimal("12.00"));
         dto.setReason("Need more time");
 
@@ -76,7 +76,7 @@ class LoanExtensionServiceTest {
     void requestExtension_Failure_NotActive() {
         loan.setStatus(LoanStatus.REPAID);
         ExtensionRequestDTO dto = new ExtensionRequestDTO();
-        dto.setNewTenureDays(60);
+        dto.setNewTenureMonths(2);
 
         when(loanRepository.findById(loanId)).thenReturn(Optional.of(loan));
 
@@ -88,7 +88,7 @@ class LoanExtensionServiceTest {
     @Test
     void requestExtension_Failure_DuplicatePendingRequest() {
         ExtensionRequestDTO dto = new ExtensionRequestDTO();
-        dto.setNewTenureDays(60);
+        dto.setNewTenureMonths(2);
 
         when(loanRepository.findById(loanId)).thenReturn(Optional.of(loan));
         when(extensionRequestRepository.existsByLoanIdAndStatus(loanId, LoanExtensionRequest.ExtensionStatus.PENDING))
@@ -115,7 +115,7 @@ class LoanExtensionServiceTest {
     void respondToExtension_Approve_Success() {
         LoanExtensionRequest request = LoanExtensionRequest.builder()
                 .loan(loan)
-                .newTenureDays(60)
+                .newTenureMonths(2)
                 .newInterestRate(new BigDecimal("12.00"))
                 .status(LoanExtensionRequest.ExtensionStatus.PENDING)
                 .build();
@@ -126,7 +126,7 @@ class LoanExtensionServiceTest {
 
         loanExtensionService.respondToExtension(loanId, true, lender);
 
-        assertEquals(60, loan.getTenureDays());
+        assertEquals(2, loan.getTenureMonths());
         assertEquals(new BigDecimal("12.00"), loan.getInterestRate());
         assertEquals(LoanExtensionRequest.ExtensionStatus.APPROVED, request.getStatus());
         verify(stateMachineService, times(1)).transition(loan, LoanAction.APPROVE_EXTENSION, ActorType.LENDER);

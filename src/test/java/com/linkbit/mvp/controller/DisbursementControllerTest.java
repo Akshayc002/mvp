@@ -85,8 +85,8 @@ public class DisbursementControllerTest {
                 .lender(lender)
                 .loanAmountInr(new BigDecimal("100000"))
                 .interestRate(new BigDecimal("10"))
-                .tenureDays(30)
-                .expectedLtvPercent(150)
+                .tenureMonths(1)
+                .expectedLtvPercent(60)
                 .status(LoanOfferStatus.OPEN)
                 .build());
 
@@ -96,7 +96,7 @@ public class DisbursementControllerTest {
                 .borrower(borrower)
                 .principalAmount(offer.getLoanAmountInr())
                 .interestRate(offer.getInterestRate())
-                .tenureDays(offer.getTenureDays())
+                .tenureMonths(offer.getTenureMonths())
                 .expectedLtvPercent(offer.getExpectedLtvPercent())
                 .collateralBtcAmount(new BigDecimal("1.5"))
                 .status(LoanStatus.COLLATERAL_LOCKED)

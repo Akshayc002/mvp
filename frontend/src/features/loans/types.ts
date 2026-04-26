@@ -27,7 +27,7 @@ export interface LoanSummary {
   counterpartyPseudonym: string;
   principalAmount: number;
   interestRate: number;
-  tenureDays: number;
+  tenureMonths: number;
   repaymentType: RepaymentType;
   emiCount?: number;
   emiAmount?: number;

@@ -23,13 +23,13 @@ public class CreateOfferRequest {
     private BigDecimal interestRate;
 
     @NotNull(message = "Expected LTV is required")
-    @Min(value = 1, message = "LTV must be positive")
-    @Max(value = 90, message = "LTV cannot exceed 90%")
+    @Min(value = 40, message = "LTV must be at least 40%")
+    @Max(value = 60, message = "LTV cannot exceed 60%")
     @JsonProperty("expected_ltv_percent")
     private Integer expectedLtvPercent;
 
     @NotNull(message = "Tenure is required")
-    @Min(value = 1, message = "Tenure must be at least 1 day")
-    @JsonProperty("tenure_days")
-    private Integer tenureDays;
+    @Min(value = 1, message = "Tenure must be at least 1 month")
+    @JsonProperty("tenure_months")
+    private Integer tenureMonths;
 }

@@ -66,7 +66,7 @@ public class DataInitializer implements CommandLineRunner {
                 .loanAmountInr(amount)
                 .interestRate(interest)
                 .expectedLtvPercent(ltv)
-                .tenureDays(tenure)
+                .tenureMonths(tenure)
                 .status(LoanOfferStatus.OPEN)
                 .build();
         return loanOfferRepository.save(offer);

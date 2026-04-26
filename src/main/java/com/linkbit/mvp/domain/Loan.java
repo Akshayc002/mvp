@@ -48,8 +48,8 @@ public class Loan {
     @Column(name = "interest_rate", nullable = false, precision = 5, scale = 2)
     private BigDecimal interestRate;
 
-    @Column(name = "tenure_days", nullable = false)
-    private Integer tenureDays;
+    @Column(name = "tenure_months", nullable = false)
+    private Integer tenureMonths;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "repayment_type")

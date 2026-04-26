@@ -38,8 +38,8 @@ public class LoanOffer {
     @Column(name = "expected_ltv_percent", nullable = false)
     private Integer expectedLtvPercent;
 
-    @Column(name = "tenure_days", nullable = false)
-    private Integer tenureDays;
+    @Column(name = "tenure_months", nullable = false)
+    private Integer tenureMonths;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

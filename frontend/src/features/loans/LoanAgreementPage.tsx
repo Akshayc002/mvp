@@ -130,10 +130,10 @@ export const LoanAgreementPage = () => {
               </div>
               <div className="space-y-1">
                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Tenure</p>
-                <p className="text-lg font-black text-slate-900">{loan.tenureDays} Days</p>
+                <p className="text-lg font-black text-slate-900">{loan.tenureMonths} Months</p>
               </div>
               <div className="space-y-1">
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Expected LTV</p>
+                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">BTC Min Value</p>
                 <p className="text-lg font-black text-slate-900">{loan.expectedLtvPercent}%</p>
               </div>
               <div className="space-y-1">

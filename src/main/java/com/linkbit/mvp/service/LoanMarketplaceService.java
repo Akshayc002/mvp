@@ -60,13 +60,13 @@ public class LoanMarketplaceService {
                 .loanAmountInr(request.getLoanAmountInr())
                 .interestRate(request.getInterestRate())
                 .expectedLtvPercent(request.getExpectedLtvPercent())
-                .tenureDays(request.getTenureDays())
+                .tenureMonths(request.getTenureMonths())
                 .status(LoanOfferStatus.OPEN)
                 .build());
     }
 
     @Transactional(readOnly = true)
-    public List<OfferResponse> getOpenOffers(BigDecimal amount, Integer tenureDays, BigDecimal interestRate, Integer expectedLtv) {
+    public List<OfferResponse> getOpenOffers(BigDecimal amount, Integer tenureMonths, BigDecimal interestRate, Integer expectedLtv) {
         Specification<LoanOffer> spec = (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
             predicates.add(cb.equal(root.get("status"), LoanOfferStatus.OPEN));
@@ -74,8 +74,8 @@ public class LoanMarketplaceService {
             if (amount != null) {
                 predicates.add(cb.equal(root.get("loanAmountInr"), amount));
             }
-            if (tenureDays != null) {
-                predicates.add(cb.equal(root.get("tenureDays"), tenureDays));
+            if (tenureMonths != null) {
+                predicates.add(cb.equal(root.get("tenureMonths"), tenureMonths));
             }
             if (interestRate != null) {
                 predicates.add(cb.equal(root.get("interestRate"), interestRate));
@@ -110,7 +110,7 @@ public class LoanMarketplaceService {
         offer.setLoanAmountInr(request.getLoanAmountInr());
         offer.setInterestRate(request.getInterestRate());
         offer.setExpectedLtvPercent(request.getExpectedLtvPercent());
-        offer.setTenureDays(request.getTenureDays());
+        offer.setTenureMonths(request.getTenureMonths());
         loanOfferRepository.save(offer);
     }
 
@@ -142,7 +142,7 @@ public class LoanMarketplaceService {
                 .borrower(borrower)
                 .principalAmount(offer.getLoanAmountInr())
                 .interestRate(offer.getInterestRate())
-                .tenureDays(offer.getTenureDays())
+                .tenureMonths(offer.getTenureMonths())
                 .expectedLtvPercent(offer.getExpectedLtvPercent())
                 .totalOutstanding(BigDecimal.ZERO)
                 .repaymentType(com.linkbit.mvp.domain.RepaymentType.BULLET)
@@ -167,7 +167,7 @@ public class LoanMarketplaceService {
                 .loanAmount(offer.getLoanAmountInr())
                 .interestRate(offer.getInterestRate())
                 .expectedLtv(offer.getExpectedLtvPercent())
-                .tenureDays(offer.getTenureDays())
+                .tenureMonths(offer.getTenureMonths())
                 .build();
     }
 }

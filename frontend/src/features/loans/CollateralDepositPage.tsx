@@ -211,13 +211,13 @@ export const CollateralDepositPage = () => {
                 <div className="p-7 bg-white">
                   <p className="text-[10px] font-black text-indigo-600 uppercase tracking-widest mb-1.5 flex items-center gap-1">
                     <Info className="h-3 w-3" />
-                    REQUIRED COLLATERAL
+                    REQUIRED BTC VALUE
                   </p>
                   <p className="text-2xl font-black text-slate-900">
                     {requiredBtc.toFixed(4)} BTC
                   </p>
                   <p className="text-[10px] text-slate-400 font-bold mt-1 tracking-tight">
-                    (~₹{loan.principalAmount.toLocaleString()} / {ltvRatio * 100}% LTV)
+                    (~₹{loan.principalAmount.toLocaleString()} / {ltvRatio * 100}% Safety Ratio)
                   </p>
                 </div>
             </div>

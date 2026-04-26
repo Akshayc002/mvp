@@ -55,7 +55,7 @@ public class NegotiationService {
 
         loan.setPrincipalAmount(request.getPrincipalAmount());
         loan.setInterestRate(request.getInterestRate());
-        loan.setTenureDays(request.getTenureDays());
+        loan.setTenureMonths(request.getTenureMonths());
         loan.setRepaymentType(request.getRepaymentType());
         loan.setEmiCount(request.getEmiCount());
         loan.setExpectedLtvPercent(request.getExpectedLtvPercent());
@@ -71,8 +71,8 @@ public class NegotiationService {
         
         loanRepository.saveAndFlush(loan);
 
-        String termsSummary = String.format("Principal: ₹%s, Rate: %s%%, Tenure: %d days", 
-            request.getPrincipalAmount(), request.getInterestRate(), request.getTenureDays());
+        String termsSummary = String.format("Principal: ₹%s, Rate: %s%%, Tenure: %d months", 
+            request.getPrincipalAmount(), request.getInterestRate(), request.getTenureMonths());
         chatService.sendSystemMessage(loanId, "SYSTEM: Terms updated by " + lender.getPseudonym() + ". " + termsSummary);
     }
 
@@ -237,11 +237,11 @@ public class NegotiationService {
     private void calculateRepayment(Loan loan) {
         BigDecimal principal = loan.getPrincipalAmount();
         BigDecimal rate = loan.getInterestRate();
-        Integer tenureDays = loan.getTenureDays();
+        Integer tenureMonths = loan.getTenureMonths();
 
         if (loan.getRepaymentType() == RepaymentType.BULLET) {
             BigDecimal annualRate = rate.divide(new BigDecimal("100"), 10, RoundingMode.HALF_UP);
-            BigDecimal timeInYears = new BigDecimal(tenureDays).divide(new BigDecimal("365"), 10, RoundingMode.HALF_UP);
+            BigDecimal timeInYears = new BigDecimal(tenureMonths).divide(new BigDecimal("12"), 10, RoundingMode.HALF_UP);
             BigDecimal total = principal.add(principal.multiply(annualRate).multiply(timeInYears));
             loan.setEmiCount(1);
             loan.setEmiAmount(total.setScale(2, RoundingMode.HALF_UP));
@@ -249,7 +249,7 @@ public class NegotiationService {
             return;
         }
 
-        int emiCount = loan.getEmiCount() != null && loan.getEmiCount() > 0 ? loan.getEmiCount() : Math.max(1, tenureDays / 30);
+        int emiCount = loan.getEmiCount() != null && loan.getEmiCount() > 0 ? loan.getEmiCount() : Math.max(1, tenureMonths);
         loan.setEmiCount(emiCount);
 
         BigDecimal annualRate = rate.divide(new BigDecimal("100"), 10, RoundingMode.HALF_UP);
@@ -275,7 +275,7 @@ public class NegotiationService {
                 loan.getLender().getId() + ":" +
                 loan.getPrincipalAmount() + ":" +
                 loan.getInterestRate() + ":" +
-                loan.getTenureDays() + ":" +
+                loan.getTenureMonths() + ":" +
                 loan.getRepaymentType() + ":" +
                 loan.getEmiCount() + ":" +
                 loan.getEmiAmount() + ":" +

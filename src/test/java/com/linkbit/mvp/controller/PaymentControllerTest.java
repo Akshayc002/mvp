@@ -104,7 +104,7 @@ public class PaymentControllerTest {
                 .loanAmountInr(new BigDecimal("100000"))
                 .interestRate(new BigDecimal("12.0"))
                 .expectedLtvPercent(60)
-                .tenureDays(90)
+                .tenureMonths(3)
                 .status(LoanOfferStatus.OPEN)
                 .build();
         loanOfferRepository.save(offer);
@@ -115,7 +115,7 @@ public class PaymentControllerTest {
                 .borrower(borrower)
                 .principalAmount(new BigDecimal("100000"))
                 .interestRate(new BigDecimal("12.0"))
-                .tenureDays(90)
+                .tenureMonths(3)
                 .status(LoanStatus.AWAITING_FEE)
                 .build();
         loanRepository.save(loan);

@@ -10,22 +10,22 @@ Feature: Loan Extension Management
 
   Background:
     Given a borrower named "Alice" and a lender named "Bob"
-    And an active loan exists between "Alice" and "Bob" with 30 days tenure
+    And an active loan exists between "Alice" and "Bob" with 1 months tenure
 
   Scenario: Borrower successfully requests an extension
-    When "Alice" requests an extension of 60 days with 12% interest
+    When "Alice" requests an extension of 1 months with 12% interest
     Then the loan status should be "EXTENSION_REQUESTED"
     And a pending extension request should exist for the loan
 
   Scenario: Lender approves an extension request
-    Given "Alice" has a pending extension request for 60 days
+    Given "Alice" has a pending extension request for 1 months
     When "Bob" approves the extension request
     Then the loan status should be "ACTIVE"
-    And the loan tenure should be 60 days
+    Then the loan tenure should be 1 months
     And the extension request status should be "APPROVED"
 
   Scenario: Lender rejects an extension request
-    Given "Alice" has a pending extension request for 60 days
+    Given "Alice" has a pending extension request for 1 months
     When "Bob" rejects the extension request
     Then the loan status should be "ACTIVE"
     And the loan tenure should be 30 days

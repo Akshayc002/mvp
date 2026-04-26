@@ -94,7 +94,7 @@ class NegotiationControllerTest {
                 .loanAmountInr(new BigDecimal("100000"))
                 .interestRate(new BigDecimal("12.0"))
                 .expectedLtvPercent(60)
-                .tenureDays(90)
+                .tenureMonths(3)
                 .status(LoanOfferStatus.OPEN)
                 .build();
         loanOfferRepository.save(offer);
@@ -106,7 +106,7 @@ class NegotiationControllerTest {
                 .borrower(borrower)
                 .principalAmount(new BigDecimal("100000"))
                 .interestRate(new BigDecimal("12.0"))
-                .tenureDays(90)
+                .tenureMonths(3)
                 .status(LoanStatus.NEGOTIATING)
                 .build();
         loanRepository.save(loan);
@@ -117,7 +117,7 @@ class NegotiationControllerTest {
         UpdateTermsRequest request = new UpdateTermsRequest();
         request.setPrincipalAmount(new BigDecimal("90000"));
         request.setInterestRate(new BigDecimal("11.5"));
-        request.setTenureDays(60);
+        request.setTenureMonths(2);
         request.setRepaymentType(RepaymentType.EMI);
         request.setEmiCount(2);
         request.setExpectedLtvPercent(55);
@@ -137,7 +137,7 @@ class NegotiationControllerTest {
         UpdateTermsRequest request = new UpdateTermsRequest();
         request.setPrincipalAmount(new BigDecimal("100000"));
         request.setInterestRate(new BigDecimal("12.0"));
-        request.setTenureDays(90);
+        request.setTenureMonths(3);
         request.setRepaymentType(RepaymentType.EMI);
         request.setEmiCount(3);
         request.setExpectedLtvPercent(60);

@@ -7,7 +7,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Calculator } from 'lucide-react';
+import { InfoTooltip } from '@/components/InfoTooltip';
 
 export const CreateOfferPage = () => {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ export const CreateOfferPage = () => {
     loanAmountInr: '',
     interestRate: '',
     expectedLtvPercent: '',
-    tenureDays: ''
+    tenureMonths: ''
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,7 +49,7 @@ export const CreateOfferPage = () => {
         loan_amount_inr: Number(formData.loanAmountInr),
         interest_rate: Number(formData.interestRate),
         expected_ltv_percent: Number(formData.expectedLtvPercent),
-        tenure_days: Number(formData.tenureDays)
+        tenure_months: Number(formData.tenureMonths)
       });
       navigate('/marketplace');
     } catch (err: unknown) {
@@ -63,7 +64,7 @@ export const CreateOfferPage = () => {
       <Card className="border-slate-200 shadow-sm">
         <CardHeader>
           <CardTitle className="text-2xl text-slate-900">Create Loan Offer</CardTitle>
-          <CardDescription>Specify the terms for your loan offer to borrowers</CardDescription>
+          <CardDescription>Specify the terms for your loan offer. BTC collateral is used for safety.</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -74,7 +75,10 @@ export const CreateOfferPage = () => {
             )}
             
             <div className="space-y-2">
-              <Label htmlFor="loanAmountInr" className="text-slate-700">Loan Amount (₹)</Label>
+              <div className="flex items-center gap-2">
+                <Label htmlFor="loanAmountInr" className="text-slate-700">Loan Amount (₹)</Label>
+                <InfoTooltip content="The total amount of INR you are willing to lend to a borrower." />
+              </div>
               <Input 
                 id="loanAmountInr" 
                 name="loanAmountInr" 
@@ -90,7 +94,10 @@ export const CreateOfferPage = () => {
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="interestRate" className="text-slate-700">Interest Rate (%)</Label>
+                <div className="flex items-center gap-2">
+                  <Label htmlFor="interestRate" className="text-slate-700">Interest Rate (%)</Label>
+                  <InfoTooltip content="The annual interest rate (APR) you want to earn. Interest is calculated on the principal amount." />
+                </div>
                 <Input 
                   id="interestRate" 
                   name="interestRate" 
@@ -107,15 +114,18 @@ export const CreateOfferPage = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="expectedLtvPercent" className="text-slate-700">Expected LTV (%)</Label>
+                <div className="flex items-center gap-2">
+                  <Label htmlFor="expectedLtvPercent" className="text-slate-700">BTC Min Value (%)</Label>
+                  <InfoTooltip content="Also known as Loan-to-Value (LTV). Lenders must offer between 40% and 60% for platform safety. A lower % means MORE BTC collateral is required." />
+                </div>
                 <Input 
                   id="expectedLtvPercent" 
                   name="expectedLtvPercent" 
                   type="number" 
                   required 
-                  min="1"
-                  max="90"
-                  placeholder="e.g. 60"
+                  min="40"
+                  max="60"
+                  placeholder="e.g. 50"
                   value={formData.expectedLtvPercent}
                   onChange={handleChange}
                   className="focus-visible:ring-indigo-500"
@@ -124,19 +134,40 @@ export const CreateOfferPage = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="tenureDays" className="text-slate-700">Tenure (Days)</Label>
+              <div className="flex items-center gap-2">
+                <Label htmlFor="tenureMonths" className="text-slate-700">Tenure (Months)</Label>
+                <InfoTooltip content="The duration of the loan in months. Interest will be calculated annually over this period." />
+              </div>
               <Input 
-                id="tenureDays" 
-                name="tenureDays" 
+                id="tenureMonths" 
+                name="tenureMonths" 
                 type="number" 
                 required 
                 min="1"
-                placeholder="e.g. 30"
-                value={formData.tenureDays}
+                placeholder="e.g. 1"
+                value={formData.tenureMonths}
                 onChange={handleChange}
                 className="focus-visible:ring-indigo-500"
               />
             </div>
+
+            {formData.loanAmountInr && formData.expectedLtvPercent && (
+              <div className="p-4 bg-indigo-50 border border-indigo-100 rounded-xl space-y-2 animate-in slide-in-from-top-2 duration-300">
+                <div className="flex items-center gap-2 text-indigo-700 font-bold text-sm">
+                  <Calculator className="h-4 w-4" />
+                  Collateral Requirement Estimate
+                </div>
+                <p className="text-xs text-indigo-600/80 leading-relaxed">
+                  To borrow ₹{Number(formData.loanAmountInr).toLocaleString()}, the borrower must provide BTC worth at least:
+                </p>
+                <div className="text-xl font-black text-indigo-900">
+                  ₹{(Number(formData.loanAmountInr) / (Number(formData.expectedLtvPercent) / 100)).toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                </div>
+                <p className="text-[10px] text-indigo-500 font-medium italic">
+                  * This represents a {formData.expectedLtvPercent}% safety ratio.
+                </p>
+              </div>
+            )}
 
             <Button type="submit" className="w-full bg-indigo-600 hover:bg-indigo-700 text-white" disabled={loading}>
               {loading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}

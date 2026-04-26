@@ -29,6 +29,6 @@ public class OfferResponse {
     @JsonProperty("expected_ltv")
     private Integer expectedLtv;
 
-    @JsonProperty("tenure_days")
-    private Integer tenureDays;
+    @com.fasterxml.jackson.annotation.JsonProperty("tenure_months")
+    private Integer tenureMonths;
 }

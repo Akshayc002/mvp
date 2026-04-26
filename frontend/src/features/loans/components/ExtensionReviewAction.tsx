@@ -10,7 +10,7 @@ import { Check, X, Loader2, CalendarClock } from 'lucide-react';
 interface ExtensionReviewActionProps {
   loanId: string;
   pendingExtension?: {
-    newTenureDays: number;
+    newTenureMonths: number;
     newInterestRate?: number | null;
     reason?: string | null;
   } | null;
@@ -49,7 +49,7 @@ export const ExtensionReviewAction: React.FC<ExtensionReviewActionProps> = ({ lo
           <div className="mb-4 grid gap-2 rounded-md border border-indigo-100 bg-white p-3 text-sm text-slate-700">
             <div className="flex justify-between gap-4">
               <span className="font-medium">Proposed tenure</span>
-              <span>{pendingExtension.newTenureDays} days</span>
+              <span>{pendingExtension.newTenureMonths} months</span>
             </div>
             {pendingExtension.newInterestRate != null && (
               <div className="flex justify-between gap-4">

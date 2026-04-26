@@ -30,11 +30,11 @@ public class LoanMarketplaceController {
     @GetMapping("/offers")
     public ResponseEntity<List<OfferResponse>> getOffers(
             @RequestParam(value = "amount", required = false) BigDecimal amount,
-            @RequestParam(value = "tenure_days", required = false) Integer tenureDays,
+            @RequestParam(value = "tenure_months", required = false) Integer tenureMonths,
             @RequestParam(value = "interest_rate", required = false) BigDecimal interestRate,
             @RequestParam(value = "expected_ltv_percent", required = false) Integer expectedLtv) {
         
-        return ResponseEntity.ok(loanMarketplaceService.getOpenOffers(amount, tenureDays, interestRate, expectedLtv));
+        return ResponseEntity.ok(loanMarketplaceService.getOpenOffers(amount, tenureMonths, interestRate, expectedLtv));
     }
 
     @PutMapping("/offers/{offerId}")
