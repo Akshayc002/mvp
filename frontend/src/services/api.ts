@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useAuthStore } from '@/store/authStore';
+import { useSettingsStore } from '@/store/settingsStore';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
 
@@ -16,6 +17,12 @@ api.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+
+    const isSimMode = useSettingsStore.getState().simulationMode;
+    if (isSimMode) {
+      config.headers['X-Simulation-Mode'] = 'true';
+    }
+
     return config;
   },
   (error) => {

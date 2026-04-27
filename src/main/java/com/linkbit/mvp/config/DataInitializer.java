@@ -35,6 +35,16 @@ public class DataInitializer implements CommandLineRunner {
         // 1. Create Admin User
         createUser("admin@linkbit.com", "SystemAdmin", "0000000000", KycStatus.VERIFIED, ActorType.ADMIN);
 
+        // 2. Create Sample Lenders
+        User lender1 = createUser("lender1@example.com", "CryptoCapital", "9876543210", KycStatus.VERIFIED, ActorType.CLIENT);
+        User lender2 = createUser("lender2@example.com", "SatStacker", "8765432109", KycStatus.VERIFIED, ActorType.CLIENT);
+
+        // 3. Create Sample Offers
+        createOffer(lender1, new BigDecimal("50000"), new BigDecimal("12.5"), 60, 6);
+        createOffer(lender1, new BigDecimal("100000"), new BigDecimal("11.0"), 50, 12);
+        createOffer(lender2, new BigDecimal("25000"), new BigDecimal("14.0"), 70, 3);
+        createOffer(lender2, new BigDecimal("500000"), new BigDecimal("9.5"), 40, 24);
+
         log.info("Sample data seeded successfully.");
     }
 

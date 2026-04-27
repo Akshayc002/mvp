@@ -100,7 +100,7 @@ export const AnalyticsPage = () => {
             </CardTitle>
             <CardDescription>Monthly interest income over the last 6 months</CardDescription>
           </CardHeader>
-          <CardContent className="p-8 h-[350px]">
+          <CardContent className="p-8 min-h-[400px]">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={earningsHistory}>
                 <defs>
@@ -131,7 +131,7 @@ export const AnalyticsPage = () => {
             </CardTitle>
             <CardDescription>Portfolio risk distribution</CardDescription>
           </CardHeader>
-          <CardContent className="p-8 flex flex-col items-center">
+          <CardContent className="p-8 flex flex-col items-center min-h-[350px]">
             <div className="h-[200px] w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>

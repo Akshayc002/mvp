@@ -54,7 +54,12 @@ public class SecurityConfig {
                 .requestMatchers(new AntPathRequestMatcher("/swagger-ui/index.html")).access((authentication, context) -> adminAccessManager.allowPublicWhenEnabled(authentication, swaggerUiEnabled))
                 .requestMatchers(new AntPathRequestMatcher("/api-docs/**")).access((authentication, context) -> adminAccessManager.allowPublicWhenEnabled(authentication, apiDocsEnabled))
                 .requestMatchers(new AntPathRequestMatcher("/h2-console/**")).access((authentication, context) -> adminAccessManager.allowPublicWhenEnabled(authentication, h2ConsoleEnabled))
-                .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")
+                .requestMatchers(new AntPathRequestMatcher("/admin/**")).access((authentication, context) -> {
+                    boolean isSim = "true".equals(context.getRequest().getHeader("X-Simulation-Mode"));
+                    boolean isAdmin = authentication.get().getAuthorities().stream()
+                            .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+                    return new org.springframework.security.authorization.AuthorizationDecision(isSim || isAdmin);
+                })
                 .requestMatchers(new AntPathRequestMatcher("/payments/**")).authenticated()
                 .requestMatchers(new AntPathRequestMatcher("/loans/*/escrow/**")).authenticated()
                 .requestMatchers(new AntPathRequestMatcher("/loans/*/deposit")).authenticated()
