@@ -15,15 +15,20 @@ import {
   Clock, 
   ArrowRight,
   ExternalLink,
-  Info
+  Info,
+  Zap
 } from 'lucide-react';
+import { toast } from 'sonner';
+import { useSettingsStore } from '@/store/settingsStore';
 import { useState, useEffect } from 'react';
 import { getLoanRoute } from './loanRoutes';
+import { LoanProgressStepper } from './components/LoanStepper';
 
 export const CollateralDepositPage = () => {
   const { id: loanId } = useParams();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { simulationMode } = useSettingsStore();
   const [copied, setCopied] = useState(false);
   const [amountBtc, setAmountBtc] = useState('');
   const [txId, setTxId] = useState('');
@@ -118,7 +123,12 @@ export const CollateralDepositPage = () => {
   const requiredBtc = btcPrice > 0 ? (loan.principalAmount / (ltvRatio * btcPrice)) : 0;
 
   return (
-    <div className="max-w-4xl mx-auto py-12 px-6">
+    <div className="flex flex-col gap-8 max-w-5xl mx-auto">
+      <div className="glass rounded-[2.5rem] p-4 shadow-sm border border-slate-200/50">
+        <LoanProgressStepper currentStatus={loan.status} />
+      </div>
+
+      <div className="w-full">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
         
         {/* LEFT: Instructions & Status */}
@@ -348,6 +358,27 @@ export const CollateralDepositPage = () => {
                </div>
             </CardFooter>
           </Card>
+
+          {simulationMode && loan.hasPendingDeposit && (
+            <div className="p-6 glass-indigo rounded-[2rem] border border-indigo-100 flex flex-col gap-4">
+              <div className="flex items-center gap-2">
+                <Zap className="h-4 w-4 text-indigo-600" />
+                <p className="text-xs font-black text-indigo-600 uppercase tracking-widest">Simulate Blockchain Confirmation</p>
+              </div>
+              <Button 
+                onClick={async () => {
+                  try {
+                    await api.post(`/admin/loans/${loanId}/collateral/verify`);
+                    toast.success('Collateral Verified!');
+                    queryClient.invalidateQueries({ queryKey: ['loan', loanId] });
+                  } catch (e) { toast.error('Verification failed'); }
+                }}
+                className="bg-indigo-600 text-white font-black text-xs uppercase rounded-xl h-12 shadow-lg"
+              >
+                Auto-Confirm BTC Deposit
+              </Button>
+            </div>
+          )}
         </div>
 
         {/* BOTTOM: NAVIGATION */}
@@ -376,7 +407,8 @@ export const CollateralDepositPage = () => {
 
       </div>
     </div>
-  );
+  </div>
+);
 };
 
 // Helper for Icons missing in Lucide standard import but mentioned in plan/UI

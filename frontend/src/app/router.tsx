@@ -16,6 +16,7 @@ import { RepaymentPage } from '@/features/loans/RepaymentPage';
 import { LoanClosurePage } from '@/features/loans/LoanClosurePage';
 import { AdminDashboardPage } from '@/features/admin/AdminDashboardPage';
 import { ProfilePage } from '@/features/profile/ProfilePage';
+import { AnalyticsPage } from '@/features/dashboard/AnalyticsPage';
 
 const Marketplace = () => <MarketplacePage />;
 const CreateOffer = () => <CreateOfferPage />;
@@ -58,6 +59,10 @@ export const router = createBrowserRouter([
           {
             path: 'marketplace',
             element: <Marketplace />,
+          },
+          {
+            path: 'analytics',
+            element: <AnalyticsPage />,
           },
           {
             path: 'offers/create',

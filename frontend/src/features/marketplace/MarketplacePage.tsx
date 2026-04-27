@@ -19,19 +19,19 @@ import {
 import { useState } from 'react';
 
 const OfferSkeleton = () => (
-  <Card className="border-slate-200 animate-pulse">
+  <Card className="border-slate-200 dark:border-slate-800 animate-pulse">
     <CardHeader className="space-y-2">
-      <div className="h-6 bg-slate-200 rounded w-3/4" />
-      <div className="h-4 bg-slate-100 rounded w-1/2" />
+      <div className="h-6 bg-slate-200 dark:bg-slate-800 rounded w-3/4" />
+      <div className="h-4 bg-slate-100 dark:bg-slate-700 rounded w-1/2" />
     </CardHeader>
     <CardContent className="space-y-4">
       <div className="grid grid-cols-2 gap-4">
-        <div className="h-10 bg-slate-50 rounded" />
-        <div className="h-10 bg-slate-50 rounded" />
+        <div className="h-10 bg-slate-50 dark:bg-slate-800/50 rounded" />
+        <div className="h-10 bg-slate-50 dark:bg-slate-800/50 rounded" />
       </div>
     </CardContent>
     <CardFooter>
-      <div className="h-10 bg-slate-200 rounded w-full" />
+      <div className="h-10 bg-slate-200 dark:bg-slate-800 rounded w-full" />
     </CardFooter>
   </Card>
 );
@@ -101,15 +101,15 @@ export const MarketplacePage = () => {
     <div className="space-y-8 animate-in fade-in duration-500">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Loan Marketplace</h1>
-          <p className="text-slate-500 mt-1">Discover peer-to-peer loan offers with BTC collateral</p>
+          <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight uppercase">Loan Marketplace</h1>
+          <p className="text-slate-500 dark:text-slate-400 mt-1 font-medium">Discover peer-to-peer loan offers with BTC collateral</p>
         </div>
         <div className="relative w-full md:w-64">
            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
            <input 
               type="text" 
               placeholder="Filter offers..." 
-              className="w-full pl-10 pr-4 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
+              className="w-full pl-10 pr-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all dark:text-white"
            />
         </div>
       </div>

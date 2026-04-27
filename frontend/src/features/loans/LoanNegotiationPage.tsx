@@ -26,6 +26,7 @@ import {
   ArrowRight
 } from 'lucide-react';
 import { InfoTooltip } from '@/components/InfoTooltip';
+import { LoanProgressStepper } from './components/LoanStepper';
 
 interface ChatMessage {
   loan_id: string;
@@ -155,7 +156,12 @@ export const LoanNegotiationPage = () => {
   const hasOtherAgreed = isLender ? loan.borrowerFinalized : loan.lenderFinalized;
 
   return (
-    <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 h-[calc(100vh-10rem)]">
+    <div className="flex flex-col gap-8 max-w-7xl mx-auto">
+      <div className="glass rounded-[2.5rem] p-4 shadow-sm border border-slate-200/50">
+        <LoanProgressStepper currentStatus={loan.status} />
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 h-[calc(100vh-16rem)]">
       {/* LEFT: CHAT */}
       <Card className="lg:col-span-7 flex flex-col overflow-hidden border-slate-200 shadow-lg">
         <CardHeader className="border-b bg-slate-50/50 flex flex-row items-center justify-between py-4">
@@ -393,7 +399,6 @@ export const LoanNegotiationPage = () => {
                   <XCircle className="h-4 w-4 mr-2" />
                   Cancel
                 </Button>
-              </div>
             </>
           ) : (
             <div className="w-full py-4 text-center">
@@ -418,5 +423,6 @@ export const LoanNegotiationPage = () => {
         </CardFooter>
       </Card>
     </div>
-  );
+  </div>
+);
 };

@@ -56,7 +56,7 @@ export const NotificationBell = () => {
       </button>
 
       {open && (
-        <div className="absolute right-0 top-12 z-50 w-80 bg-white border border-slate-100 rounded-3xl shadow-2xl overflow-hidden">
+        <div className="absolute right-0 top-12 z-50 w-80 glass rounded-[2rem] shadow-2xl overflow-hidden animate-in zoom-in-95 fade-in duration-200">
           {/* Header */}
           <div className="flex items-center justify-between px-5 py-4 border-b border-slate-50">
             <p className="text-xs font-black text-slate-900 uppercase tracking-widest">Notifications</p>

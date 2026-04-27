@@ -5,9 +5,12 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Loader2, User, Mail, Phone, ShieldCheck, Building, UserCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useSettingsStore } from '@/store/settingsStore';
+import { Terminal, Zap, Info } from 'lucide-react';
 
 export const ProfilePage = () => {
   const { user: authUser } = useAuthStore();
+  const { simulationMode, toggleSimulationMode } = useSettingsStore();
   
   const { data: profile, isLoading, error } = useQuery({
     queryKey: ['profile'],
@@ -131,6 +134,55 @@ export const ProfilePage = () => {
           </CardContent>
         </Card>
       </div>
+
+      <Card className="border-indigo-100 bg-indigo-50/30 overflow-hidden rounded-[2.5rem] shadow-xl glass-indigo">
+        <CardHeader className="bg-white/50 border-b border-indigo-100 p-8">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="p-3 bg-indigo-600 rounded-2xl shadow-lg shadow-indigo-200">
+                <Terminal className="h-6 w-6 text-white" />
+              </div>
+              <div>
+                <CardTitle className="text-xl font-black text-slate-900 tracking-tight uppercase">Developer Settings</CardTitle>
+                <CardDescription className="text-slate-500 font-medium">Testing tools and simulation overrides</CardDescription>
+              </div>
+            </div>
+            <div className="flex items-center gap-4 bg-white/80 p-2 rounded-2xl shadow-inner border border-indigo-100">
+              <span className={`text-[10px] font-black uppercase tracking-widest ${simulationMode ? 'text-indigo-600' : 'text-slate-400'}`}>
+                {simulationMode ? 'Active' : 'Disabled'}
+              </span>
+              <button 
+                onClick={toggleSimulationMode}
+                className={`w-14 h-8 rounded-xl transition-all duration-500 relative flex items-center px-1 ${
+                  simulationMode ? 'bg-indigo-600' : 'bg-slate-200 shadow-inner'
+                }`}
+              >
+                <div className={`w-6 h-6 bg-white rounded-lg shadow-md transition-all duration-500 ${
+                  simulationMode ? 'translate-x-6' : 'translate-x-0'
+                }`} />
+              </button>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent className="p-8 space-y-6">
+          <div className="flex items-start gap-4 p-5 bg-white/60 rounded-3xl border border-indigo-100 shadow-sm">
+            <Zap className="h-6 w-6 text-indigo-500 shrink-0 mt-1" />
+            <div>
+              <p className="text-sm font-black text-slate-900 uppercase tracking-tight">Simulation Mode</p>
+              <p className="text-xs text-slate-500 font-medium mt-1 leading-relaxed">
+                When active, you will see "Auto-Approve" triggers on waiting pages. This allows you to simulate Admin actions (like KYC verification or payment confirmation) without switching to the Admin Panel.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3 p-4 bg-amber-50/50 rounded-2xl border border-amber-200/50">
+            <Info className="h-4 w-4 text-amber-500" />
+            <p className="text-[10px] text-amber-700 font-bold uppercase tracking-tight">
+              Only use this for testing and feature exploration.
+            </p>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };

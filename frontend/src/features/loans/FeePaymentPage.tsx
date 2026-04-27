@@ -12,14 +12,19 @@ import {
   CheckCircle2, 
   ShieldCheck,
   ArrowRight,
-  Info
+  Info,
+  Zap
 } from 'lucide-react';
+import { toast } from 'sonner';
+import { useSettingsStore } from '@/store/settingsStore';
 import { getLoanRoute } from './loanRoutes';
+import { LoanProgressStepper } from './components/LoanStepper';
 
 export const FeePaymentPage = () => {
   const { id: loanId } = useParams();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { simulationMode } = useSettingsStore();
 
   const { data: loan, isLoading } = useQuery({
     queryKey: ['loan', loanId],
@@ -48,7 +53,12 @@ export const FeePaymentPage = () => {
   const isMyFeePending = myFee?.status === 'PENDING';
 
   return (
-    <div className="max-w-3xl mx-auto py-12 px-4">
+    <div className="flex flex-col gap-8 max-w-4xl mx-auto">
+      <div className="glass rounded-[2.5rem] p-4 shadow-sm border border-slate-200/50">
+        <LoanProgressStepper currentStatus={loan.status} />
+      </div>
+
+      <div className="w-full">
       <div className="mb-8 text-center animate-in fade-in slide-in-from-top-4 duration-700">
         <div className="inline-flex items-center justify-center p-3 bg-indigo-100 rounded-2xl mb-4 shadow-inner">
           <Coins className="h-8 w-8 text-indigo-600" />
@@ -166,6 +176,47 @@ export const FeePaymentPage = () => {
               </div>
             </div>
           )}
+
+          {simulationMode && (myFee?.status === 'PENDING' || otherFee?.status === 'PENDING') && (
+            <div className="mt-4 p-4 glass-indigo rounded-3xl border border-indigo-100 flex flex-col gap-3">
+               <p className="text-[10px] font-black text-indigo-600 uppercase tracking-widest flex items-center gap-2">
+                 <Zap className="h-3 w-3" />
+                 Simulation Tools
+               </p>
+               <div className="flex gap-2">
+                 {myFee?.status === 'PENDING' && (
+                   <Button 
+                    size="sm"
+                    className="flex-1 bg-indigo-600 text-white text-[10px] font-black uppercase rounded-xl h-9"
+                    onClick={async () => {
+                      try {
+                        await api.post(`/admin/fees/${myFee.feeId}/verify`);
+                        toast.success('Your fee verified');
+                        queryClient.invalidateQueries({ queryKey: ['loan', loanId] });
+                      } catch (e) { toast.error('Failed to verify'); }
+                    }}
+                   >
+                     Verify My Fee
+                   </Button>
+                 )}
+                 {otherFee?.status === 'PENDING' && (
+                   <Button 
+                    size="sm"
+                    className="flex-1 bg-indigo-600 text-white text-[10px] font-black uppercase rounded-xl h-9"
+                    onClick={async () => {
+                      try {
+                        await api.post(`/admin/fees/${otherFee.feeId}/verify`);
+                        toast.success("Counterparty's fee verified");
+                        queryClient.invalidateQueries({ queryKey: ['loan', loanId] });
+                      } catch (e) { toast.error('Failed to verify'); }
+                    }}
+                   >
+                     Verify Other's Fee
+                   </Button>
+                 )}
+               </div>
+            </div>
+          )}
         </CardContent>
 
         <CardFooter className="bg-slate-50 border-t p-8 flex flex-col gap-4">
@@ -223,5 +274,6 @@ export const FeePaymentPage = () => {
         </CardFooter>
       </Card>
     </div>
-  );
+  </div>
+);
 };

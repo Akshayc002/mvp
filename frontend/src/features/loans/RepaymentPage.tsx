@@ -20,17 +20,24 @@ import {
   FileSearch,
   Receipt,
   ImageIcon,
-  CalendarClock
+  CalendarClock,
+  Bitcoin
 } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import { useState } from 'react';
 import { format } from 'date-fns';
 import { ExtensionRequestModal } from './components/ExtensionRequestModal';
 import { ExtensionReviewAction } from './components/ExtensionReviewAction';
+import { LoanProgressStepper } from './components/LoanStepper';
+import { useSettingsStore } from '@/store/settingsStore';
+import { toast } from 'sonner';
+import { Zap } from 'lucide-react';
 
 export const RepaymentPage = () => {
   const { id: loanId } = useParams();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { simulationMode } = useSettingsStore();
   const [repayAmount, setRepayAmount] = useState('');
   const [txRef, setTxRef] = useState('');
   const [proofUrl, setProofUrl] = useState('');
@@ -45,6 +52,12 @@ export const RepaymentPage = () => {
       return res.data;
     },
     refetchInterval: 3000,
+  });
+
+  const { data: btcPriceData } = useQuery({
+    queryKey: ['btc-price'],
+    queryFn: async () => (await api.get('/btc-price')).data,
+    refetchInterval: 10000,
   });
 
   // 2. Fetch Ledger
@@ -92,8 +105,21 @@ export const RepaymentPage = () => {
   const progressPercent = Math.min(100, Math.round((totalRepaidAmount / loan.totalRepaymentAmount) * 100));
   const isFullyRepaid = loan.totalOutstanding <= 0;
 
+  const btcPrice = btcPriceData?.inr || 0;
+  const currentCollateralValueInr = (loan.collateralAmount || 0) * btcPrice;
+  const currentLtv = currentCollateralValueInr > 0 ? (loan.totalOutstanding / currentCollateralValueInr) * 100 : 0;
+  
+  const isHealthy = currentLtv < 70;
+  const isWarning = currentLtv >= 70 && currentLtv < 85;
+  const isCritical = currentLtv >= 85;
+
   return (
-    <div className="max-w-5xl mx-auto py-12 px-6">
+    <div className="flex flex-col gap-8 max-w-7xl mx-auto">
+      <div className="glass rounded-[2.5rem] p-4 shadow-sm border border-slate-200/50">
+        <LoanProgressStepper currentStatus={loan.status} />
+      </div>
+
+      <div className="w-full">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
         {/* HEADER & BALANCE HUD */}
@@ -110,8 +136,8 @@ export const RepaymentPage = () => {
                   {isFullyRepaid ? 'FULLY REPAID' : 'ACTIVE LOAN'}
                 </Badge>
               </div>
-              <h1 className="text-4xl font-black text-slate-900 tracking-tight lg:text-5xl uppercase">Loan Repayment</h1>
-              <p className="mt-2 text-slate-500 font-medium italic">Settle your outstanding balance to release collateral</p>
+              <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight lg:text-5xl uppercase">Loan Repayment</h1>
+              <p className="mt-2 text-slate-500 dark:text-slate-400 font-medium italic">Settle your outstanding balance to release collateral</p>
             </div>
             
             <div className="bg-white p-6 rounded-[2rem] shadow-xl border border-slate-100 min-w-[280px]">
@@ -131,6 +157,61 @@ export const RepaymentPage = () => {
               </div>
             </div>
           </div>
+
+          <Card className="glass-indigo rounded-[2rem] border-none shadow-xl p-8 overflow-hidden relative">
+            <div className="absolute top-0 right-0 p-8 opacity-5">
+              <ShieldCheck className="h-24 w-24" />
+            </div>
+            <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+              <div className="flex items-center gap-6">
+                <div className={cn(
+                  "p-4 rounded-3xl shadow-lg",
+                  isHealthy ? "bg-green-500 text-white" : 
+                  isWarning ? "bg-amber-500 text-white" : 
+                  isCritical ? "bg-red-500 text-white animate-pulse" : "bg-slate-500 text-white"
+                )}>
+                  <Zap className="h-8 w-8" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight uppercase">Loan Health Monitor</h3>
+                  <div className="flex items-center gap-3 mt-1">
+                    <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase">Current LTV: {currentLtv.toFixed(2)}%</p>
+                    <div className="h-1 w-1 rounded-full bg-slate-300 dark:bg-slate-700" />
+                    <p className={cn(
+                      "text-xs font-black uppercase tracking-widest",
+                      isHealthy ? "text-green-600" : isWarning ? "text-amber-600" : isCritical ? "text-red-600" : "text-slate-600 dark:text-slate-400"
+                    )}>
+                      {isHealthy ? 'Healthy' : isWarning ? 'Warning' : 'Critical'}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex-1 max-w-md w-full">
+                <div className="flex items-center justify-between mb-2 text-[10px] font-black uppercase tracking-widest text-slate-400">
+                  <span>Safety Margin</span>
+                  <span>Liquidation at 90%</span>
+                </div>
+                <div className="h-4 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden p-1 shadow-inner">
+                  <div 
+                    className={cn(
+                      "h-full rounded-full transition-all duration-1000",
+                      isHealthy ? "bg-green-500" : isWarning ? "bg-amber-500" : isCritical ? "bg-red-500" : "bg-slate-500"
+                    )}
+                    style={{ width: `${Math.min(100, (currentLtv / 90) * 100)}%` }}
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">BTC Collateral</p>
+                <div className="px-6 py-2 bg-white dark:bg-slate-800 rounded-2xl border border-indigo-100 dark:border-indigo-900 shadow-sm flex items-center gap-2">
+                  <Bitcoin className="h-4 w-4 text-orange-400" />
+                  <span className="text-sm font-black text-slate-900 dark:text-white">{loan.collateralAmount} BTC</span>
+                </div>
+              </div>
+            </div>
+          </Card>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
              <Card className="bg-slate-900 text-white rounded-[2rem] border-none shadow-2xl relative overflow-hidden group">
@@ -361,7 +442,7 @@ export const RepaymentPage = () => {
                                 <p className="text-[10px] text-slate-400 font-bold uppercase">{rep.transactionReference}</p>
                               </div>
                             </div>
-                            <div className="text-right">
+                            <div className="text-right flex flex-col items-end gap-2">
                                 <Badge className={`rounded-full px-4 py-1 text-[10px] font-black uppercase ${
                                   rep.status === 'VERIFIED' ? 'bg-green-100 text-green-700 border-none' :
                                   rep.status === 'REJECTED' ? 'bg-red-100 text-red-700 border-none' :
@@ -369,7 +450,23 @@ export const RepaymentPage = () => {
                                 }`}>
                                   {rep.status}
                                 </Badge>
-                                <p className="text-[9px] text-slate-300 font-bold mt-1 uppercase mt-2">{format(new Date(rep.createdAt), 'MMM dd, HH:mm')}</p>
+                                {simulationMode && rep.status === 'PENDING' && (
+                                  <Button 
+                                    size="sm" 
+                                    className="h-7 px-3 bg-indigo-600 text-[9px] font-black uppercase rounded-lg"
+                                    onClick={async () => {
+                                      try {
+                                        await api.post(`/admin/repayments/${rep.repaymentId}/verify`);
+                                        toast.success('Repayment verified');
+                                        queryClient.invalidateQueries({ queryKey: ['loan', loanId] });
+                                      } catch (e) { toast.error('Verification failed'); }
+                                    }}
+                                  >
+                                    <Zap className="h-3 w-3 mr-1" />
+                                    Auto-Verify
+                                  </Button>
+                                )}
+                                <p className="text-[9px] text-slate-300 font-bold mt-1 uppercase tracking-tight">{format(new Date(rep.createdAt), 'MMM dd, HH:mm')}</p>
                             </div>
                           </div>
                         ))}
@@ -459,5 +556,6 @@ export const RepaymentPage = () => {
         />
       </div>
     </div>
-  );
+  </div>
+);
 };

@@ -22,16 +22,16 @@ import {
 import { useAuthStore } from '@/store/authStore';
 
 const StatCard = ({ title, value, subValue, icon: Icon, colorClass }: any) => (
-  <Card className="border-slate-200 hover:shadow-md transition-all duration-200">
+  <Card className="glass border-none shadow-xl rounded-[2rem] group hover:-translate-y-1 transition-all duration-300">
     <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-      <CardTitle className="text-sm font-medium text-slate-500 uppercase tracking-wider">{title}</CardTitle>
-      <div className={`p-2 rounded-lg ${colorClass}`}>
-        <Icon className="h-4 w-4" />
+      <CardTitle className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{title}</CardTitle>
+      <div className={`p-3 rounded-2xl shadow-lg ${colorClass}`}>
+        <Icon className="h-5 w-5" />
       </div>
     </CardHeader>
     <CardContent>
-      <div className="text-2xl font-bold text-slate-900">{value}</div>
-      <p className="text-xs text-slate-500 mt-1">{subValue}</p>
+      <div className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">{value}</div>
+      <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 mt-2 uppercase tracking-tight opacity-70">{subValue}</p>
     </CardContent>
   </Card>
 );
@@ -98,8 +98,30 @@ export const DashboardPage = () => {
 
   if (isLoading) {
     return (
-      <div className="flex h-[400px] items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-indigo-600" />
+      <div className="max-w-7xl mx-auto space-y-8 animate-pulse">
+        <div className="flex justify-between items-center">
+          <div className="space-y-2">
+            <div className="h-10 bg-slate-100 rounded-xl w-64" />
+            <div className="h-4 bg-slate-50 rounded-lg w-48" />
+          </div>
+          <div className="flex gap-3">
+            <div className="h-12 bg-slate-100 rounded-2xl w-32" />
+            <div className="h-12 bg-slate-100 rounded-2xl w-32" />
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          {[1, 2, 3, 4].map(i => (
+            <div key={i} className="h-32 bg-slate-100 rounded-[2rem]" />
+          ))}
+        </div>
+        <div className="space-y-4">
+          <div className="h-6 bg-slate-100 rounded w-48" />
+          <div className="space-y-4">
+            {[1, 2, 3].map(i => (
+              <div key={i} className="h-24 bg-slate-50 rounded-[2.5rem]" />
+            ))}
+          </div>
+        </div>
       </div>
     );
   }
@@ -157,29 +179,29 @@ export const DashboardPage = () => {
         </div>
       )}
 
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
         <div>
-          <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Financial Overview</h1>
-          <div className="flex items-center gap-2 mt-1 px-0.5">
-            <p className="text-slate-500 text-sm">Real-time status of your borrowing and lending</p>
-            <span className="text-slate-300">•</span>
-            <div className="flex items-center gap-1.5 text-xs text-indigo-600 font-medium">
+          <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight uppercase">Financial Hub</h1>
+          <div className="flex items-center gap-3 mt-1 px-0.5">
+            <p className="text-slate-500 dark:text-slate-400 font-medium text-xs">Real-time status of your portfolio</p>
+            <div className="h-1 w-1 rounded-full bg-slate-300" />
+            <div className="flex items-center gap-1.5 text-[10px] text-indigo-600 font-black uppercase tracking-widest">
               <RefreshCcw className="h-3 w-3 animate-spin-slow" />
               Updated {timeAgo}
             </div>
           </div>
         </div>
         {user?.role !== 'ADMIN' && (
-          <div className="flex gap-3">
+          <div className="flex gap-4">
             <Link to="/marketplace">
-              <Button className="bg-white text-indigo-600 hover:bg-slate-50 shadow-sm border border-indigo-200">
-                Find Offers
+              <Button className="bg-white dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700 shadow-md border-none px-6 h-12 rounded-2xl font-black text-xs uppercase tracking-widest">
+                Marketplace
               </Button>
             </Link>
             <Link to="/offers/create">
-              <Button className="bg-indigo-600 hover:bg-indigo-700 shadow-sm text-white">
+              <Button className="bg-indigo-600 hover:bg-indigo-700 shadow-xl shadow-indigo-100 text-white px-6 h-12 rounded-2xl font-black text-xs uppercase tracking-widest">
                 <Plus className="h-4 w-4 mr-2" />
-                Create Offer
+                New Offer
               </Button>
             </Link>
           </div>
@@ -218,17 +240,17 @@ export const DashboardPage = () => {
       </div>
 
       <div className="space-y-4">
-        <h2 className="text-xl font-semibold text-slate-900">Your Loans</h2>
+        <h2 className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-2">Portfolio Details</h2>
         
         {sortedLoans.length > 0 ? (
-          <div className="grid gap-4">
+          <div className="grid gap-6">
             {sortedLoans.map((loan) => {
               const isAtRisk = ['MARGIN_CALL', 'LIQUIDATION_ELIGIBLE'].includes(loan.status);
               return (
                 <Card 
                   key={loan.loanId} 
-                  className={`border-slate-200 hover:border-indigo-300 transition-all duration-200 group cursor-pointer overflow-hidden ${
-                    isAtRisk ? 'border-red-300 shadow-[0_0_15px_rgba(239,68,68,0.15)] ring-1 ring-red-100' : ''
+                  className={`glass border-none hover:shadow-2xl transition-all duration-500 group cursor-pointer overflow-hidden rounded-[2.5rem] ${
+                    isAtRisk ? 'ring-2 ring-red-400 animate-pulse' : ''
                   }`}
                   onClick={() => navigate(getLoanRoute(loan.loanId, loan.status))}
                 >
@@ -242,21 +264,21 @@ export const DashboardPage = () => {
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 flex-wrap">
-                            <span className="font-semibold text-slate-900 truncate">ID: {loan.loanId.substring(0, 8)}...</span>
+                            <span className="font-semibold text-slate-900 dark:text-white truncate">ID: {loan.loanId.substring(0, 8)}...</span>
                             <Badge variant={getStatusVariant(loan.status)} className={isAtRisk ? 'animate-pulse' : ''}>
                               {loan.status.replace(/_/g, ' ')}
                             </Badge>
                           </div>
-                          <div className="text-xs text-slate-500 mt-1 capitalize leading-relaxed">
+                          <div className="text-xs text-slate-500 dark:text-slate-400 mt-1 capitalize leading-relaxed">
                             Role: {loan.role.toLowerCase()} • With {loan.counterpartyPseudonym}
                           </div>
                         </div>
                       </div>
                       
-                      <div className="flex items-center justify-between md:justify-end gap-8 w-full md:w-auto mt-2 md:mt-0 pt-4 md:pt-0 border-t md:border-0 border-slate-100">
+                      <div className="flex items-center justify-between md:justify-end gap-8 w-full md:w-auto mt-2 md:mt-0 pt-4 md:pt-0 border-t md:border-0 border-slate-100 dark:border-slate-800">
                         <div className="text-right">
-                          <div className="text-xs text-slate-500 mb-0.5 uppercase tracking-tighter">Outstanding</div>
-                          <div className="font-bold text-slate-900 leading-none">
+                          <div className="text-xs text-slate-500 dark:text-slate-400 mb-0.5 uppercase tracking-tighter">Outstanding</div>
+                          <div className="font-bold text-slate-900 dark:text-white leading-none">
                             ₹{loan.totalOutstanding.toLocaleString()}
                           </div>
                         </div>

@@ -7,12 +7,16 @@ import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { ShieldCheck, Loader2, AlertCircle, Clock } from 'lucide-react';
+import { ShieldCheck, Loader2, AlertCircle, Clock, Zap } from 'lucide-react';
+import { useSettingsStore } from '@/store/settingsStore';
+import { toast } from 'sonner';
 
 export const KycPage = () => {
   const navigate = useNavigate();
   const { user, updateKycStatus } = useAuthStore();
+  const { simulationMode } = useSettingsStore();
   const [isLoading, setIsLoading] = useState(false);
+  const [isApproving, setIsApproving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const [formData, setFormData] = useState({
@@ -54,6 +58,19 @@ export const KycPage = () => {
     }
   };
 
+  const handleAutoApprove = async () => {
+    setIsApproving(true);
+    try {
+      await api.post(`/admin/users/${user?.userId}/kyc/approve`);
+      toast.success('KYC Auto-Approved (Simulation Mode)');
+      updateKycStatus('VERIFIED');
+    } catch (err: any) {
+      toast.error('Auto-approval failed');
+    } finally {
+      setIsApproving(false);
+    }
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -72,10 +89,20 @@ export const KycPage = () => {
               Your details have been submitted and are currently under review by our administration team. You will be notified once approved.
             </CardDescription>
           </CardHeader>
-          <CardContent className="pb-10 pt-4 flex justify-center">
+          <CardContent className="pb-10 pt-4 space-y-4 flex flex-col items-center">
             <Button onClick={() => navigate('/dashboard')} variant="outline" className="w-full">
               Return to Dashboard
             </Button>
+            {simulationMode && (
+              <Button 
+                onClick={handleAutoApprove} 
+                disabled={isApproving}
+                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white group"
+              >
+                <Zap className="h-4 w-4 mr-2 group-hover:animate-bounce" />
+                {isApproving ? 'Approving...' : 'Auto-Approve (Dev Mode)'}
+              </Button>
+            )}
           </CardContent>
         </Card>
       </div>
